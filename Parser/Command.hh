@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:58:29 2017 Arnaud WURMEL
-// Last update Mon Apr 10 20:07:43 2017 Arnaud WURMEL
+// Last update Mon Apr 10 21:07:20 2017 Arnaud WURMEL
 //
 
 #ifndef COMMAND_HH_
@@ -38,5 +38,7 @@ namespace	Plazza
     Information	_commandType;
   };
 }
+
+std::ostream& operator<<(std::ostream&, const Plazza::Command&);
 
 #endif /* !COMMAND_HH_ */

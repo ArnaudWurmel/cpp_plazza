@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Mon Apr 10 20:15:00 2017 Arnaud WURMEL
+## Last update Mon Apr 10 21:13:27 2017 Arnaud WURMEL
 ##
 
 CC		=	g++
@@ -36,7 +36,7 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Process \
 			-I ./Parser
 
-CXXFLAGS	+= 	-Wall -Wextra -std=c++14
+CXXFLAGS	+= 	-Wall -Wextra -std=c++14 -g
 
 NAME		=	plazza
 
