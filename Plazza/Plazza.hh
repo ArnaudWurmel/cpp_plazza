@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Mon Apr 10 10:22:30 2017 Arnaud WURMEL
+// Last update Mon Apr 10 13:18:12 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -16,8 +16,13 @@ namespace	Plazza
   class	Plazza
   {
   public:
-    Plazza(int, char**);
+    Plazza(unsigned int);
     ~Plazza();
+
+  public:
+    void	mainLoop();
+  private:
+    unsigned int	_maxThreads;
   };
 }
 
