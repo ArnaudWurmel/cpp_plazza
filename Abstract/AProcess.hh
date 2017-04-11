@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 14:17:33 2017 Arnaud WURMEL
-// Last update Tue Apr 11 15:36:22 2017 Arnaud WURMEL
+// Last update Tue Apr 11 15:57:37 2017 Arnaud WURMEL
 //
 
 #ifndef APROCESS_HH_
@@ -24,7 +24,6 @@ namespace	Plazza
 
   public:
     virtual pid_t	getPid() const = 0;
-
   };
 }
 

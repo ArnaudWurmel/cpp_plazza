@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Tue Apr 11 09:28:02 2017 Arnaud WURMEL
+## Last update Tue Apr 11 17:59:33 2017 Arnaud WURMEL
 ##
 
 CC		=	g++
@@ -17,6 +17,7 @@ SRCS		=	Plazza/Plazza.cpp \
 			Parser/Parser.cpp \
 			Parser/Command.cpp \
 			Thread/Thread.cpp \
+			Pipe/Pipe.cpp \
 			srcs/main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
@@ -36,7 +37,8 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Errors \
 			-I ./Process \
 			-I ./Parser \
-			-I ./Abstract
+			-I ./Abstract \
+			-I ./Pipe
 
 CXXFLAGS	+= 	-Wall -Wextra -std=c++14 -g
 
