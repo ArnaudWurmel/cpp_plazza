@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Mon Apr 10 19:54:44 2017 Arnaud WURMEL
+// Last update Tue Apr 11 15:40:31 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -13,17 +13,25 @@
 
 namespace	Plazza
 {
-  class	Process
+  class	Process : public Plazza::AProcess
   {
   public:
     Process(unsigned int);
     ~Process();
 
   public:
-    void	processLoop();
+    void	runProcess();
+    bool	createProcess();
+
+  public:
+    pid_t	getPid() const;
+
+  private:
+    bool	createThreads();
 
   private:
     unsigned int	_maxThread;
+    pid_t		_pid;
   };
 }
 

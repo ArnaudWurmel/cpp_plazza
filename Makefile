@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Mon Apr 10 21:13:27 2017 Arnaud WURMEL
+## Last update Tue Apr 11 09:28:02 2017 Arnaud WURMEL
 ##
 
 CC		=	g++
@@ -16,6 +16,7 @@ SRCS		=	Plazza/Plazza.cpp \
 			Process/Process.cpp \
 			Parser/Parser.cpp \
 			Parser/Command.cpp \
+			Thread/Thread.cpp \
 			srcs/main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
@@ -34,7 +35,8 @@ RED		=	"\033[0;31m"
 HEADERS		+=	-I ./Plazza \
 			-I ./Errors \
 			-I ./Process \
-			-I ./Parser
+			-I ./Parser \
+			-I ./Abstract
 
 CXXFLAGS	+= 	-Wall -Wextra -std=c++14 -g
 
@@ -43,7 +45,7 @@ NAME		=	plazza
 all:			$(NAME)
 
 $(NAME):		title $(OBJS)
-			@$(CC) $(OBJS) -o $(NAME) $(ERROUTPUT) &&		\
+			@$(CC) $(OBJS) -o $(NAME) &&				\
 			 $(ECHO) $(TEAL)"[OK]" $(GREEN) $(NAME) $(DEFAULT) ||	\
 			 $(ECHO) $(RED)"[KO]" $(NAME) $(DEFAULT)
 
