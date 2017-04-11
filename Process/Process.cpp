@@ -5,12 +5,17 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Tue Apr 11 16:32:39 2017 Arnaud WURMEL
+// Last update Tue Apr 11 20:45:54 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
 #include <cstdlib>
+#include <vector>
 #include <iostream>
+#include <memory>
+#include "Command.hh"
+#include "PipeData.hh"
+#include "APipe.hh"
 #include "AProcess.hh"
 #include "Process.hh"
 
@@ -41,6 +46,11 @@ void	Plazza::Process::runProcess()
 
     }
   std::cout << "Plazza: Process [" << _pid << "] exiting." << std::endl;
+}
+
+void	Plazza::Process::assignPipe(std::shared_ptr<Plazza::APipe> const& pipe)
+{
+  _pipe = pipe;
 }
 
 bool	Plazza::Process::createThreads()

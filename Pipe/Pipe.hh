@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:55:14 2017 Arnaud WURMEL
-// Last update Tue Apr 11 17:59:55 2017 Arnaud WURMEL
+// Last update Tue Apr 11 20:37:31 2017 Arnaud WURMEL
 //
 
 #ifndef PIPE_HH_
@@ -13,11 +13,25 @@
 
 namespace	Plazza
 {
-  class	Pipe : public Plazza::APipe
+  class	Pipe : public APipe
   {
   public:
-    Pipe();
+    Pipe(std::string const&);
     ~Pipe();
+
+  public:
+    bool	openPipe();
+
+  public:
+    int		getFd() const;
+    
+  public:
+    void	operator<<(const PipeData *);
+    void	operator>>(PipeData&);
+
+  private:
+    std::string	_pipeName;
+    int		_fd;
   };
 }
 

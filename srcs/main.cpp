@@ -5,13 +5,16 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 12:46:29 2017 Arnaud WURMEL
-// Last update Tue Apr 11 16:15:33 2017 Arnaud WURMEL
+// Last update Tue Apr 11 20:41:58 2017 Arnaud WURMEL
 //
 
 #include <iostream>
 #include <string>
 #include <memory>
 #include <vector>
+#include "Command.hh"
+#include "PipeData.hh"
+#include "APipe.hh"
 #include "AProcess.hh"
 #include "Command.hh"
 #include "Plazza.hh"

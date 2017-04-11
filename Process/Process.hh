@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Tue Apr 11 15:57:27 2017 Arnaud WURMEL
+// Last update Tue Apr 11 20:46:05 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -22,6 +22,7 @@ namespace	Plazza
   public:
     void	runProcess();
     bool	createProcess();
+    void	assignPipe(std::shared_ptr<APipe> const&);
 
   public:
     pid_t	getPid() const;
@@ -32,6 +33,7 @@ namespace	Plazza
   private:
     unsigned int	_maxThread;
     pid_t		_pid;
+    std::shared_ptr<APipe>	_pipe;
   };
 }
 
