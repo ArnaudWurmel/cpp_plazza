@@ -5,11 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Wed Apr 12 21:50:44 2017 Arnaud WURMEL
+// Last update Wed Apr 12 22:33:08 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
 # define PROCESS_HH_
+
+# include <queue>
 
 namespace	Plazza
 {
@@ -34,11 +36,13 @@ namespace	Plazza
   private:
     bool	createThreads();
     void	getInfo(PipeData const&);
+    void	addCommand(PipeData const&);
 
   private:
     unsigned int		_maxThread;
     pid_t			_pid;
     std::shared_ptr<APipe>	_pipe;
+    std::queue<std::shared_ptr<Command>	>	_queue;
   };
 }
 

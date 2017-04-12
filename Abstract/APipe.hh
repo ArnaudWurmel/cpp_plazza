@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:53:28 2017 Arnaud WURMEL
-// Last update Wed Apr 12 17:09:52 2017 Arnaud WURMEL
+// Last update Wed Apr 12 23:06:47 2017 Arnaud WURMEL
 //
 
 #ifndef APIPE_HH_
@@ -20,7 +20,6 @@ namespace	Plazza
 
   public:
     virtual bool	openPipe() = 0;
-    virtual int		getFd() const = 0;
 
   public:
     virtual void	operator<<(const PipeData&) = 0;

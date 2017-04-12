@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 12 21:44:57 2017 Arnaud WURMEL
+// Last update Wed Apr 12 23:14:07 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -13,6 +13,8 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <cstdlib>
+#include <unistd.h>
 #include <exception>
 #include "Command.hh"
 #include "Parser.hh"
@@ -33,21 +35,30 @@ bool	Plazza::Plazza::createNewProcess()
   AProcess	*p = new Process(_maxThreads);
   std::shared_ptr<APipe>	pipe(new Pipe("/tmp/" + std::to_string(_process.size())));
 
-  p->assignPipe(pipe);
   if (pipe->openPipe() == false ||
       p->createProcess() == false)
     {
       delete p;
       return false;
     }
+  p->assignPipe(pipe);
   if (p->getPid() == 0)
     p->runProcess();
-  _process.push_back(std::shared_ptr<AProcess>(p));
+  else
+    _process.push_back(std::shared_ptr<AProcess>(p));
   return true;
 }
 
 void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
 {
+  PipeData	data(PipeData::DataType::GET_PROCESS_INFO);
+
+  if (createNewProcess())
+    {
+      *_process.back() << data;
+      *_process.back() >> data;
+      std::cout << "Process usage : " << data.getCurrThread() << std::endl;
+    }
 }
 
 void	Plazza::Plazza::mainLoop()
