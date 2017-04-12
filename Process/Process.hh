@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Tue Apr 11 20:46:05 2017 Arnaud WURMEL
+// Last update Wed Apr 12 21:50:44 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -27,12 +27,17 @@ namespace	Plazza
   public:
     pid_t	getPid() const;
 
-  private:
-    bool	createThreads();
+  public:
+    virtual void	operator<<(PipeData const&);
+    virtual void	operator>>(PipeData&);
 
   private:
-    unsigned int	_maxThread;
-    pid_t		_pid;
+    bool	createThreads();
+    void	getInfo(PipeData const&);
+
+  private:
+    unsigned int		_maxThread;
+    pid_t			_pid;
     std::shared_ptr<APipe>	_pipe;
   };
 }

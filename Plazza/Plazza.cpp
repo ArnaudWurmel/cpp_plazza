@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 12 17:31:51 2017 Arnaud WURMEL
+// Last update Wed Apr 12 21:44:57 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -28,24 +28,26 @@ Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
   std::cout << "[Plazza] instancied" << std::endl;
 }
 
-void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
+bool	Plazza::Plazza::createNewProcess()
 {
   AProcess	*p = new Process(_maxThreads);
-  std::shared_ptr<APipe>	pipe(new Pipe("/tmp/test"));
-  PipeData	data;
+  std::shared_ptr<APipe>	pipe(new Pipe("/tmp/" + std::to_string(_process.size())));
 
-  pipe->openPipe();
   p->assignPipe(pipe);
-  if (p->createProcess() == false)
+  if (pipe->openPipe() == false ||
+      p->createProcess() == false)
     {
       delete p;
-      return ;
+      return false;
     }
   if (p->getPid() == 0)
     p->runProcess();
   _process.push_back(std::shared_ptr<AProcess>(p));
-  data.setString("ça marche pas :(((");
-  *pipe << data;
+  return true;
+}
+
+void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
+{
 }
 
 void	Plazza::Plazza::mainLoop()
@@ -69,5 +71,6 @@ void	Plazza::Plazza::mainLoop()
 
 Plazza::Plazza::~Plazza()
 {
+  _process.clear();
   std::cout << "[Plazza] deleted" << std::endl;
 }

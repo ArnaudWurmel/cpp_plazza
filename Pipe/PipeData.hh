@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 20:16:58 2017 Arnaud WURMEL
-// Last update Wed Apr 12 17:37:23 2017 Arnaud WURMEL
+// Last update Wed Apr 12 21:57:48 2017 Arnaud WURMEL
 //
 
 #ifndef APIPEDATA_HH_
@@ -20,20 +20,23 @@ namespace	Plazza
   public:
     enum	DataType : int
       {
+	FAILURE = -1,
 	UNUSED = 0,
 	GET_PROCESS_INFO,
 	SEND_DATA
       };
     
   public:
-    struct	Data
+    struct			Data
     {
-      DataType		_type;
+      DataType			_type;
       Command::Information	_inf;
-      char		_str[MAX_DATA];
+      unsigned int		_curr_thread;
+      char			_str[MAX_DATA];
     };
 
   public:
+    PipeData(DataType const&);
     PipeData();
     ~PipeData();
 
@@ -42,11 +45,13 @@ namespace	Plazza
     std::string	const&	getString() const;
     DataType const&	getDataType() const;
     Command::Information const&	getInformation() const;
+    unsigned int	getCurrThread() const;
 
   public:
     void	setString(const std::string&);
     void	setDataType(DataType const&);
     void	setInformation(Command::Information const&);
+    void	setCurrThread(unsigned int);
 
   private:
     Data	_data;

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 14:17:33 2017 Arnaud WURMEL
-// Last update Tue Apr 11 20:45:50 2017 Arnaud WURMEL
+// Last update Wed Apr 12 21:51:33 2017 Arnaud WURMEL
 //
 
 #ifndef APROCESS_HH_
@@ -16,6 +16,11 @@ namespace	Plazza
   class	AProcess
   {
   public:
+    enum	AutoOrder
+      {
+	GET_INFO = 0
+      };
+  public:
     virtual ~AProcess() {}
 
   public:
@@ -25,6 +30,10 @@ namespace	Plazza
 
   public:
     virtual pid_t	getPid() const = 0;
+
+  public:
+    virtual void	operator<<(PipeData const&) = 0;
+    virtual void	operator>>(PipeData&) = 0;
   };
 }
 

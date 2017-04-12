@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:57:48 2017 Arnaud WURMEL
-// Last update Wed Apr 12 17:36:54 2017 Arnaud WURMEL
+// Last update Wed Apr 12 20:11:52 2017 Arnaud WURMEL
 //
 
 #include <sys/types.h>
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <unistd.h>
+#include <sys/select.h>
 #include "Command.hh"
 #include "PipeData.hh"
 #include "APipe.hh"
@@ -43,7 +44,6 @@ int	Plazza::Pipe::getFd() const
 
 void	Plazza::Pipe::operator<<(const PipeData& pipeData)
 {
-  std::cout << "STR = {" <<  pipeData.getData()._str << "}" << std::endl;
   write(_fd, &(pipeData.getData()), sizeof(pipeData.getData()));
 }
 
@@ -51,11 +51,10 @@ void	Plazza::Pipe::operator>>(PipeData& pipeData)
 {
   Plazza::PipeData::Data	data;
 
-  std::cout << read(_fd, &data, sizeof(data)) <<std::endl;
+  read(_fd, &data, sizeof(data));
   pipeData.setString(data._str);
   pipeData.setDataType(data._type);
   pipeData.setInformation(data._inf);
-  std::cout << "Received : " << pipeData.getString() << std::endl;
 }
 
 Plazza::Pipe::~Pipe() {}

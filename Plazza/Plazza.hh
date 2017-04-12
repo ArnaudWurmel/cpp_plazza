@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Tue Apr 11 16:15:16 2017 Arnaud WURMEL
+// Last update Wed Apr 12 20:48:00 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -24,6 +24,7 @@ namespace	Plazza
 
   private:
     void	dispatchCommand(const std::vector<std::shared_ptr<Command> >&);
+    bool	createNewProcess();
 
   private:
     unsigned int	_maxThreads;
