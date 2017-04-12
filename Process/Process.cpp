@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Tue Apr 11 20:45:54 2017 Arnaud WURMEL
+// Last update Wed Apr 12 17:39:02 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -40,10 +40,13 @@ bool	Plazza::Process::createProcess()
 
 void	Plazza::Process::runProcess()
 {
+  PipeData	data;
+
   std::cout << "Plazza: Process [" << _pid << "] start running." << std::endl;
   while (true)
     {
-
+      *_pipe >> data;
+      std::cout << "Plazza: Process [" << _pid << "] received data." << std::endl;
     }
   std::cout << "Plazza: Process [" << _pid << "] exiting." << std::endl;
 }
@@ -63,4 +66,7 @@ pid_t	Plazza::Process::getPid() const
   return _pid;
 }
 
-Plazza::Process::~Process() {}
+Plazza::Process::~Process()
+{
+  exit(0);
+}

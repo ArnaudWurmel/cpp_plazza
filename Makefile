@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Tue Apr 11 17:59:33 2017 Arnaud WURMEL
+## Last update Wed Apr 12 15:19:26 2017 Arnaud WURMEL
 ##
 
 CC		=	g++
@@ -18,6 +18,7 @@ SRCS		=	Plazza/Plazza.cpp \
 			Parser/Command.cpp \
 			Thread/Thread.cpp \
 			Pipe/Pipe.cpp \
+			Pipe/PipeData.cpp \
 			srcs/main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Tue Apr 11 20:58:19 2017 Arnaud WURMEL
+// Last update Wed Apr 12 17:31:51 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -32,9 +32,10 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 {
   AProcess	*p = new Process(_maxThreads);
   std::shared_ptr<APipe>	pipe(new Pipe("/tmp/test"));
+  PipeData	data;
 
-  //  p->assignPipe(pipe);
-  //  _process.push_back(p);
+  pipe->openPipe();
+  p->assignPipe(pipe);
   if (p->createProcess() == false)
     {
       delete p;
@@ -42,6 +43,9 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
     }
   if (p->getPid() == 0)
     p->runProcess();
+  _process.push_back(std::shared_ptr<AProcess>(p));
+  data.setString("ça marche pas :(((");
+  *pipe << data;
 }
 
 void	Plazza::Plazza::mainLoop()

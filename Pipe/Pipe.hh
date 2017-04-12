@@ -5,11 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:55:14 2017 Arnaud WURMEL
-// Last update Tue Apr 11 20:37:31 2017 Arnaud WURMEL
+// Last update Wed Apr 12 15:52:56 2017 Arnaud WURMEL
 //
 
 #ifndef PIPE_HH_
 # define PIPE_HH_
+
+# define MAX_PIPE 32650
 
 namespace	Plazza
 {
@@ -26,7 +28,7 @@ namespace	Plazza
     int		getFd() const;
     
   public:
-    void	operator<<(const PipeData *);
+    void	operator<<(const PipeData&);
     void	operator>>(PipeData&);
 
   private:
