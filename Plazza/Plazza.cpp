@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 12 23:14:07 2017 Arnaud WURMEL
+// Last update Thu Apr 13 13:33:18 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -33,7 +33,7 @@ Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
 bool	Plazza::Plazza::createNewProcess()
 {
   AProcess	*p = new Process(_maxThreads);
-  std::shared_ptr<APipe>	pipe(new Pipe("/tmp/" + std::to_string(_process.size())));
+  std::shared_ptr<APipe>	pipe(new Pipe("/tmp/" + std::to_string(_process.size()) + ".fifo"));
 
   if (pipe->openPipe() == false ||
       p->createProcess() == false)
@@ -52,13 +52,28 @@ bool	Plazza::Plazza::createNewProcess()
 void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
 {
   PipeData	data(PipeData::DataType::GET_PROCESS_INFO);
+  bool		shouldCreate;
+  std::vector<std::shared_ptr<AProcess> >::iterator	it;
+  std::vector<std::shared_ptr<Command>>::const_iterator	it_cmd;
 
-  if (createNewProcess())
+  it_cmd = commands.begin();
+  while (it_cmd != commands.end())
     {
-      *_process.back() << data;
-      *_process.back() >> data;
-      std::cout << "Process usage : " << data.getCurrThread() << std::endl;
+      shouldCreate = false;
+      it = _process.begin();
+      while (it != _process.end())
+	{
+	  ++it;
+	}
+  
+      // if (createNewProcess())
+      // 	{
+      // 	  *_process.back() << data;
+      // 	  *_process.back() >> data;
+      // 	}
+      ++it_cmd;
     }
+
 }
 
 void	Plazza::Plazza::mainLoop()
@@ -70,7 +85,7 @@ void	Plazza::Plazza::mainLoop()
   while (std::getline(std::cin, line))
     {
       try {
-      	commands = parser.evalString(line);
+	commands = parser.evalString(line);
 	dispatchCommand(commands);
 	commands.clear();
       }

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 12 23:22:43 2017 Arnaud WURMEL
+// Last update Thu Apr 13 13:29:16 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -79,10 +79,9 @@ void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
 {
   Plazza::PipeData	send;
 
-  memset(&send, 0, sizeof(send));
-  send.setString("Test d'envoi" + std::to_string(_pid));
+  send.setString("");
   send.setDataType(pipeData.getDataType());
-  send.setCurrThread(10);
+  send.setCurrThread(1);
   *_pipe << send;
 }
 
