@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Thu Apr 13 13:29:16 2017 Arnaud WURMEL
+// Last update Sat Apr 15 21:49:35 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -45,11 +45,11 @@ bool	Plazza::Process::createProcess()
 
 void	Plazza::Process::runProcess()
 {
-  PipeData	data;
-  std::map<PipeData::DataType, std::function<void (PipeData const&)> >	functionPtr;
+  PipeData<int>	data;
+  std::map<PipeData<int>::DataType, std::function<void (PipeData<int> const&)> >	functionPtr;
 
   std::cout << "Plazza: Process [" << _pid << "] start running." << std::endl;
-  functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData<int>::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
   while (true)
     {
       (*_pipe) >> data;
@@ -75,22 +75,29 @@ pid_t	Plazza::Process::getPid() const
   return _pid;
 }
 
-void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
+void	Plazza::Process::getInfo(Plazza::PipeData<int> const& pipeData)
 {
-  Plazza::PipeData	send;
+  Plazza::PipeData<int>	send;
 
-  send.setString("");
-  send.setDataType(pipeData.getDataType());
-  send.setCurrThread(1);
   *_pipe << send;
 }
 
-void	Plazza::Process::operator<<(Plazza::PipeData const& pipeData)
+void	Plazza::Process::operator<<(Plazza::PipeData<std::string> const& pipeData)
 {
   *_pipe << pipeData;
 }
 
-void	Plazza::Process::operator>>(Plazza::PipeData& pipeData)
+void	Plazza::Process::operator>>(Plazza::PipeData<std::string>& pipeData)
+{
+  *_pipe >> pipeData;
+}
+
+void	Plazza::Process::operator<<(Plazza::PipeData<int> const& pipeData)
+{
+  *_pipe << pipeData;
+}
+
+void	Plazza::Process::operator>>(Plazza::PipeData<int>& pipeData)
 {
   *_pipe >> pipeData;
 }

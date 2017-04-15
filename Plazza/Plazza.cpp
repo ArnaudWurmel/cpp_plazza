@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Thu Apr 13 13:33:18 2017 Arnaud WURMEL
+// Last update Sat Apr 15 21:40:58 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -51,7 +51,7 @@ bool	Plazza::Plazza::createNewProcess()
 
 void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
 {
-  PipeData	data(PipeData::DataType::GET_PROCESS_INFO);
+  PipeData<int>	data(PipeData<int>::DataType::GET_PROCESS_INFO);
   bool		shouldCreate;
   std::vector<std::shared_ptr<AProcess> >::iterator	it;
   std::vector<std::shared_ptr<Command>>::const_iterator	it_cmd;

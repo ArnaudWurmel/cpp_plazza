@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 20:16:58 2017 Arnaud WURMEL
-// Last update Wed Apr 12 21:57:48 2017 Arnaud WURMEL
+// Last update Sat Apr 15 22:19:22 2017 Arnaud WURMEL
 //
 
 #ifndef APIPEDATA_HH_
@@ -15,6 +15,7 @@
 
 namespace	Plazza
 {
+  template<typename T>
   class	PipeData
   {
   public:
@@ -23,39 +24,57 @@ namespace	Plazza
 	FAILURE = -1,
 	UNUSED = 0,
 	GET_PROCESS_INFO,
-	SEND_DATA
+	SEND_DATA,
+	ASSIGN_ORDER
       };
     
   public:
     struct			Data
     {
       DataType			_type;
-      Command::Information	_inf;
-      unsigned int		_curr_thread;
-      char			_str[MAX_DATA];
+      T				_stockage;
     };
 
   public:
-    PipeData(DataType const&);
-    PipeData();
-    ~PipeData();
+    PipeData<T>(DataType const& type)
+    {
+      _data._type = type;
+    }
+    PipeData<T>()
+    {
+
+    }
+    ~PipeData<T>() {}
 
   public:
-    Plazza::PipeData::Data const&	getData() const;
-    std::string	const&	getString() const;
-    DataType const&	getDataType() const;
-    Command::Information const&	getInformation() const;
-    unsigned int	getCurrThread() const;
+    Plazza::PipeData<T>::Data const&	getData() const
+    {
+      return _data;
+    }
+    
+    T const&	getStockage() const
+    {
+      return _data._stockage;
+    }
+
+    DataType const&	getDataType() const
+    {
+      return _data._type;
+    }
 
   public:
-    void	setString(const std::string&);
-    void	setDataType(DataType const&);
-    void	setInformation(Command::Information const&);
-    void	setCurrThread(unsigned int);
+    void	setStockage(T const& stockage)
+    {
+      _data._stockage = stockage;
+    }
+
+    void	setDataType(DataType const& type)
+    {
+      _data._type = type;
+    }
 
   private:
     Data	_data;
-    std::string	_str;
   };
 }
 
