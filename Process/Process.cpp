@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Tue Apr 18 13:01:05 2017 Arnaud WURMEL
+// Last update Tue Apr 18 21:05:31 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -25,6 +25,7 @@
 #include "APipe.hh"
 #include "AProcess.hh"
 #include "Process.hh"
+#include "ThreadTask.hh"
 
 Plazza::Process::Process(unsigned int maxThread)
 {
@@ -44,7 +45,6 @@ bool	Plazza::Process::createProcess()
     std::cout << "Plazza: Process [" << _pid << "] created." << std::endl;
   return true;
 }
-
 void	Plazza::Process::runProcess()
 {
   PipeData	data;
@@ -71,12 +71,12 @@ void	Plazza::Process::addCommand(PipeData const& pipeData)
   PipeData	data(PipeData::DataType::UNUSED);
   PipeData	separator(PipeData::DataType::UNUSED);
 
-  std::cout<< "addCommand selected" << std::endl;
   *_pipe << separator;
-  std::cout << "Waiting data" << std::endl;
   *_pipe >> data;
+  std::shared_ptr<Plazza::ThreadTask>	ptr(new Plazza::ThreadTask(data.getData()._stockage.string));
+
+  _pool->insertNewTask(ptr);
   *_pipe << separator;
-  std::cout << "Acquired value : " << data.getData()._stockage.string << std::endl;
 }
 
 void	Plazza::Process::assignPipe(std::shared_ptr<Plazza::APipe> const& pipe)
