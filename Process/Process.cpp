@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Sat Apr 15 21:49:35 2017 Arnaud WURMEL
+// Last update Tue Apr 18 13:01:05 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -18,6 +18,8 @@
 #include <functional>
 #include <utility>
 #include <cstring>
+#include "Thread.hh"
+#include "ThreadPool.hh"
 #include "Command.hh"
 #include "PipeData.hh"
 #include "APipe.hh"
@@ -45,19 +47,36 @@ bool	Plazza::Process::createProcess()
 
 void	Plazza::Process::runProcess()
 {
-  PipeData<int>	data;
-  std::map<PipeData<int>::DataType, std::function<void (PipeData<int> const&)> >	functionPtr;
+  PipeData	data;
+  std::map<PipeData::DataType, std::function<void (PipeData const&)> > functionPtr;
 
+  _pool = std::unique_ptr<Plazza::ThreadPool>(new Plazza::ThreadPool(_maxThread));
   std::cout << "Plazza: Process [" << _pid << "] start running." << std::endl;
-  functionPtr.insert(std::make_pair(PipeData<int>::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::ASSIGN_ORDER, std::bind(&Plazza::Process::addCommand, this, std::placeholders::_1)));
   while (true)
     {
       (*_pipe) >> data;
       if (functionPtr.find(data.getDataType()) != functionPtr.end())
-      	functionPtr[data.getDataType()](data);
-    std::cout << "Plazza: Process [" << _pid << "] received data." << std::endl;
+	{
+	  std::cout << "Plazza: Process [" << _pid << "] received data." << std::endl;
+	  functionPtr[data.getDataType()](data);
+	}
     }
   std::cout << "Plazza: Process [" << _pid << "] exiting." << std::endl;
+}
+
+void	Plazza::Process::addCommand(PipeData const& pipeData)
+{
+  PipeData	data(PipeData::DataType::UNUSED);
+  PipeData	separator(PipeData::DataType::UNUSED);
+
+  std::cout<< "addCommand selected" << std::endl;
+  *_pipe << separator;
+  std::cout << "Waiting data" << std::endl;
+  *_pipe >> data;
+  *_pipe << separator;
+  std::cout << "Acquired value : " << data.getData()._stockage.string << std::endl;
 }
 
 void	Plazza::Process::assignPipe(std::shared_ptr<Plazza::APipe> const& pipe)
@@ -65,39 +84,29 @@ void	Plazza::Process::assignPipe(std::shared_ptr<Plazza::APipe> const& pipe)
   _pipe = pipe;
 }
 
-bool	Plazza::Process::createThreads()
-{
-  return false;
-}
-
 pid_t	Plazza::Process::getPid() const
 {
   return _pid;
 }
 
-void	Plazza::Process::getInfo(Plazza::PipeData<int> const& pipeData)
+void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
 {
-  Plazza::PipeData<int>	send;
+  Plazza::PipeData	send;
 
-  *_pipe << send;
+  std::cout << "Info received" << std::endl;
+  if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_PROCESS_INFO)
+    {
+      send.setInteger(_pool->getFreeThread());
+      *_pipe << send;
+    }
 }
 
-void	Plazza::Process::operator<<(Plazza::PipeData<std::string> const& pipeData)
-{
-  *_pipe << pipeData;
-}
-
-void	Plazza::Process::operator>>(Plazza::PipeData<std::string>& pipeData)
-{
-  *_pipe >> pipeData;
-}
-
-void	Plazza::Process::operator<<(Plazza::PipeData<int> const& pipeData)
+void	Plazza::Process::operator<<(Plazza::PipeData const& pipeData)
 {
   *_pipe << pipeData;
 }
 
-void	Plazza::Process::operator>>(Plazza::PipeData<int>& pipeData)
+void	Plazza::Process::operator>>(Plazza::PipeData& pipeData)
 {
   *_pipe >> pipeData;
 }

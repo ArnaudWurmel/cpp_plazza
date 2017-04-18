@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Wed Apr 12 15:19:26 2017 Arnaud WURMEL
+## Last update Mon Apr 17 19:31:31 2017 Arnaud WURMEL
 ##
 
 CC		=	g++
@@ -14,9 +14,10 @@ RM		=	rm -f
 SRCS		=	Plazza/Plazza.cpp \
 			Errors/Errors.cpp \
 			Process/Process.cpp \
+			Process/ThreadPool.cpp \
+			Process/Thread.cpp \
 			Parser/Parser.cpp \
 			Parser/Command.cpp \
-			Thread/Thread.cpp \
 			Pipe/Pipe.cpp \
 			Pipe/PipeData.cpp \
 			srcs/main.cpp
@@ -41,6 +42,8 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Abstract \
 			-I ./Pipe
 
+LDFLAGS		=	-lpthread
+
 CXXFLAGS	+= 	-Wall -Wextra -std=c++14 -g
 
 NAME		=	plazza
@@ -48,7 +51,7 @@ NAME		=	plazza
 all:			$(NAME)
 
 $(NAME):		title $(OBJS)
-			@$(CC) $(OBJS) -o $(NAME) &&				\
+			@$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) &&				\
 			 $(ECHO) $(TEAL)"[OK]" $(GREEN) $(NAME) $(DEFAULT) ||	\
 			 $(ECHO) $(RED)"[KO]" $(NAME) $(DEFAULT)
 

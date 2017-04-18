@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Sat Apr 15 21:40:58 2017 Arnaud WURMEL
+// Last update Tue Apr 18 13:10:52 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -51,52 +51,85 @@ bool	Plazza::Plazza::createNewProcess()
 
 void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
 {
-  PipeData<int>	data(PipeData<int>::DataType::GET_PROCESS_INFO);
+  PipeData	data(PipeData::DataType::GET_PROCESS_INFO);
+  PipeData	status;
   bool		shouldCreate;
   std::vector<std::shared_ptr<AProcess> >::iterator	it;
   std::vector<std::shared_ptr<Command>>::const_iterator	it_cmd;
+  std::vector<std::string>::const_iterator	it_filepath;
+  std::shared_ptr<AProcess>	process;
 
   it_cmd = commands.begin();
   while (it_cmd != commands.end())
     {
-      shouldCreate = false;
-      it = _process.begin();
-      while (it != _process.end())
+      it_filepath = (*it_cmd)->getFilePaths().begin();
+      while (it_filepath != (*it_cmd)->getFilePaths().end())
 	{
-	  ++it;
+	  shouldCreate = true;
+	  it = _process.begin();
+	  while (shouldCreate && it != _process.end())
+	    {
+	      std::cout << "Getting status" << std::endl;
+	      *(*it) << data;
+	      *(*it) >> status;
+	      std::cout << "Getted status" << std::endl;
+	      if (status.getData()._stockage.integer > 0)
+		{
+		  shouldCreate = false;
+		  PipeData	assignCommand(PipeData::DataType::ASSIGN_ORDER);
+		  PipeData	filePath(PipeData::DataType::ASSIGN_ORDER);
+
+		  assignCommand.setInteger((*it_cmd)->getCommandType());
+		  filePath.setString(*it_filepath);
+		  std::cout << "Send cmd" << std::endl;
+		  *(*it) << assignCommand;
+		  *(*it) >> status;
+		  std::cout << "Receive status" << std::endl;
+		  *(*it) << filePath;
+		  *(*it) >> status;
+		  std::cout << "End send command" << std::endl;
+		}
+	      ++it;
+	    }
+	  if (shouldCreate && createNewProcess())
+	    {
+	      PipeData	assignCommand(PipeData::DataType::ASSIGN_ORDER);
+	      PipeData	filePath(PipeData::DataType::ASSIGN_ORDER);
+
+	      assignCommand.setInteger((*it_cmd)->getCommandType());
+	      filePath.setString(*it_filepath);
+	      *_process.back() << assignCommand;
+	      *_process.back() >> status;
+	      *_process.back() << filePath;
+	      *_process.back() >> status;
+	    }
+	  ++it_filepath;
 	}
-  
-      // if (createNewProcess())
-      // 	{
-      // 	  *_process.back() << data;
-      // 	  *_process.back() >> data;
-      // 	}
       ++it_cmd;
     }
-
 }
 
 void	Plazza::Plazza::mainLoop()
-{
-  std::string	line;
-  Parser	parser;
-  std::vector<std::shared_ptr<Command> >	commands;
+  {
+    std::string	line;
+    Parser	parser;
+    std::vector<std::shared_ptr<Command> >	commands;
 
-  while (std::getline(std::cin, line))
-    {
-      try {
-	commands = parser.evalString(line);
-	dispatchCommand(commands);
-	commands.clear();
+    while (std::getline(std::cin, line))
+      {
+	try {
+	  commands = parser.evalString(line);
+	  dispatchCommand(commands);
+	  commands.clear();
+	}
+	catch (std::exception& e)	{
+	  std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
+	}
       }
-      catch (std::exception& e)	{
-	std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
-      }
-    }
-}
+  }
 
-Plazza::Plazza::~Plazza()
-{
-  _process.clear();
-  std::cout << "[Plazza] deleted" << std::endl;
-}
+      Plazza::Plazza::~Plazza()
+      {
+	_process.clear();
+	std::cout << "[Plazza] deleted" << std::endl;
+      }

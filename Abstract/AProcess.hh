@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 14:17:33 2017 Arnaud WURMEL
-// Last update Sat Apr 15 21:35:24 2017 Arnaud WURMEL
+// Last update Tue Apr 18 10:34:36 2017 Arnaud WURMEL
 //
 
 #ifndef APROCESS_HH_
@@ -32,10 +32,8 @@ namespace	Plazza
     virtual pid_t	getPid() const = 0;
 
   public:
-    virtual void	operator<<(const PipeData<std::string>&) = 0;
-    virtual void	operator>>(PipeData<std::string>&) = 0;
-    virtual void	operator<<(const PipeData<int>&) = 0;
-    virtual void	operator>>(PipeData<int>&) = 0;
+    virtual void	operator<<(const PipeData&) = 0;
+    virtual void	operator>>(PipeData&) = 0;
   };
 }
 

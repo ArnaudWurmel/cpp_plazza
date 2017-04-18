@@ -5,17 +5,16 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 20:16:58 2017 Arnaud WURMEL
-// Last update Sat Apr 15 22:19:22 2017 Arnaud WURMEL
+// Last update Tue Apr 18 11:16:15 2017 Arnaud WURMEL
 //
 
 #ifndef APIPEDATA_HH_
 # define APIPEDATA_HH_
 
-# define MAX_DATA 1024
+# define MAX_SIZE 255
 
 namespace	Plazza
 {
-  template<typename T>
   class	PipeData
   {
   public:
@@ -29,49 +28,33 @@ namespace	Plazza
       };
     
   public:
+    union	DataStockage
+    {
+      uint32_t	integer;
+      char	string[MAX_SIZE];
+    };
+  public:
     struct			Data
     {
       DataType			_type;
-      T				_stockage;
+      DataStockage		_stockage;
     };
 
   public:
-    PipeData<T>(DataType const& type)
-    {
-      _data._type = type;
-    }
-    PipeData<T>()
-    {
-
-    }
-    ~PipeData<T>() {}
+    PipeData(DataType const& type);
+    PipeData();
+    ~PipeData();
 
   public:
-    Plazza::PipeData<T>::Data const&	getData() const
-    {
-      return _data;
-    }
-    
-    T const&	getStockage() const
-    {
-      return _data._stockage;
-    }
-
-    DataType const&	getDataType() const
-    {
-      return _data._type;
-    }
+    Data const&		getData() const;
+    DataType const&	getDataType() const;
 
   public:
-    void	setStockage(T const& stockage)
-    {
-      _data._stockage = stockage;
-    }
+    void	setInteger(uint32_t value);
+    void	setString(std::string const&);
+    void	setDataType(DataType const& type);
+    void	setStockage(DataStockage const&);
 
-    void	setDataType(DataType const& type)
-    {
-      _data._type = type;
-    }
 
   private:
     Data	_data;

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:57:48 2017 Arnaud WURMEL
-// Last update Sat Apr 15 22:18:00 2017 Arnaud WURMEL
+// Last update Tue Apr 18 11:17:24 2017 Arnaud WURMEL
 //
 
 #include <fstream>
@@ -35,60 +35,30 @@ bool	Plazza::Pipe::openPipe()
   return true;
 }
 
-void	Plazza::Pipe::operator<<(const PipeData<int>& pipeData)
+void	Plazza::Pipe::operator<<(const PipeData& pipeData)
 {
   std::ofstream	file(_pipeName);
-  PipeData<int>::Data	data;
+  PipeData::Data	data;
 
   if (file)
     {
       memset(&data, 0, sizeof(data));
-      data._stockage = pipeData.getStockage();
+      data._stockage = pipeData.getData()._stockage;
       data._type = pipeData.getDataType();
       file.write(reinterpret_cast<char *>(&data), sizeof(data));
       file.close();
     }
 }
 
-void	Plazza::Pipe::operator>>(PipeData<int>& pipeData)
+void	Plazza::Pipe::operator>>(PipeData& pipeData)
 {
   std::ifstream	file(_pipeName);
-  PipeData<int>::Data	data;
+  PipeData::Data	data;
 
   if (file)
     {
       memset(&data, 0, sizeof(data));
-      file.read(reinterpret_cast<char *>(&data), sizeof(data));      
-      file.close();
-      pipeData.setStockage(data._stockage);
-      pipeData.setDataType(data._type);
-    }
-}
-
-void	Plazza::Pipe::operator<<(const PipeData<std::string>& pipeData)
-{
-  std::ofstream	file(_pipeName);
-  PipeData<std::string>::Data	data;
-
-  if (file)
-    {
-      memset(&data, 0, sizeof(data));
-      data._stockage = pipeData.getStockage();
-      data._type = pipeData.getDataType();
-      file.write(reinterpret_cast<char *>(&data), sizeof(data));
-      file.close();
-    }
-}
-
-void	Plazza::Pipe::operator>>(PipeData<std::string>& pipeData)
-{
-  std::ifstream	file(_pipeName);
-  PipeData<std::string>::Data	data;
-
-  if (file)
-    {
-      memset(&data, 0, sizeof(data));
-      file.read(reinterpret_cast<char *>(&data), sizeof(data));      
+      file.read(reinterpret_cast<char *>(&data), sizeof(data));
       file.close();
       pipeData.setStockage(data._stockage);
       pipeData.setDataType(data._type);
