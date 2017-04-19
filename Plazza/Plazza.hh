@@ -5,11 +5,14 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Wed Apr 12 20:48:00 2017 Arnaud WURMEL
+// Last update Wed Apr 19 13:06:10 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
 # define PLAZZA_HH_
+
+# include <mutex>
+# include <thread>
 
 namespace	Plazza
 {
@@ -23,12 +26,17 @@ namespace	Plazza
     void	mainLoop();
 
   private:
+    void	threadGetData();
+
+  private:
     void	dispatchCommand(const std::vector<std::shared_ptr<Command> >&);
     bool	createNewProcess();
 
   private:
     unsigned int	_maxThreads;
     std::vector<std::shared_ptr<AProcess> >	_process;
+    std::thread		*_threadData;
+    std::mutex		_writer;
   };
 }
 
