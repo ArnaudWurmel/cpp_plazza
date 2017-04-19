@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 18 20:04:24 2017 Arnaud WURMEL
-// Last update Tue Apr 18 20:12:27 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:09:22 2017 Arnaud WURMEL
 //
 
 #include <vector>
@@ -28,9 +28,19 @@ std::string const&	Plazza::ThreadTask::getFilePath() const
   return _file;
 }
 
+std::vector<std::string> const&	Plazza::ThreadTask::getResult() const
+{
+  return _result;
+}
+
 void	Plazza::ThreadTask::setTaskState(Plazza::ThreadTask::TaskState const& state)
 {
   _state = state;
+}
+
+void	Plazza::ThreadTask::setResult(std::vector<std::string> const& result)
+{
+  _result = result;
 }
 
 Plazza::ThreadTask::~ThreadTask() {}

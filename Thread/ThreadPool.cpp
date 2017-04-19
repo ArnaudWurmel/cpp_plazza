@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:25:15 2017 Arnaud WURMEL
-// Last update Wed Apr 19 13:02:57 2017 Arnaud WURMEL
+// Last update Wed Apr 19 17:00:16 2017 Arnaud WURMEL
 //
 
 #include <memory>
@@ -82,6 +82,22 @@ bool	Plazza::ThreadPool::haveAvailableTask() const
   if (_taskQueue.size() > 0)
     return true;
   return false;
+}
+
+unsigned int	Plazza::ThreadPool::haveEndedTask() const
+{
+  return _endedTask.size();
+}
+
+std::shared_ptr<Plazza::ThreadTask>	Plazza::ThreadPool::getAEndedTask()
+{
+  std::shared_ptr<Plazza::ThreadTask>	ret;
+
+  _queueLocker.lock();
+  ret = _endedTask.front();
+  _endedTask.pop();
+  _queueLocker.unlock();
+  return ret;
 }
 
 void	Plazza::ThreadPool::waitForNewCommand()

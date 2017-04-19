@@ -5,10 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:28:23 2017 Arnaud WURMEL
-// Last update Wed Apr 19 12:22:23 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:17:34 2017 Arnaud WURMEL
 //
 
 #include <iostream>
+#include <vector>
+#include "Command.hh"
+#include "Searcher.hh"
 #include "Thread.hh"
 #include "ThreadPool.hh"
 
@@ -22,6 +25,7 @@ void	Plazza::Thread::threadLoop()
 {
   bool	success;
   std::shared_ptr<Plazza::ThreadTask>	ret;
+  Plazza::Searcher	searcher;
 
   _state = Plazza::Thread::ThreadState::WAITING;
   while (1)
@@ -32,7 +36,9 @@ void	Plazza::Thread::threadLoop()
       	  if (success)
 	    {
 	      _state = Plazza::Thread::ThreadState::WORKING;
-	      std::cout << "Asked for " << ret->getFilePath() << std::endl;
+	      ret->setResult(searcher.checkInformation(Command::Information::PHONE_NUMBER,
+						       ret->getFilePath()));
+	      std::cout << ret->getResult().size() << std::endl;
 	      _delegate.insertEndedTask(ret);
 	      ret.reset();
 	    }

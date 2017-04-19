@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Tue Apr 18 10:58:42 2017 Arnaud WURMEL
+// Last update Wed Apr 19 15:12:08 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -40,8 +40,11 @@ namespace	Plazza
   private:
     void	threadLoop();
     bool	createThreads();
+
+  private:
     void	getInfo(PipeData const&);
     void	addCommand(PipeData const&);
+    void	sendData(PipeData const&);
 
   private:
     unsigned int		_maxThread;

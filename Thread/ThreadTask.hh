@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 18 20:02:14 2017 Arnaud WURMEL
-// Last update Tue Apr 18 20:12:05 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:08:53 2017 Arnaud WURMEL
 //
 
 #ifndef THREADTASK_HH_
@@ -31,13 +31,18 @@ namespace	Plazza
   public:
     TaskState const&	getTaskState() const;
     std::string const&	getFilePath() const;
+    std::vector<std::string> const&	getResult() const;
 
   public:
     void	setTaskState(TaskState const&);
+    void	setResult(std::vector<std::string> const&);
 
   private:
     TaskState	_state;
     std::string	_file;
+
+  private:
+    std::vector<std::string>	_result;
   };
 }
 

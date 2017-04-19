@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Wed Apr 19 13:01:19 2017 Arnaud WURMEL
+## Last update Wed Apr 19 18:05:10 2017 Arnaud WURMEL
 ##
 
 CC		=	g++
@@ -22,6 +22,7 @@ SRCS		=	Plazza/Plazza.cpp \
 			Thread/Thread.cpp \
 			Thread/ThreadTask.cpp \
 			Mutex/StackLock.cpp \
+			Searcher/Searcher.cpp \
 			srcs/main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
@@ -44,6 +45,7 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Abstract \
 			-I ./Pipe \
 			-I ./Mutex \
+			-I ./Searcher \
 			-I ./Thread
 
 LDFLAGS		=	-lpthread

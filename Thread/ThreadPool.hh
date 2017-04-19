@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:21:44 2017 Arnaud WURMEL
-// Last update Wed Apr 19 12:19:25 2017 Arnaud WURMEL
+// Last update Wed Apr 19 16:36:05 2017 Arnaud WURMEL
 //
 
 #ifndef THREADPOOL_HH_
@@ -35,6 +35,10 @@ namespace	Plazza
   public:
     bool	haveAvailableTask() const;
     void	waitForNewCommand();
+
+  public:
+    unsigned int	haveEndedTask() const;
+    std::shared_ptr<Plazza::ThreadTask>	getAEndedTask();
 
   private:
     std::vector<std::unique_ptr<Plazza::Thread> >	_threadPool;

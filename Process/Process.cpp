@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 19 12:23:16 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:15:15 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -19,6 +19,7 @@
 #include <utility>
 #include <cstring>
 #include "Thread.hh"
+#include "ThreadTask.hh"
 #include "ThreadPool.hh"
 #include "Command.hh"
 #include "PipeData.hh"
@@ -54,16 +55,32 @@ void	Plazza::Process::runProcess()
   std::cout << "Plazza: Process [" << _pid << "] start running." << std::endl;
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
   functionPtr.insert(std::make_pair(PipeData::DataType::ASSIGN_ORDER, std::bind(&Plazza::Process::addCommand, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_ORDER_STATE, std::bind(&Plazza::Process::sendData, this, std::placeholders::_1)));
   while (true)
     {
       (*_pipe) >> data;
       if (functionPtr.find(data.getDataType()) != functionPtr.end())
-	{
-	  std::cout << "Plazza: Process [" << _pid << "] received data." << std::endl;
-	  functionPtr[data.getDataType()](data);
-	}
+	functionPtr[data.getDataType()](data);
     }
   std::cout << "Plazza: Process [" << _pid << "] exiting." << std::endl;
+}
+
+void	Plazza::Process::sendData(PipeData const& pipeData)
+{
+  PipeData	data(PipeData::DataType::SEND_DATA);
+
+  if (_pool->haveEndedTask() > 0)
+    {
+      std::shared_ptr<Plazza::ThreadTask> ret = _pool->getAEndedTask();
+      data.setInteger(ret->getResult().size());
+      *_pipe << data;
+    }
+  else
+    {
+      PipeData	failure(PipeData::DataType::FAILURE);
+
+      *_pipe << failure;
+    }
 }
 
 void	Plazza::Process::addCommand(PipeData const& pipeData)

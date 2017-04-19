@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Wed Apr 19 13:06:10 2017 Arnaud WURMEL
+// Last update Wed Apr 19 15:02:52 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -35,7 +35,7 @@ namespace	Plazza
   private:
     unsigned int	_maxThreads;
     std::vector<std::shared_ptr<AProcess> >	_process;
-    std::thread		*_threadData;
+    std::unique_ptr<std::thread>		_threadData;
     std::mutex		_writer;
   };
 }

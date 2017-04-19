@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 19 13:05:56 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:16:24 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -29,6 +29,8 @@
 Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
 {
   std::cout << "[Plazza] instancied" << std::endl;
+  _threadData = std::unique_ptr<std::thread>(new std::thread(&Plazza::threadGetData, this));
+  _threadData->detach();
 }
 
 bool	Plazza::Plazza::createNewProcess()
@@ -108,13 +110,23 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 
 void	Plazza::Plazza::threadGetData()
 {
+  PipeData	getter(PipeData::DataType::GET_ORDER_STATE);
+  PipeData	data;
+  std::vector<std::shared_ptr<AProcess> >::iterator	it;
+
   while (1)
     {
-      std::cout << "Start locking mutex" << std::endl;
       _writer.lock();
-      std::cout << "Mutex acquired" << std::endl;
+      it = _process.begin();
+      while (it != _process.end())
+      	{
+	  *(*it) << getter;
+	  *(*it) >> data;
+	  if (data.getDataType() != PipeData::DataType::FAILURE)
+	    std::cout << "Ended task size : " << data.getData()._stockage.integer << std::endl;
+	  ++it;
+      	}
       _writer.unlock();
-      std::cout << "Mutex unlocked" << std::endl;
     }
 }
 
@@ -139,6 +151,7 @@ void	Plazza::Plazza::mainLoop()
 
 Plazza::Plazza::~Plazza()
 {
+  _threadData.reset();
   _process.clear();
   std::cout << "[Plazza] deleted" << std::endl;
 }
