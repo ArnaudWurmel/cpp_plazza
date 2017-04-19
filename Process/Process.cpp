@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Tue Apr 18 21:05:31 2017 Arnaud WURMEL
+// Last update Wed Apr 19 12:23:16 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -93,7 +93,6 @@ void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
 {
   Plazza::PipeData	send;
 
-  std::cout << "Info received" << std::endl;
   if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_PROCESS_INFO)
     {
       send.setInteger(_pool->getFreeThread());

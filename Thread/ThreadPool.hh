@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:21:44 2017 Arnaud WURMEL
-// Last update Tue Apr 18 21:08:55 2017 Arnaud WURMEL
+// Last update Wed Apr 19 12:19:25 2017 Arnaud WURMEL
 //
 
 #ifndef THREADPOOL_HH_
@@ -30,6 +30,7 @@ namespace	Plazza
   public:
     void	insertNewTask(std::shared_ptr<Plazza::ThreadTask> const&);
     std::shared_ptr<Plazza::ThreadTask>	getATask(bool&);
+    void	insertEndedTask(std::shared_ptr<Plazza::ThreadTask> const&);
 
   public:
     bool	haveAvailableTask() const;

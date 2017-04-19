@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Tue Apr 18 13:10:52 2017 Arnaud WURMEL
+// Last update Wed Apr 19 12:35:48 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -69,10 +69,8 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 	  it = _process.begin();
 	  while (shouldCreate && it != _process.end())
 	    {
-	      std::cout << "Getting status" << std::endl;
 	      *(*it) << data;
 	      *(*it) >> status;
-	      std::cout << "Getted status" << std::endl;
 	      if (status.getData()._stockage.integer > 0)
 		{
 		  shouldCreate = false;
@@ -81,13 +79,10 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 
 		  assignCommand.setInteger((*it_cmd)->getCommandType());
 		  filePath.setString(*it_filepath);
-		  std::cout << "Send cmd" << std::endl;
 		  *(*it) << assignCommand;
 		  *(*it) >> status;
-		  std::cout << "Receive status" << std::endl;
 		  *(*it) << filePath;
 		  *(*it) >> status;
-		  std::cout << "End send command" << std::endl;
 		}
 	      ++it;
 	    }
@@ -110,26 +105,26 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 }
 
 void	Plazza::Plazza::mainLoop()
-  {
-    std::string	line;
-    Parser	parser;
-    std::vector<std::shared_ptr<Command> >	commands;
+{
+  std::string	line;
+  Parser	parser;
+  std::vector<std::shared_ptr<Command> >	commands;
 
-    while (std::getline(std::cin, line))
-      {
-	try {
-	  commands = parser.evalString(line);
-	  dispatchCommand(commands);
-	  commands.clear();
-	}
-	catch (std::exception& e)	{
-	  std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
-	}
+  while (std::getline(std::cin, line))
+    {
+      try {
+	commands = parser.evalString(line);
+	dispatchCommand(commands);
+	commands.clear();
       }
-  }
+      catch (std::exception& e)	{
+	std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
+      }
+    }
+}
 
-      Plazza::Plazza::~Plazza()
-      {
-	_process.clear();
-	std::cout << "[Plazza] deleted" << std::endl;
-      }
+Plazza::Plazza::~Plazza()
+{
+  _process.clear();
+  std::cout << "[Plazza] deleted" << std::endl;
+}

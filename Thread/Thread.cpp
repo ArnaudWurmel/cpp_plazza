@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:28:23 2017 Arnaud WURMEL
-// Last update Tue Apr 18 21:32:11 2017 Arnaud WURMEL
+// Last update Wed Apr 19 12:22:23 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -33,6 +33,8 @@ void	Plazza::Thread::threadLoop()
 	    {
 	      _state = Plazza::Thread::ThreadState::WORKING;
 	      std::cout << "Asked for " << ret->getFilePath() << std::endl;
+	      _delegate.insertEndedTask(ret);
+	      ret.reset();
 	    }
       	}
       _state = Plazza::Thread::ThreadState::WAITING;

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:25:15 2017 Arnaud WURMEL
-// Last update Tue Apr 18 21:30:43 2017 Arnaud WURMEL
+// Last update Wed Apr 19 12:20:26 2017 Arnaud WURMEL
 //
 
 #include <memory>
@@ -61,6 +61,13 @@ std::shared_ptr<Plazza::ThreadTask>	Plazza::ThreadPool::getATask(bool& success)
       _queueLocker.unlock();
     }
   return ret;
+}
+
+void	Plazza::ThreadPool::insertEndedTask(std::shared_ptr<Plazza::ThreadTask> const& task)
+{
+  _queueLocker.lock();
+  _endedTask.push(task);
+  _queueLocker.unlock();
 }
 
 void	Plazza::ThreadPool::insertNewTask(std::shared_ptr<Plazza::ThreadTask> const& task)
