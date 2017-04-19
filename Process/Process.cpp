@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 19 18:15:15 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:21:42 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -69,7 +69,8 @@ void	Plazza::Process::sendData(PipeData const& pipeData)
 {
   PipeData	data(PipeData::DataType::SEND_DATA);
 
-  if (_pool->haveEndedTask() > 0)
+  if (pipeData.getDataType() == PipeData::DataType::GET_ORDER_STATE &&
+      _pool->haveEndedTask() > 0)
     {
       std::shared_ptr<Plazza::ThreadTask> ret = _pool->getAEndedTask();
       data.setInteger(ret->getResult().size());
@@ -88,12 +89,15 @@ void	Plazza::Process::addCommand(PipeData const& pipeData)
   PipeData	data(PipeData::DataType::UNUSED);
   PipeData	separator(PipeData::DataType::UNUSED);
 
-  *_pipe << separator;
-  *_pipe >> data;
-  std::shared_ptr<Plazza::ThreadTask>	ptr(new Plazza::ThreadTask(data.getData()._stockage.string));
+  if (pipeData.getDataType() == PipeData::DataType::ASSIGN_ORDER)
+    {
+      *_pipe << separator;
+      *_pipe >> data;
+      std::shared_ptr<Plazza::ThreadTask>	ptr(new Plazza::ThreadTask(data.getData()._stockage.string));
 
-  _pool->insertNewTask(ptr);
-  *_pipe << separator;
+      _pool->insertNewTask(ptr);
+      *_pipe << separator;
+    }
 }
 
 void	Plazza::Process::assignPipe(std::shared_ptr<Plazza::APipe> const& pipe)
