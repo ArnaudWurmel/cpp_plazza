@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:28:23 2017 Arnaud WURMEL
-// Last update Wed Apr 19 18:17:34 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:38:34 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -38,7 +38,6 @@ void	Plazza::Thread::threadLoop()
 	      _state = Plazza::Thread::ThreadState::WORKING;
 	      ret->setResult(searcher.checkInformation(Command::Information::PHONE_NUMBER,
 						       ret->getFilePath()));
-	      std::cout << ret->getResult().size() << std::endl;
 	      _delegate.insertEndedTask(ret);
 	      ret.reset();
 	    }

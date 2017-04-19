@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 19 18:16:24 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:38:13 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -111,7 +111,9 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 void	Plazza::Plazza::threadGetData()
 {
   PipeData	getter(PipeData::DataType::GET_ORDER_STATE);
+  PipeData	separator(PipeData::DataType::UNUSED);
   PipeData	data;
+  PipeData	result;
   std::vector<std::shared_ptr<AProcess> >::iterator	it;
 
   while (1)
@@ -123,7 +125,17 @@ void	Plazza::Plazza::threadGetData()
 	  *(*it) << getter;
 	  *(*it) >> data;
 	  if (data.getDataType() != PipeData::DataType::FAILURE)
-	    std::cout << "Ended task size : " << data.getData()._stockage.integer << std::endl;
+	    {
+	      unsigned int nb;
+	      
+	      *(*it) << separator;
+	      for (nb = 0; nb < data.getData()._stockage.integer; nb++)
+	      	{
+	      	  *(*it) >> result;
+	      	  std::cout << result.getData()._stockage.string << std::endl;
+	      	  *(*it) << separator;
+	      	}
+	    }
 	  ++it;
       	}
       _writer.unlock();

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 19 18:21:42 2017 Arnaud WURMEL
+// Last update Wed Apr 19 18:36:57 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -68,6 +68,7 @@ void	Plazza::Process::runProcess()
 void	Plazza::Process::sendData(PipeData const& pipeData)
 {
   PipeData	data(PipeData::DataType::SEND_DATA);
+  PipeData	result(PipeData::DataType::UNUSED);
 
   if (pipeData.getDataType() == PipeData::DataType::GET_ORDER_STATE &&
       _pool->haveEndedTask() > 0)
@@ -75,6 +76,16 @@ void	Plazza::Process::sendData(PipeData const& pipeData)
       std::shared_ptr<Plazza::ThreadTask> ret = _pool->getAEndedTask();
       data.setInteger(ret->getResult().size());
       *_pipe << data;
+      std::vector<std::string>::const_iterator	it;
+      *_pipe >> result;
+      it = ret->getResult().begin();
+      while (it != ret->getResult().end())
+      	{
+      	  result.setString(*it);
+      	  *_pipe << result;
+      	  *_pipe >> result;
+      	  ++it;
+      	}
     }
   else
     {
