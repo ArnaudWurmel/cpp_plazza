@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 19 12:35:48 2017 Arnaud WURMEL
+// Last update Wed Apr 19 13:05:56 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -24,6 +24,7 @@
 #include "AProcess.hh"
 #include "Process.hh"
 #include "Plazza.hh"
+#include "StackLock.hh"
 
 Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
 {
@@ -51,6 +52,7 @@ bool	Plazza::Plazza::createNewProcess()
 
 void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
 {
+  StackLock	locker(_writer);
   PipeData	data(PipeData::DataType::GET_PROCESS_INFO);
   PipeData	status;
   bool		shouldCreate;
@@ -101,6 +103,18 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 	  ++it_filepath;
 	}
       ++it_cmd;
+    }
+}
+
+void	Plazza::Plazza::threadGetData()
+{
+  while (1)
+    {
+      std::cout << "Start locking mutex" << std::endl;
+      _writer.lock();
+      std::cout << "Mutex acquired" << std::endl;
+      _writer.unlock();
+      std::cout << "Mutex unlocked" << std::endl;
     }
 }
 

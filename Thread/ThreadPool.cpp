@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:25:15 2017 Arnaud WURMEL
-// Last update Wed Apr 19 12:20:26 2017 Arnaud WURMEL
+// Last update Wed Apr 19 13:02:57 2017 Arnaud WURMEL
 //
 
 #include <memory>
@@ -41,7 +41,6 @@ unsigned int	Plazza::ThreadPool::getFreeThread() const
 	++freed;
       ++it;
     }
-  std::cout << "Freed : " << freed << std::endl;
   return freed;
 }
 
