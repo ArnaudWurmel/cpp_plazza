@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 19 21:16:08 2017 Arnaud WURMEL
+// Last update Wed Apr 19 21:32:18 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -152,16 +152,19 @@ void	Plazza::Plazza::mainLoop()
   Parser	parser;
   std::vector<std::shared_ptr<Command> >	commands;
 
-  while (std::getline(std::cin, line) || _process.size() > 0)
+  while (std::getline(std::cin, line))
     {
-      try {
-	commands = parser.evalString(line);
-	dispatchCommand(commands);
-	commands.clear();
-      }
-      catch (std::exception& e)	{
-	std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
-      }
+      if (line.size() > 0)
+	{
+	  try {
+	    commands = parser.evalString(line);
+	    dispatchCommand(commands);
+	    commands.clear();
+	  }
+	  catch (std::exception& e)	{
+	    std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
+	  }
+	}
     }
 }
 

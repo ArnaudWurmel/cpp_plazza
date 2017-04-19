@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Wed Apr 19 17:11:42 2017 baptiste
+// Last update Wed Apr 19 21:36:00 2017 Arnaud WURMEL
 //
 
 #include <regex>
@@ -43,7 +43,7 @@ void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::strin
 
 void	Plazza::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
 {
-  std::regex	check_ip("(^[2][5][0-5].|^[2][0-4][0-9].|^[1][0-9][0-9].|^[0-9][0-9].|^[0-9].)([2][0-5][0-5].|[2][0-4][0-9].|[1][0-9][0-9].|[0-9][0-9].|[0-9].)([2][0-5][0-5].|[2][0-4][0-9].|[1][0-9][0-9].|[0-9][0-9].|[0-9].)([2][0-5][0-5]|[2][0-4][0-9]|[1][0-9][0-9]|[0-9][0-9]|[0-9])");
+  std::regex	check_ip("(\\d{1,3}(\\.\\d{1,3}){3})");
   std::smatch	ip;
 
   while (std::regex_search(str, ip, check_ip))
