@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:56:28 2017 Arnaud WURMEL
-// Last update Mon Apr 10 21:19:00 2017 Arnaud WURMEL
+// Last update Wed Apr 19 12:45:08 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -111,10 +111,13 @@ std::vector<std::shared_ptr<Plazza::Command> >	Plazza::Parser::evalString(std::s
 	    res.push_back(cmd);
 	}
     }
-  epurStr(input);
-  std::shared_ptr<Plazza::Command> cmd = createToken(input);
-  if (cmd->getFilePaths().size() > 0)
-    res.push_back(cmd);
+  if (input.size() > 0)
+    {
+      epurStr(input);
+      std::shared_ptr<Plazza::Command> cmd = createToken(input);
+      if (cmd->getFilePaths().size() > 0)
+	res.push_back(cmd);
+    }
   return res;
 }
 

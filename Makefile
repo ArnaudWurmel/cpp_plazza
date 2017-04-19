@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Mon Apr 17 19:31:31 2017 Arnaud WURMEL
+## Last update Tue Apr 18 20:08:13 2017 Arnaud WURMEL
 ##
 
 CC		=	g++
@@ -14,12 +14,13 @@ RM		=	rm -f
 SRCS		=	Plazza/Plazza.cpp \
 			Errors/Errors.cpp \
 			Process/Process.cpp \
-			Process/ThreadPool.cpp \
-			Process/Thread.cpp \
 			Parser/Parser.cpp \
 			Parser/Command.cpp \
 			Pipe/Pipe.cpp \
 			Pipe/PipeData.cpp \
+			Thread/ThreadPool.cpp \
+			Thread/Thread.cpp \
+			Thread/ThreadTask.cpp \
 			srcs/main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
@@ -40,7 +41,8 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Process \
 			-I ./Parser \
 			-I ./Abstract \
-			-I ./Pipe
+			-I ./Pipe \
+			-I ./Thread
 
 LDFLAGS		=	-lpthread
 
