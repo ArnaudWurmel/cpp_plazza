@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 19 18:36:57 2017 Arnaud WURMEL
+// Last update Wed Apr 19 21:12:49 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -18,10 +18,10 @@
 #include <functional>
 #include <utility>
 #include <cstring>
+#include "Command.hh"
 #include "Thread.hh"
 #include "ThreadTask.hh"
 #include "ThreadPool.hh"
-#include "Command.hh"
 #include "PipeData.hh"
 #include "APipe.hh"
 #include "AProcess.hh"
@@ -68,6 +68,7 @@ void	Plazza::Process::runProcess()
 void	Plazza::Process::sendData(PipeData const& pipeData)
 {
   PipeData	data(PipeData::DataType::SEND_DATA);
+  PipeData	separator(PipeData::DataType::UNUSED);
   PipeData	result(PipeData::DataType::UNUSED);
 
   if (pipeData.getDataType() == PipeData::DataType::GET_ORDER_STATE &&
@@ -86,6 +87,7 @@ void	Plazza::Process::sendData(PipeData const& pipeData)
       	  *_pipe >> result;
       	  ++it;
       	}
+      *_pipe << separator;
     }
   else
     {
@@ -104,7 +106,7 @@ void	Plazza::Process::addCommand(PipeData const& pipeData)
     {
       *_pipe << separator;
       *_pipe >> data;
-      std::shared_ptr<Plazza::ThreadTask>	ptr(new Plazza::ThreadTask(data.getData()._stockage.string));
+      std::shared_ptr<Plazza::ThreadTask>	ptr(new Plazza::ThreadTask(data.getData()._stockage.string, static_cast<Command::Information>(pipeData.getData()._stockage.integer)));
 
       _pool->insertNewTask(ptr);
       *_pipe << separator;

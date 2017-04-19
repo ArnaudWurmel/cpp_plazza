@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 18 20:04:24 2017 Arnaud WURMEL
-// Last update Wed Apr 19 18:09:22 2017 Arnaud WURMEL
+// Last update Wed Apr 19 20:48:08 2017 Arnaud WURMEL
 //
 
 #include <vector>
@@ -13,7 +13,7 @@
 #include "Command.hh"
 #include "ThreadTask.hh"
 
-Plazza::ThreadTask::ThreadTask(std::string const& file) : _file(file)
+Plazza::ThreadTask::ThreadTask(std::string const& file, Command::Information const& research) : _file(file), _research(research)
 {
   _state = NotStarted;
 }
@@ -21,6 +21,11 @@ Plazza::ThreadTask::ThreadTask(std::string const& file) : _file(file)
 Plazza::ThreadTask::TaskState const&	Plazza::ThreadTask::getTaskState() const
 {
   return _state;
+}
+
+Plazza::Command::Information const&	Plazza::ThreadTask::getResearch() const
+{
+  return _research;
 }
 
 std::string const&	Plazza::ThreadTask::getFilePath() const

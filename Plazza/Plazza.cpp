@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 19 18:38:13 2017 Arnaud WURMEL
+// Last update Wed Apr 19 21:16:08 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -116,7 +116,7 @@ void	Plazza::Plazza::threadGetData()
   PipeData	result;
   std::vector<std::shared_ptr<AProcess> >::iterator	it;
 
-  while (1)
+  while (true)
     {
       _writer.lock();
       it = _process.begin();
@@ -131,10 +131,14 @@ void	Plazza::Plazza::threadGetData()
 	      *(*it) << separator;
 	      for (nb = 0; nb < data.getData()._stockage.integer; nb++)
 	      	{
+		  std::cout << "Wait for reading into pipe" << std::endl;
 	      	  *(*it) >> result;
 	      	  std::cout << result.getData()._stockage.string << std::endl;
-	      	  *(*it) << separator;
+		  *(*it) << separator;
+		  std::cout << "line getted" << std::endl;
 	      	}
+	      *(*it) >> separator;
+	      std::cout << "Transmission OK" << std::endl;
 	    }
 	  ++it;
       	}
@@ -148,7 +152,7 @@ void	Plazza::Plazza::mainLoop()
   Parser	parser;
   std::vector<std::shared_ptr<Command> >	commands;
 
-  while (std::getline(std::cin, line))
+  while (std::getline(std::cin, line) || _process.size() > 0)
     {
       try {
 	commands = parser.evalString(line);
