@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 12:46:29 2017 Arnaud WURMEL
-// Last update Tue Apr 11 20:41:58 2017 Arnaud WURMEL
+// Last update Thu Apr 20 09:49:20 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -33,7 +33,7 @@ int	main(int ac, char **av)
   if (ac != 2 || check_arg(av[1]) == false)
     {
       std::cerr << "Usage:" << std::endl;
-      std::cout<< av[0] << " [NB_THREAD_BY_PROCESS > 0]" << std::endl;
+      std::cerr << av[0] << " [NB_THREAD_BY_PROCESS > 0]" << std::endl;
       return 1;
     }
   plazza = std::unique_ptr<Plazza::Plazza>(new Plazza::Plazza(std::stoi(av[1], nullptr)));

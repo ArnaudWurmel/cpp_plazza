@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 19 21:25:21 2017 Arnaud WURMEL
+// Last update Thu Apr 20 09:49:03 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -18,6 +18,7 @@
 #include <functional>
 #include <utility>
 #include <cstring>
+#include "Logger.hh"
 #include "Command.hh"
 #include "Thread.hh"
 #include "ThreadTask.hh"
@@ -39,11 +40,11 @@ bool	Plazza::Process::createProcess()
   _pid = fork();
   if (_pid == -1)
     {
-      std::cout << "Plazza: Failed to add new process." << std::endl;
+      std::cerr << "Plazza: Failed to add new process." << std::endl;
       return false;
     }
   if (_pid != 0)
-    std::cout << "Plazza: Process [" << _pid << "] created." << std::endl;
+    Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] created.");
   return true;
 }
 void	Plazza::Process::runProcess()
@@ -52,7 +53,7 @@ void	Plazza::Process::runProcess()
   std::map<PipeData::DataType, std::function<void (PipeData const&)> > functionPtr;
 
   _pool = std::unique_ptr<Plazza::ThreadPool>(new Plazza::ThreadPool(_maxThread));
-  std::cout << "Plazza: Process [" << _pid << "] start running." << std::endl;
+  Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] start running.");
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
   functionPtr.insert(std::make_pair(PipeData::DataType::ASSIGN_ORDER, std::bind(&Plazza::Process::addCommand, this, std::placeholders::_1)));
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_ORDER_STATE, std::bind(&Plazza::Process::sendData, this, std::placeholders::_1)));
@@ -62,7 +63,7 @@ void	Plazza::Process::runProcess()
       if (functionPtr.find(data.getDataType()) != functionPtr.end())
 	functionPtr[data.getDataType()](data);
     }
-  std::cout << "Plazza: Process [" << _pid << "] exiting." << std::endl;
+  Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] exiting.");
 }
 
 void	Plazza::Process::sendData(PipeData const& pipeData)
@@ -146,7 +147,7 @@ void	Plazza::Process::operator>>(Plazza::PipeData& pipeData)
 
 Plazza::Process::~Process()
 {
-  std::cout << "Process[" << _pid << "] Killed." << std::endl;
+  Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] Killed.");
   if (_pid > 0)
     kill(_pid, SIGQUIT);
 }

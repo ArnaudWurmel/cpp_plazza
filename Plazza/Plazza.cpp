@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 19 21:32:18 2017 Arnaud WURMEL
+// Last update Thu Apr 20 09:44:13 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <exception>
+#include "Logger.hh"
 #include "Command.hh"
 #include "Parser.hh"
 #include "PipeData.hh"
@@ -28,7 +29,7 @@
 
 Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
 {
-  std::cout << "[Plazza] instancied" << std::endl;
+  Logger::addLog("[Plazza] instancied");
   _threadData = std::unique_ptr<std::thread>(new std::thread(&Plazza::threadGetData, this));
   _threadData->detach();
 }
@@ -131,14 +132,11 @@ void	Plazza::Plazza::threadGetData()
 	      *(*it) << separator;
 	      for (nb = 0; nb < data.getData()._stockage.integer; nb++)
 	      	{
-		  std::cout << "Wait for reading into pipe" << std::endl;
 	      	  *(*it) >> result;
 	      	  std::cout << result.getData()._stockage.string << std::endl;
 		  *(*it) << separator;
-		  std::cout << "line getted" << std::endl;
 	      	}
 	      *(*it) >> separator;
-	      std::cout << "Transmission OK" << std::endl;
 	    }
 	  ++it;
       	}
@@ -172,5 +170,5 @@ Plazza::Plazza::~Plazza()
 {
   _threadData.reset();
   _process.clear();
-  std::cout << "[Plazza] deleted" << std::endl;
+  Logger::addLog("[Plazza] deleted");
 }
