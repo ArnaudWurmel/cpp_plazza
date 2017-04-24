@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Thu Apr 20 09:43:18 2017 Arnaud WURMEL
+// Last update Mon Apr 24 16:10:08 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -30,6 +30,8 @@ namespace	Plazza
 
   private:
     void	dispatchCommand(const std::vector<std::shared_ptr<Command> >&);
+    void	assignCommand(std::string const&, Command::Information const&,
+			      std::shared_ptr<AProcess>&);
     bool	createNewProcess();
 
   private:

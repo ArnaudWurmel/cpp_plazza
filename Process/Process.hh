@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:53:36 2017 Arnaud WURMEL
+// Last update Mon Apr 24 15:23:30 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -47,6 +47,7 @@ namespace	Plazza
     void	sendData(PipeData const&);
 
   private:
+    bool			_isAlive;
     unsigned int		_maxThread;
     pid_t			_pid;
     std::shared_ptr<APipe>	_in;

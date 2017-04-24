@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:55:08 2017 Arnaud WURMEL
+// Last update Mon Apr 24 15:24:01 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -63,6 +63,7 @@ void	Plazza::Process::runProcess()
   PipeData	data;
   std::map<PipeData::DataType, std::function<void (PipeData const&)> > functionPtr;
 
+  _isAlive = true;
   _pool = std::unique_ptr<Plazza::ThreadPool>(new Plazza::ThreadPool(_maxThread));
   Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] start running.");
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
@@ -136,7 +137,10 @@ void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
 
   if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_PROCESS_INFO)
     {
-      send.setInteger(_pool->getFreeThread());
+      if (_isAlive)
+	send.setInteger(_pool->getFreeThread());
+      else
+	send.setInteger(-1);
       *_out << send;
     }
 }

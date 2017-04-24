@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 20:16:58 2017 Arnaud WURMEL
-// Last update Wed Apr 19 15:11:10 2017 Arnaud WURMEL
+// Last update Mon Apr 24 16:17:59 2017 Arnaud WURMEL
 //
 
 #ifndef APIPEDATA_HH_
@@ -31,7 +31,7 @@ namespace	Plazza
   public:
     union	DataStockage
     {
-      uint32_t	integer;
+      int32_t	integer;
       char	string[MAX_SIZE];
     };
   public:

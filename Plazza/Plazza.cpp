@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:33:36 2017 Arnaud WURMEL
+// Last update Mon Apr 24 16:18:34 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -46,19 +46,23 @@ bool	Plazza::Plazza::createNewProcess()
     std::cout << e.what() << std::endl;
     return false;
   }
-  // std::shared_ptr<APipe>	pipe(new Pipe("/tmp/" + std::to_string(_process.size()) + ".fifo"));
-
-  // if (pipe->openPipe() == false ||
-  //     p->createProcess() == false)
-  //   {
-  //     delete p;
-  //     return false;
-  //   }
-  // p->assignPipe(pipe);
-  // if (p->getPid() == 0)
-  //   p->runProcess();
-  // else
   return true;
+}
+
+void	Plazza::Plazza::assignCommand(std::string const& filepath,
+				      Command::Information const& information,
+				      std::shared_ptr<AProcess>& process)
+{
+  PipeData	assignCommand(PipeData::DataType::ASSIGN_ORDER);
+  PipeData	filePath(PipeData::DataType::ASSIGN_ORDER);
+  PipeData	status;
+  
+  assignCommand.setInteger(information);
+  filePath.setString(filepath);
+  *process << assignCommand;
+  *process >> status;
+  *process << filePath;
+  *process >> status;
 }
 
 void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
@@ -87,30 +91,14 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 	      if (status.getData()._stockage.integer > 0)
 		{
 		  shouldCreate = false;
-		  PipeData	assignCommand(PipeData::DataType::ASSIGN_ORDER);
-		  PipeData	filePath(PipeData::DataType::ASSIGN_ORDER);
-
-		  assignCommand.setInteger((*it_cmd)->getCommandType());
-		  filePath.setString(*it_filepath);
-		  *(*it) << assignCommand;
-		  *(*it) >> status;
-		  *(*it) << filePath;
-		  *(*it) >> status;
+		  assignCommand(*it_filepath, (*it_cmd)->getCommandType(), *it);
 		}
+	      else if (status.getData()._stockage.integer == -1)
+		_process.erase(it);
 	      ++it;
 	    }
 	  if (shouldCreate && createNewProcess())
-	    {
-	      PipeData	assignCommand(PipeData::DataType::ASSIGN_ORDER);
-	      PipeData	filePath(PipeData::DataType::ASSIGN_ORDER);
-
-	      assignCommand.setInteger((*it_cmd)->getCommandType());
-	      filePath.setString(*it_filepath);
-	      *_process.back() << assignCommand;
-	      *_process.back() >> status;
-	      *_process.back() << filePath;
-	      *_process.back() >> status;
-	    }
+	    assignCommand(*it_filepath, (*it_cmd)->getCommandType(), _process.back());
 	  ++it_filepath;
 	}
       ++it_cmd;
@@ -135,7 +123,7 @@ void	Plazza::Plazza::threadGetData()
 	  *(*it) >> data;
 	  if (data.getDataType() != PipeData::DataType::FAILURE)
 	    {
-	      unsigned int nb;
+	      int nb;
 	      
 	      *(*it) << separator;
 	      for (nb = 0; nb < data.getData()._stockage.integer; nb++)
