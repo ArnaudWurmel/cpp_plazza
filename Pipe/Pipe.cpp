@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:57:48 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:25:07 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:51:29 2017 Arnaud WURMEL
 //
 
 #include <fstream>
@@ -32,34 +32,32 @@ bool	Plazza::Pipe::openPipe()
 {
   if (mkfifo(_pipeName.c_str(), S_IWUSR | S_IRUSR) == -1)
     return false;
+  if ((_fd = open(_pipeName.c_str(), O_RDWR)) == -1)
+    return false;
   return true;
 }
 
 void	Plazza::Pipe::operator<<(const PipeData& pipeData)
 {
-  std::ofstream	file(_pipeName);
   PipeData::Data	data;
 
-  if (file)
+  if (_fd != -1)
     {
       memset(&data, 0, sizeof(data));
       data._stockage = pipeData.getData()._stockage;
       data._type = pipeData.getDataType();
-      file.write(reinterpret_cast<char *>(&data), sizeof(data));
-      file.close();
+      write(_fd, &data, sizeof(data));
     }
 }
 
 void	Plazza::Pipe::operator>>(PipeData& pipeData)
 {
-  std::ifstream	file(_pipeName);
   PipeData::Data	data;
 
-  if (file)
+  if (_fd != -1)
     {
       memset(&data, 0, sizeof(data));
-      file.read(reinterpret_cast<char *>(&data), sizeof(data));
-      file.close();
+      read(_fd, &data, sizeof(data));
       pipeData.setStockage(data._stockage);
       pipeData.setDataType(data._type);
     }
@@ -67,5 +65,6 @@ void	Plazza::Pipe::operator>>(PipeData& pipeData)
 
 Plazza::Pipe::~Pipe()
 {
+  close(_fd);
   unlink(_pipeName.c_str());
 }

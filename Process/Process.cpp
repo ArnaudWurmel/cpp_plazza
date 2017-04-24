@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:38:26 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:55:08 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -39,8 +39,10 @@ Plazza::Process::Process(unsigned int maxThread)
   _maxThread = maxThread;
 
   std::string	pipePath = "/tmp/" + std::to_string(Plazza::Process::processId);
-  _pipe = std::shared_ptr<APipe>(new Pipe(pipePath + ".fifo"));
-  _pipe->openPipe();
+  _in = std::shared_ptr<APipe>(new Pipe(pipePath + ".in.fifo"));
+  _in->openPipe();
+  _out = std::shared_ptr<APipe>(new Pipe(pipePath + ".out.fifo"));
+  _out->openPipe();
   _pid = fork();
   if (_pid == -1)
     {
@@ -68,7 +70,7 @@ void	Plazza::Process::runProcess()
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_ORDER_STATE, std::bind(&Plazza::Process::sendData, this, std::placeholders::_1)));
   while (true)
     {
-      (*_pipe) >> data;
+      *_in >> data;
       if (functionPtr.find(data.getDataType()) != functionPtr.end())
 	functionPtr[data.getDataType()](data);
     }
@@ -86,24 +88,24 @@ void	Plazza::Process::sendData(PipeData const& pipeData)
     {
       std::shared_ptr<Plazza::ThreadTask> ret = _pool->getAEndedTask();
       data.setInteger(ret->getResult().size());
-      *_pipe << data;
+      *_out << data;
       std::vector<std::string>::const_iterator	it;
-      *_pipe >> result;
+      *_in >> result;
       it = ret->getResult().begin();
       while (it != ret->getResult().end())
       	{
       	  result.setString(*it);
-      	  *_pipe << result;
-      	  *_pipe >> result;
+      	  *_out << result;
+      	  *_in >> result;
       	  ++it;
       	}
-      *_pipe << separator;
+      *_out << separator;
     }
   else
     {
       PipeData	failure(PipeData::DataType::FAILURE);
 
-      *_pipe << failure;
+      *_out << failure;
     }
 }
 
@@ -114,12 +116,12 @@ void	Plazza::Process::addCommand(PipeData const& pipeData)
 
   if (pipeData.getDataType() == PipeData::DataType::ASSIGN_ORDER)
     {
-      *_pipe << separator;
-      *_pipe >> data;
+      *_out << separator;
+      *_in >> data;
       std::shared_ptr<Plazza::ThreadTask>	ptr(new Plazza::ThreadTask(data.getData()._stockage.string, static_cast<Command::Information>(pipeData.getData()._stockage.integer)));
 
       _pool->insertNewTask(ptr);
-      *_pipe << separator;
+      *_out << separator;
     }
 }
 
@@ -135,18 +137,18 @@ void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
   if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_PROCESS_INFO)
     {
       send.setInteger(_pool->getFreeThread());
-      *_pipe << send;
+      *_out << send;
     }
 }
 
 void	Plazza::Process::operator<<(Plazza::PipeData const& pipeData)
 {
-  *_pipe << pipeData;
+  *_in << pipeData;
 }
 
 void	Plazza::Process::operator>>(Plazza::PipeData& pipeData)
 {
-  *_pipe >> pipeData;
+  *_out >> pipeData;
 }
 
 Plazza::Process::~Process()

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:30:23 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:53:36 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -49,7 +49,8 @@ namespace	Plazza
   private:
     unsigned int		_maxThread;
     pid_t			_pid;
-    std::shared_ptr<APipe>	_pipe;
+    std::shared_ptr<APipe>	_in;
+    std::shared_ptr<APipe>	_out;
     std::unique_ptr<ThreadPool>	_pool;
   };
 }
