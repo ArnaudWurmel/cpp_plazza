@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Thu Apr 20 09:49:03 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:38:26 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -25,28 +25,37 @@
 #include "ThreadPool.hh"
 #include "PipeData.hh"
 #include "APipe.hh"
+#include "Pipe.hh"
 #include "AProcess.hh"
 #include "Process.hh"
 #include "ThreadTask.hh"
+#include "Errors.hh"
+
+unsigned int	Plazza::Process::processId = 0;
 
 Plazza::Process::Process(unsigned int maxThread)
 {
   _pid = -1;
   _maxThread = maxThread;
-}
 
-bool	Plazza::Process::createProcess()
-{
+  std::string	pipePath = "/tmp/" + std::to_string(Plazza::Process::processId);
+  _pipe = std::shared_ptr<APipe>(new Pipe(pipePath + ".fifo"));
+  _pipe->openPipe();
   _pid = fork();
   if (_pid == -1)
     {
       std::cerr << "Plazza: Failed to add new process." << std::endl;
-      return false;
+      throw Error("Failed to add process");
     }
   if (_pid != 0)
     Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] created.");
-  return true;
+  else
+    {
+      runProcess();
+      exit(0);
+    }
 }
+
 void	Plazza::Process::runProcess()
 {
   PipeData	data;
@@ -112,11 +121,6 @@ void	Plazza::Process::addCommand(PipeData const& pipeData)
       _pool->insertNewTask(ptr);
       *_pipe << separator;
     }
-}
-
-void	Plazza::Process::assignPipe(std::shared_ptr<Plazza::APipe> const& pipe)
-{
-  _pipe = pipe;
 }
 
 pid_t	Plazza::Process::getPid() const

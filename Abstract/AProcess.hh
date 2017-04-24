@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 14:17:33 2017 Arnaud WURMEL
-// Last update Tue Apr 18 10:34:36 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:29:53 2017 Arnaud WURMEL
 //
 
 #ifndef APROCESS_HH_
@@ -22,11 +22,6 @@ namespace	Plazza
       };
   public:
     virtual ~AProcess() {}
-
-  public:
-    virtual void	runProcess() = 0;
-    virtual bool	createProcess() = 0;
-    virtual void	assignPipe(std::shared_ptr<APipe> const&) = 0;
 
   public:
     virtual pid_t	getPid() const = 0;

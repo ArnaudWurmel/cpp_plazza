@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:55:14 2017 Arnaud WURMEL
-// Last update Tue Apr 18 10:29:21 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:24:56 2017 Arnaud WURMEL
 //
 
 #ifndef PIPE_HH_
@@ -28,6 +28,7 @@ namespace	Plazza
 
   private:
     std::string	_pipeName;
+    int		_fd;
   };
 }
 

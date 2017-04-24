@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Thu Apr 20 09:44:13 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:33:36 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -36,20 +36,28 @@ Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
 
 bool	Plazza::Plazza::createNewProcess()
 {
-  AProcess	*p = new Process(_maxThreads);
-  std::shared_ptr<APipe>	pipe(new Pipe("/tmp/" + std::to_string(_process.size()) + ".fifo"));
+  AProcess	*p;
 
-  if (pipe->openPipe() == false ||
-      p->createProcess() == false)
-    {
-      delete p;
-      return false;
-    }
-  p->assignPipe(pipe);
-  if (p->getPid() == 0)
-    p->runProcess();
-  else
+  try {
+    p = new Process(_maxThreads);
     _process.push_back(std::shared_ptr<AProcess>(p));
+  }
+  catch (std::exception &e) {
+    std::cout << e.what() << std::endl;
+    return false;
+  }
+  // std::shared_ptr<APipe>	pipe(new Pipe("/tmp/" + std::to_string(_process.size()) + ".fifo"));
+
+  // if (pipe->openPipe() == false ||
+  //     p->createProcess() == false)
+  //   {
+  //     delete p;
+  //     return false;
+  //   }
+  // p->assignPipe(pipe);
+  // if (p->getPid() == 0)
+  //   p->runProcess();
+  // else
   return true;
 }
 

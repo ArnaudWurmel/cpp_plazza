@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Wed Apr 19 15:12:08 2017 Arnaud WURMEL
+// Last update Mon Apr 24 13:30:23 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -22,13 +22,13 @@ namespace	Plazza
   class	Process : public Plazza::AProcess
   {
   public:
+    static unsigned int	processId;
+  public:
     Process(unsigned int);
     ~Process();
 
-  public:
+  private:
     void	runProcess();
-    bool	createProcess();
-    void	assignPipe(std::shared_ptr<APipe> const&);
 
   public:
     pid_t	getPid() const;
