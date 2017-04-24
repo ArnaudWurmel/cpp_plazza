@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Sat Apr 22 18:49:33 2017 baptiste
+// Last update Mon Apr 24 13:58:03 2017 baptiste
 //
 
 #include <regex>
@@ -45,7 +45,7 @@ void    Plazza::Searcher::itoa(char c, std::string& str)
     }
 }
 
-void		Plazza::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std::string>& vec, int& ret)
+void		Plazza::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
 {
   std::string   buffer;
   std::string   buffer2;
@@ -71,13 +71,13 @@ void		Plazza::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<s
 	{
 	  vec.push_back(number[0]);
 	  res_str = number.suffix().str();
-	  ret++;
+	  ret = true;
 	}
       key++;
     }
 }
 
-void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<std::string>& vec, int& ret)
+void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
 {
   std::string   buffer;
   std::string   buffer2;
@@ -112,7 +112,7 @@ void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vecto
 	    {
 	      vec.push_back(number[0]);
 	      res_str = number.suffix().str();
-	      ret++;
+	      ret = true;
 	    }
 	  key2++;
 	}
@@ -120,7 +120,7 @@ void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vecto
     }
 }
 
-void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::string>& vec, int& ret)
+void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
 {
   std::string   res_str; 
   std::smatch	number;
@@ -140,7 +140,7 @@ void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::
 	{
 	  vec.push_back(number[0]);
 	  res_str = number.suffix().str();
-	  ret++;
+	  ret = true;
 	}
       key++;
     }
@@ -150,60 +150,60 @@ void	Plazza::Searcher::matchPhoneNumber(std::string str, std::vector<std::string
 {
   std::regex	check_number("(([0][1-9]) ?([0-9 ]{2}) ?([0-9 ]{2}) ?([0-9]{2}) ?([0-9]{2}))");
   std::smatch	number;
-  int		i = 0;
+  bool		find = false;
 
   while (std::regex_search(str, number, check_number))
     {
       vec.push_back(number[0]);
       str = number.suffix().str();
-      i++;
+      find = true;
     }
-  if (i == 0)
-    this->cesar(check_number, str, vec, i);
-  if (i == 0)
-    this->XOR_1byte(check_number, str, vec, i);
-  if (i == 0)
-    this->XOR_2byte(check_number, str, vec, i);
+  if (find == false)
+    this->cesar(check_number, str, vec, find);
+  if (find == false)
+    this->XOR_1byte(check_number, str, vec, find);
+  if (find == false)
+    this->XOR_2byte(check_number, str, vec, find);
 }
 
 void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec)
 {
   std::regex	check_mail("([a-zA-Z0-9_.-]+)@((?:[a-zA-Z0-9]+.)+)([a-zA-Z0-9]{1,4})");
   std::smatch	mail;
-  int		i = 0;
+  bool		find = false;
 
   while (std::regex_search(str, mail, check_mail))
     {
       vec.push_back(mail[0]);
       str = mail.suffix().str();
-      i++;
+      find = true;
     }
-  if (i == 0)
-    this->cesar(check_mail, str, vec, i);
-  if (i == 0)
-    this->XOR_1byte(check_mail, str, vec, i);
-  if (i == 0)
-    this->XOR_2byte(check_mail, str, vec, i);
+  if (find == false)
+    this->cesar(check_mail, str, vec, find);
+  if (find == false)
+    this->XOR_1byte(check_mail, str, vec, find);
+  if (find == false)
+    this->XOR_2byte(check_mail, str, vec, find);
 }
 
 void	Plazza::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
 {
   std::regex	check_ip("([0-2]?[0-9]?[0-9](\\.[0-2]?[0-9]?[0-9]){3})");
   std::smatch	ip;
-  int		i = 0;
+  bool		find = false;
 
   while (std::regex_search(str, ip, check_ip))
     {
       vec.push_back(ip[0]);
       str = ip.suffix().str();
-      i++;
+      find = true;
     }
-  if (i == 0)
-    this->cesar(check_ip, str, vec, i);
-  if (i == 0)
-    this->XOR_1byte(check_ip, str, vec, i);
-  if (i == 0)
-    this->XOR_2byte(check_ip, str, vec, i);
+  if (find == false)
+    this->cesar(check_ip, str, vec, find);
+  if (find == false)
+    this->XOR_1byte(check_ip, str, vec, find);
+  if (find == false)
+    this->XOR_2byte(check_ip, str, vec, find);
 }
 
 std::vector<std::string>	Plazza::Searcher::checkInformation(Command::Information inf, std::string file)
