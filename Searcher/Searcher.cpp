@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Mon Apr 24 17:10:16 2017 Arnaud WURMEL
+// Last update Mon Apr 24 17:31:41 2017 Arnaud WURMEL
 //
 
 #include <regex>
@@ -158,12 +158,12 @@ void	Plazza::Searcher::matchPhoneNumber(std::string str, std::vector<std::string
       str = number.suffix().str();
       find = true;
     }
-  if (find == false)
-    this->cesar(check_number, str, vec, find);
-  if (find == false)
-    this->XOR_1byte(check_number, str, vec, find);
-  if (find == false)
-    this->XOR_2byte(check_number, str, vec, find);
+  // if (find == false)
+  //   this->cesar(check_number, str, vec, find);
+  // if (find == false)
+  //   this->XOR_1byte(check_number, str, vec, find);
+  // if (find == false)
+  //   this->XOR_2byte(check_number, str, vec, find);
 }
 
 void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec)
@@ -178,12 +178,12 @@ void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::strin
       str = mail.suffix().str();
       find = true;
     }
-  if (find == false)
-    this->cesar(check_mail, str, vec, find);
-  if (find == false)
-    this->XOR_1byte(check_mail, str, vec, find);
-  if (find == false)
-    this->XOR_2byte(check_mail, str, vec, find);
+  // if (find == false)
+  //   this->cesar(check_mail, str, vec, find);
+  // if (find == false)
+  //   this->XOR_1byte(check_mail, str, vec, find);
+  // if (find == false)
+  //   this->XOR_2byte(check_mail, str, vec, find);
 }
 
 void	Plazza::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
@@ -198,12 +198,12 @@ void	Plazza::Searcher::matchIpAddress(std::string str, std::vector<std::string>&
       str = ip.suffix().str();
       find = true;
     }
-  if (find == false)
-    this->cesar(check_ip, str, vec, find);
-  if (find == false)
-    this->XOR_1byte(check_ip, str, vec, find);
-  if (find == false)
-    this->XOR_2byte(check_ip, str, vec, find);
+  // if (find == false)
+  //   this->cesar(check_ip, str, vec, find);
+  // if (find == false)
+  //   this->XOR_1byte(check_ip, str, vec, find);
+  // if (find == false)
+  //   this->XOR_2byte(check_ip, str, vec, find);
 }
 
 std::vector<std::string>	Plazza::Searcher::checkInformation(Command::Information inf, std::string file)
