@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Mon Apr 24 17:23:29 2017 Arnaud WURMEL
+// Last update Mon Apr 24 22:47:12 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -37,12 +37,13 @@ Plazza::Process::Process(unsigned int maxThread)
 {
   _pid = -1;
   _maxThread = maxThread;
-
+  _lastUpdate = 0;
   std::string	pipePath = "/tmp/" + std::to_string(Plazza::Process::processId);
   _in = std::shared_ptr<APipe>(new Pipe(pipePath + ".in.fifo"));
   _in->openPipe();
   _out = std::shared_ptr<APipe>(new Pipe(pipePath + ".out.fifo"));
   _out->openPipe();
+  Plazza::Process::processId += 1;
   _pid = fork();
   if (_pid == -1)
     {
@@ -69,13 +70,47 @@ void	Plazza::Process::runProcess()
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
   functionPtr.insert(std::make_pair(PipeData::DataType::ASSIGN_ORDER, std::bind(&Plazza::Process::addCommand, this, std::placeholders::_1)));
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_ORDER_STATE, std::bind(&Plazza::Process::sendData, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_END, std::bind(&Plazza::Process::getProcessEnd, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_FREE_SPACE, std::bind(&Plazza::Process::getFreeSpace, this, std::placeholders::_1)));
   while (true)
     {
       *_in >> data;
       if (functionPtr.find(data.getDataType()) != functionPtr.end())
 	functionPtr[data.getDataType()](data);
+      if (_pool->haveAvailableTask() == 0 && _pool->haveEndedTask() == 0)
+	{
+	  if (_lastUpdate != 0 && _lastUpdate + 5 < time(0))
+	    _isAlive = false;
+	}
     }
   Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] exiting.");
+}
+
+void	Plazza::Process::getProcessEnd(PipeData const& pipeData)
+{
+  PipeData	res;
+
+  if (_isAlive)
+    res.setInteger(0);
+  else
+    res.setInteger(1);
+  *_out << res;
+}
+
+void	Plazza::Process::getFreeSpace(PipeData const& pipeData)
+{
+  Plazza::PipeData	send;
+
+  if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_FREE_SPACE)
+    {
+      if (_isAlive)
+	{
+	  send.setInteger((2 * _maxThread) - ((_maxThread - _pool->getFreeThread()) + _pool->haveAvailableTask()));
+	}
+      else
+	send.setInteger(-1);
+      *_out << send;
+    }
 }
 
 void	Plazza::Process::sendData(PipeData const& pipeData)
@@ -101,6 +136,7 @@ void	Plazza::Process::sendData(PipeData const& pipeData)
       	  ++it;
       	}
       *_out << separator;
+      _lastUpdate = time(0);
     }
   else
     {

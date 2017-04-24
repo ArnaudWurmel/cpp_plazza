@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 20:16:58 2017 Arnaud WURMEL
-// Last update Mon Apr 24 16:17:59 2017 Arnaud WURMEL
+// Last update Mon Apr 24 22:38:27 2017 Arnaud WURMEL
 //
 
 #ifndef APIPEDATA_HH_
@@ -23,7 +23,9 @@ namespace	Plazza
 	FAILURE = -1,
 	UNUSED = 0,
 	GET_PROCESS_INFO,
+	GET_FREE_SPACE,
 	GET_ORDER_STATE,
+	GET_PROCESS_END,
 	SEND_DATA,
 	ASSIGN_ORDER
       };

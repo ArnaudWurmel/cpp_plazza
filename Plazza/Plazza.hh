@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Mon Apr 24 16:10:08 2017 Arnaud WURMEL
+// Last update Mon Apr 24 22:28:27 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -33,6 +33,7 @@ namespace	Plazza
     void	assignCommand(std::string const&, Command::Information const&,
 			      std::shared_ptr<AProcess>&);
     bool	createNewProcess();
+    bool	checkExitProcess(std::vector<std::shared_ptr<AProcess> >::iterator&);
 
   private:
     unsigned int	_maxThreads;

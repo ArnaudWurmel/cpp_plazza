@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Mon Apr 24 16:18:34 2017 Arnaud WURMEL
+// Last update Mon Apr 24 22:43:30 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -68,7 +68,7 @@ void	Plazza::Plazza::assignCommand(std::string const& filepath,
 void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
 {
   StackLock	locker(_writer);
-  PipeData	data(PipeData::DataType::GET_PROCESS_INFO);
+  PipeData	data(PipeData::DataType::GET_FREE_SPACE);
   PipeData	status;
   bool		shouldCreate;
   std::vector<std::shared_ptr<AProcess> >::iterator	it;
@@ -90,6 +90,7 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 	      *(*it) >> status;
 	      if (status.getData()._stockage.integer > 0)
 		{
+		  std::cerr << "No need to create : " << status.getData()._stockage.integer << std::endl;
 		  shouldCreate = false;
 		  assignCommand(*it_filepath, (*it_cmd)->getCommandType(), *it);
 		}
@@ -103,6 +104,20 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 	}
       ++it_cmd;
     }
+}
+
+bool	Plazza::Plazza::checkExitProcess(std::vector<std::shared_ptr<AProcess> >::iterator& it)
+{
+  PipeData	status(PipeData::DataType::GET_PROCESS_END);
+
+  *(*it) << status;
+  *(*it) >> status;
+  if (status.getData()._stockage.integer == 1)
+    {
+      _process.erase(it);
+      return true;
+    }
+  return false;
 }
 
 void	Plazza::Plazza::threadGetData()
@@ -132,9 +147,12 @@ void	Plazza::Plazza::threadGetData()
 	      	  std::cout << result.getData()._stockage.string << std::endl;
 		  *(*it) << separator;
 	      	}
+	      if (data.getData()._stockage.integer > 0)
+		std::cout << std::endl;
 	      *(*it) >> separator;
 	    }
-	  ++it;
+	  if (checkExitProcess(it) == false)
+	    ++it;
       	}
       _writer.unlock();
     }
@@ -159,6 +177,9 @@ void	Plazza::Plazza::mainLoop()
 	    std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
 	  }
 	}
+    }
+  while (_process.size())
+    {
     }
 }
 

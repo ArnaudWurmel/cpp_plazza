@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Mon Apr 24 15:23:30 2017 Arnaud WURMEL
+// Last update Mon Apr 24 22:37:11 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -14,6 +14,7 @@
 # include <queue>
 # include <thread>
 # include <mutex>
+# include <ctime>
 # include "Thread.hh"
 # include "ThreadPool.hh"
 
@@ -42,11 +43,14 @@ namespace	Plazza
     bool	createThreads();
 
   private:
+    void	getFreeSpace(PipeData const&);
     void	getInfo(PipeData const&);
     void	addCommand(PipeData const&);
     void	sendData(PipeData const&);
+    void	getProcessEnd(PipeData const&);
 
   private:
+    time_t			_lastUpdate;
     bool			_isAlive;
     unsigned int		_maxThread;
     pid_t			_pid;

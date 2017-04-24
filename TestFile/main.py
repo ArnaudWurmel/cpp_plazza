@@ -6,7 +6,7 @@ string = "abcdefghi\njklmnopqrstu\nvw\nxyz"
 firstname = ["arnaud", "thibaud", "erwan", "baptiste", "lucile"]
 lastname = ["wurmel", "marchand", "ballet", "hector", "chauvin"]
 extension = "@epitech.eu"
-fileSize = 50
+fileSize = 5000
 
 
 class   Generator:
