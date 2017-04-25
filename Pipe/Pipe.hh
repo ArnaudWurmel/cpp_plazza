@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:55:14 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:24:56 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:49:21 2017 baptiste
 //
 
 #ifndef PIPE_HH_
 # define PIPE_HH_
 
-namespace	Plazza
+namespace	plz
 {
   class	Pipe : public APipe
   {

@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 18 20:02:14 2017 Arnaud WURMEL
-// Last update Wed Apr 19 20:46:59 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:59:00 2017 baptiste
 //
 
 #ifndef THREADTASK_HH_
 # define THREADTASK_HH_
 
-namespace	Plazza
+namespace	plz
 {
   class	ThreadTask
   {

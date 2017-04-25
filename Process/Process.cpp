@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Tue Apr 25 11:48:20 2017 Arnaud WURMEL
+// Last update Tue Apr 25 18:03:01 2017 baptiste
 //
 
 #include <unistd.h>
@@ -31,27 +31,27 @@
 #include "ThreadTask.hh"
 #include "Errors.hh"
 
-unsigned int	Plazza::Process::processId = 0;
+unsigned int	plz::Process::processId = 0;
 
-Plazza::Process::Process(unsigned int maxThread)
+plz::Process::Process(unsigned int maxThread)
 {
   _pid = -1;
   _maxThread = maxThread;
   _lastUpdate = 0;
-  std::string	pipePath = "/tmp/" + std::to_string(Plazza::Process::processId);
+  std::string	pipePath = "/tmp/" + std::to_string(plz::Process::processId);
   _in = std::shared_ptr<APipe>(new Pipe(pipePath + ".in.fifo"));
   _in->openPipe();
   _out = std::shared_ptr<APipe>(new Pipe(pipePath + ".out.fifo"));
   _out->openPipe();
-  Plazza::Process::processId += 1;
+  plz::Process::processId += 1;
   _pid = fork();
   if (_pid == -1)
     {
-      std::cerr << "Plazza: Failed to add new process." << std::endl;
+      std::cerr << "plz: Failed to add new process." << std::endl;
       throw Error("Failed to add process");
     }
   if (_pid != 0)
-    Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] created.");
+    Logger::addLog("plz: Process [" + std::to_string(_pid) + "] created.");
   else
     {
       runProcess();
@@ -59,19 +59,19 @@ Plazza::Process::Process(unsigned int maxThread)
     }
 }
 
-void	Plazza::Process::runProcess()
+void	plz::Process::runProcess()
 {
   PipeData	data;
   std::map<PipeData::DataType, std::function<void (PipeData const&)> > functionPtr;
 
   _isAlive = true;
-  _pool = std::unique_ptr<Plazza::ThreadPool>(new Plazza::ThreadPool(_maxThread));
-  Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] start running.");
-  functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&Plazza::Process::getInfo, this, std::placeholders::_1)));
-  functionPtr.insert(std::make_pair(PipeData::DataType::ASSIGN_ORDER, std::bind(&Plazza::Process::addCommand, this, std::placeholders::_1)));
-  functionPtr.insert(std::make_pair(PipeData::DataType::GET_ORDER_STATE, std::bind(&Plazza::Process::sendData, this, std::placeholders::_1)));
-  functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_END, std::bind(&Plazza::Process::getProcessEnd, this, std::placeholders::_1)));
-  functionPtr.insert(std::make_pair(PipeData::DataType::GET_FREE_SPACE, std::bind(&Plazza::Process::getFreeSpace, this, std::placeholders::_1)));
+  _pool = std::unique_ptr<plz::ThreadPool>(new plz::ThreadPool(_maxThread));
+  Logger::addLog("plz: Process [" + std::to_string(_pid) + "] start running.");
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_INFO, std::bind(&plz::Process::getInfo, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::ASSIGN_ORDER, std::bind(&plz::Process::addCommand, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_ORDER_STATE, std::bind(&plz::Process::sendData, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_END, std::bind(&plz::Process::getProcessEnd, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::GET_FREE_SPACE, std::bind(&plz::Process::getFreeSpace, this, std::placeholders::_1)));
   while (true)
     {
       *_in >> data;
@@ -83,14 +83,14 @@ void	Plazza::Process::runProcess()
 	    _isAlive = false;
 	}
     }
-  Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] exiting.");
+  Logger::addLog("plz: Process [" + std::to_string(_pid) + "] exiting.");
 }
 
-void	Plazza::Process::getProcessEnd(PipeData const& pipeData)
+void	plz::Process::getProcessEnd(PipeData const& pipeData)
 {
   PipeData	res;
 
-  if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_PROCESS_END)
+  if (pipeData.getDataType() == plz::PipeData::DataType::GET_PROCESS_END)
     {
       if (_isAlive)
 	res.setInteger(0);
@@ -100,11 +100,11 @@ void	Plazza::Process::getProcessEnd(PipeData const& pipeData)
     }
 }
 
-void	Plazza::Process::getFreeSpace(PipeData const& pipeData)
+void	plz::Process::getFreeSpace(PipeData const& pipeData)
 {
-  Plazza::PipeData	send;
+  plz::PipeData	send;
 
-  if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_FREE_SPACE)
+  if (pipeData.getDataType() == plz::PipeData::DataType::GET_FREE_SPACE)
     {
       if (_isAlive)
 	send.setInteger((2 * _maxThread) - ((_maxThread - _pool->getFreeThread()) + _pool->haveAvailableTask()));
@@ -114,7 +114,7 @@ void	Plazza::Process::getFreeSpace(PipeData const& pipeData)
     }
 }
 
-void	Plazza::Process::sendData(PipeData const& pipeData)
+void	plz::Process::sendData(PipeData const& pipeData)
 {
   PipeData	data(PipeData::DataType::SEND_DATA);
   PipeData	separator(PipeData::DataType::UNUSED);
@@ -123,7 +123,7 @@ void	Plazza::Process::sendData(PipeData const& pipeData)
   if (pipeData.getDataType() == PipeData::DataType::GET_ORDER_STATE &&
       _pool->haveEndedTask() > 0)
     {
-      std::shared_ptr<Plazza::ThreadTask> ret = _pool->getAEndedTask();
+      std::shared_ptr<plz::ThreadTask> ret = _pool->getAEndedTask();
       data.setInteger(ret->getResult().size());
       *_out << data;
       std::vector<std::string>::const_iterator	it;
@@ -147,7 +147,7 @@ void	Plazza::Process::sendData(PipeData const& pipeData)
     }
 }
 
-void	Plazza::Process::addCommand(PipeData const& pipeData)
+void	plz::Process::addCommand(PipeData const& pipeData)
 {
   PipeData	data(PipeData::DataType::UNUSED);
   PipeData	separator(PipeData::DataType::UNUSED);
@@ -156,23 +156,23 @@ void	Plazza::Process::addCommand(PipeData const& pipeData)
     {
       *_out << separator;
       *_in >> data;
-      std::shared_ptr<Plazza::ThreadTask>	ptr(new Plazza::ThreadTask(data.getData()._stockage.string, static_cast<Command::Information>(pipeData.getData()._stockage.integer)));
+      std::shared_ptr<plz::ThreadTask>	ptr(new plz::ThreadTask(data.getData()._stockage.string, static_cast<Command::Information>(pipeData.getData()._stockage.integer)));
 
       _pool->insertNewTask(ptr);
       *_out << separator;
     }
 }
 
-pid_t	Plazza::Process::getPid() const
+pid_t	plz::Process::getPid() const
 {
   return _pid;
 }
 
-void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
+void	plz::Process::getInfo(plz::PipeData const& pipeData)
 {
-  Plazza::PipeData	send;
+  plz::PipeData	send;
 
-  if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_PROCESS_INFO)
+  if (pipeData.getDataType() == plz::PipeData::DataType::GET_PROCESS_INFO)
     {
       if (_isAlive)
 	send.setInteger(_pool->getFreeThread());
@@ -182,19 +182,19 @@ void	Plazza::Process::getInfo(Plazza::PipeData const& pipeData)
     }
 }
 
-void	Plazza::Process::operator<<(Plazza::PipeData const& pipeData)
+void	plz::Process::operator<<(plz::PipeData const& pipeData)
 {
   *_in << pipeData;
 }
 
-void	Plazza::Process::operator>>(Plazza::PipeData& pipeData)
+void	plz::Process::operator>>(plz::PipeData& pipeData)
 {
   *_out >> pipeData;
 }
 
-Plazza::Process::~Process()
+plz::Process::~Process()
 {
-  Logger::addLog("Plazza: Process [" + std::to_string(_pid) + "] Killed.");
+  Logger::addLog("plz: Process [" + std::to_string(_pid) + "] Killed.");
   if (_pid > 0)
     kill(_pid, SIGQUIT);
 }

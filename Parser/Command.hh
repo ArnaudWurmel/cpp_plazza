@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:58:29 2017 Arnaud WURMEL
-// Last update Mon Apr 10 21:07:20 2017 Arnaud WURMEL
+// Last update Tue Apr 25 18:01:45 2017 baptiste
 //
 
 #ifndef COMMAND_HH_
 # define COMMAND_HH_
 
-namespace	Plazza
+namespace	plz
 {
   class		Command
   {
@@ -39,6 +39,6 @@ namespace	Plazza
   };
 }
 
-std::ostream& operator<<(std::ostream&, const Plazza::Command&);
+std::ostream& operator<<(std::ostream&, const plz::Command&);
 
 #endif /* !COMMAND_HH_ */

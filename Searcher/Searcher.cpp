@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Tue Apr 25 17:05:19 2017 baptiste
+// Last update Tue Apr 25 17:35:00 2017 baptiste
 //
 
 #include <regex>
@@ -14,11 +14,11 @@
 #include <cstdlib>
 #include "Searcher.hh"
 
-Plazza::Searcher::Searcher()
+plz::Searcher::Searcher()
 {
 }
 
-void    Plazza::Searcher::XOR_change(std::string buf, std::string buf2, std::string& res)
+void    plz::Searcher::XOR_change(std::string buf, std::string buf2, std::string& res)
 {
   int   i = 0;
 
@@ -33,7 +33,7 @@ void    Plazza::Searcher::XOR_change(std::string buf, std::string buf2, std::str
     }
 }
 
-void    Plazza::Searcher::itoa(char c, std::string& str)
+void    plz::Searcher::itoa(char c, std::string& str)
 {
   int   i = 7;
   
@@ -45,7 +45,7 @@ void    Plazza::Searcher::itoa(char c, std::string& str)
     }
 }
 
-void		Plazza::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
+void		plz::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
 {
   std::string   buffer;
   std::string   buffer2;
@@ -77,7 +77,7 @@ void		Plazza::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<s
     }
 }
 
-void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
+void     plz::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
 {
   std::string   buffer;
   std::string   buffer2;
@@ -120,7 +120,7 @@ void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vecto
     }
 }
 
-void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
+void		plz::Searcher::cesar(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
 {
   std::smatch	number;
 
@@ -132,7 +132,7 @@ void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::
     }
 }
 
-void	Plazza::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& vec)
+void	plz::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& vec)
 {
   std::string	reg = "(([0][1-9]) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}))";
   std::string	reg2 = "000100101001000101000001000101000001000101000001000101000000";
@@ -178,7 +178,7 @@ void	Plazza::Searcher::matchPhoneNumber(std::string str, std::vector<std::string
   //   this->XOR_2byte(check_number, str, vec, find);
 }
 
-void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec)
+void	plz::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec)
 {
   std::string	reg = "([a-zA-Z0-9_.-]+)@((?:[a-zA-Z0-9]+.)+)([a-zA-Z0-9]{1,4})";
   std::string	reg2 = "00101101101111000100000101101101001000001011011010000000";
@@ -224,7 +224,7 @@ void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::strin
   //   this->XOR_2byte(check_mail, str, vec, find);
 }
 
-void	Plazza::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
+void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
 {
   std::string	reg = "([0-2]?[0-9]?[0-9](\\.[0-2]?[0-9]?[0-9]){3})";
   std::string	reg2 = "00101000101000101000010101000101000101000000";
@@ -270,7 +270,7 @@ void	Plazza::Searcher::matchIpAddress(std::string str, std::vector<std::string>&
   //   this->XOR_2byte(check_ip, str, vec, find);
 }
 
-std::vector<std::string>	Plazza::Searcher::checkInformation(Command::Information inf, std::string file)
+std::vector<std::string>	plz::Searcher::checkInformation(Command::Information inf, std::string file)
 {
   std::ifstream			fichier(file, std::ios::in);
   std::vector<std::string>	ret;
@@ -279,9 +279,9 @@ std::vector<std::string>	Plazza::Searcher::checkInformation(Command::Information
   if (fichier)
     {
       getline(fichier, all_file, '\0');
-      if (inf == Plazza::Command::Information::PHONE_NUMBER)
+      if (inf == plz::Command::Information::PHONE_NUMBER)
 	this->matchPhoneNumber(all_file, ret);
-      else if (inf == Plazza::Command::Information::EMAIL_ADDRESS)
+      else if (inf == plz::Command::Information::EMAIL_ADDRESS)
 	this->matchEmailAddress(all_file, ret);
       else
 	this->matchIpAddress(all_file, ret);
@@ -289,4 +289,4 @@ std::vector<std::string>	Plazza::Searcher::checkInformation(Command::Information
   return (ret);
 }
 
-Plazza::Searcher::~Searcher() {}
+plz::Searcher::~Searcher() {}

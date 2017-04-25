@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Wed Apr 12 15:15:26 2017 Arnaud WURMEL
-// Last update Tue Apr 18 11:16:38 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:47:04 2017 baptiste
 //
 
 #include <vector>
@@ -14,45 +14,45 @@
 #include "Command.hh"
 #include "PipeData.hh"
 
-Plazza::PipeData::PipeData()
+plz::PipeData::PipeData()
 {
   memset(&_data, 0, sizeof(_data));
 }
 
-Plazza::PipeData::PipeData(Plazza::PipeData::DataType const& type)
+plz::PipeData::PipeData(plz::PipeData::DataType const& type)
 {
   memset(&_data, 0, sizeof(_data));
   _data._type = type;
 }
 
-Plazza::PipeData::Data const&	Plazza::PipeData::getData() const
+plz::PipeData::Data const&	plz::PipeData::getData() const
 {
   return _data;
 }
 
-Plazza::PipeData::DataType const&	Plazza::PipeData::getDataType() const
+plz::PipeData::DataType const&	plz::PipeData::getDataType() const
 {
   return _data._type;
 }
 
-void	Plazza::PipeData::setInteger(uint32_t value)
+void	plz::PipeData::setInteger(uint32_t value)
 {
   _data._stockage.integer = value;
 }
 
-void	Plazza::PipeData::setString(std::string const& value)
+void	plz::PipeData::setString(std::string const& value)
 {
   value.copy(_data._stockage.string, MAX_SIZE, 0);
 }
 
-void	Plazza::PipeData::setDataType(Plazza::PipeData::DataType const& type)
+void	plz::PipeData::setDataType(plz::PipeData::DataType const& type)
 {
   _data._type = type;
 }
 
-void	Plazza::PipeData::setStockage(DataStockage const& stockage)
+void	plz::PipeData::setStockage(DataStockage const& stockage)
 {
   _data._stockage = stockage;
 }
 
-Plazza::PipeData::~PipeData() {}
+plz::PipeData::~PipeData() {}

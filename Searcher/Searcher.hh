@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:14:19 2017 baptiste
-// Last update Mon Apr 24 13:56:18 2017 baptiste
+// Last update Tue Apr 25 17:41:55 2017 baptiste
 //
 
 #ifndef SEARCHER_HH_
@@ -15,7 +15,7 @@
 #include <regex>
 #include "Command.hh"
 
-namespace	Plazza
+namespace	plz
 {
   class	Searcher
   {
