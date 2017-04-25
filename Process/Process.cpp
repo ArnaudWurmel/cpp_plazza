@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Mon Apr 24 22:47:12 2017 Arnaud WURMEL
+// Last update Tue Apr 25 11:48:20 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -90,11 +90,14 @@ void	Plazza::Process::getProcessEnd(PipeData const& pipeData)
 {
   PipeData	res;
 
-  if (_isAlive)
-    res.setInteger(0);
-  else
-    res.setInteger(1);
-  *_out << res;
+  if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_PROCESS_END)
+    {
+      if (_isAlive)
+	res.setInteger(0);
+      else
+	res.setInteger(1);
+      *_out << res;
+    }
 }
 
 void	Plazza::Process::getFreeSpace(PipeData const& pipeData)
@@ -104,9 +107,7 @@ void	Plazza::Process::getFreeSpace(PipeData const& pipeData)
   if (pipeData.getDataType() == Plazza::PipeData::DataType::GET_FREE_SPACE)
     {
       if (_isAlive)
-	{
-	  send.setInteger((2 * _maxThread) - ((_maxThread - _pool->getFreeThread()) + _pool->haveAvailableTask()));
-	}
+	send.setInteger((2 * _maxThread) - ((_maxThread - _pool->getFreeThread()) + _pool->haveAvailableTask()));
       else
 	send.setInteger(-1);
       *_out << send;

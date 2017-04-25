@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Mon Apr 24 17:31:41 2017 Arnaud WURMEL
+// Last update Tue Apr 25 10:17:59 2017 Arnaud WURMEL
 //
 
 #include <regex>
@@ -55,7 +55,7 @@ void		Plazza::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<s
   int           key = 0;
   int           i;
 
-  while (key != 256)
+  while (key <= 127)
     {
       i = 0;
       res_str = "";
@@ -89,10 +89,10 @@ void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vecto
   int           key2 = 0;
   int           i;
 
-  while (key != 256)
+  while (key <= 127)
     {
       key2 = 0;
-      while (key2 != 256)
+      while (key2 <= 127)
 	{
 	  i = 0;
 	  res_str = "";
@@ -127,7 +127,7 @@ void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::
   int           key = 0;
   int           i;
 
-  while (key != 256)
+  while (key != 127)
     {
       i = 0;
       res_str = "";
@@ -148,7 +148,7 @@ void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::
 
 void	Plazza::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& vec)
 {
-  std::regex	check_number("(([0][1-9]) ?([0-9 ]{2}) ?([0-9 ]{2}) ?([0-9]{2}) ?([0-9]{2}))");
+  std::regex	check_number("(([0][1-9]) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}))");
   std::smatch	number;
   bool		find = false;
 
