@@ -5,7 +5,7 @@
 // Login   <wurmel@epitech.net>
 // 
 // Started on  Tue Apr 25 09:27:26 2017 Arnaud WURMEL
-// Last update Tue Apr 25 14:12:17 2017 Arnaud WURMEL
+// Last update Tue Apr 25 14:15:23 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -16,7 +16,7 @@ plz::UIManager::UIManager(unsigned int maxThread) : _maxThread(maxThread)
   sf::VideoMode	mode(600, 600);
 
   _color[BACKGROUND] = sf::Color(44, 62, 80);
-  _color[PROCESS_BACKGROUND] = sf::Color(149, 165, 166);
+  _color[PROCESS_BACKGROUND] = sf::Color(236, 240, 241);
   _color[THREAD_USED] = sf::Color(231, 76, 60);
   _color[THREAD_UNUSED] = sf::Color(39, 174, 96);
   _window = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(mode, "Plazza"));
