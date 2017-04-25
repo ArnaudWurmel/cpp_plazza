@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:26:42 2017 Arnaud WURMEL
-// Last update Tue Apr 18 20:46:57 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:53:32 2017 baptiste
 //
 
 #ifndef THREAD_HH_
@@ -15,7 +15,7 @@
 # include <vector>
 # include <string>
 
-namespace	Plazza
+namespace	plz
 {
   class ThreadPool;
   class	Thread
@@ -28,7 +28,7 @@ namespace	Plazza
 	DIED
       };
   public:
-    Thread(Plazza::ThreadPool&);
+    Thread(plz::ThreadPool&);
     ~Thread();
 
   public:

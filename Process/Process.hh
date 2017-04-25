@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Mon Apr 24 22:37:11 2017 Arnaud WURMEL
+// Last update Tue Apr 25 18:03:15 2017 baptiste
 //
 
 #ifndef PROCESS_HH_
@@ -18,9 +18,9 @@
 # include "Thread.hh"
 # include "ThreadPool.hh"
 
-namespace	Plazza
+namespace	plz
 {
-  class	Process : public Plazza::AProcess
+  class	Process : public plz::AProcess
   {
   public:
     static unsigned int	processId;

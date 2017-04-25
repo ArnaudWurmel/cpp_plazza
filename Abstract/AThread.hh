@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 09:19:29 2017 Arnaud WURMEL
-// Last update Tue Apr 11 09:29:24 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:42:44 2017 baptiste
 //
 
 #ifndef ATHREAD_HH_
 # define ATHREAD_HH_
 
-namespace	Plazza
+namespace	plz
 {
   class	AThread
   {

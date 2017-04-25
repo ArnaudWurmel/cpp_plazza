@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Thu Apr 20 09:36:59 2017 Arnaud WURMEL
-// Last update Tue Apr 25 13:46:39 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:43:04 2017 baptiste
 //
 
 #include <cstdio>
 #include "Logger.hh"
 
-void	Plazza::Logger::addLog(std::string const& to_add)
+void	plz::Logger::addLog(std::string const& to_add)
 {
   std::ofstream	file;
 
@@ -23,7 +23,7 @@ void	Plazza::Logger::addLog(std::string const& to_add)
     }
 }
 
-void	Plazza::Logger::resetLogFile()
+void	plz::Logger::resetLogFile()
 {
   std::ofstream	file;
 

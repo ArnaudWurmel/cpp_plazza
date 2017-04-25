@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:53:28 2017 Arnaud WURMEL
-// Last update Tue Apr 18 10:28:57 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:42:15 2017 baptiste
 //
 
 #ifndef APIPE_HH_
 # define APIPE_HH_
 
-namespace	Plazza
+namespace	plz
 {
   class	APipe
   {

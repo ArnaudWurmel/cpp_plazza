@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:28:23 2017 Arnaud WURMEL
-// Last update Mon Apr 24 17:23:49 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:53:13 2017 baptiste
 //
 
 #include <iostream>
@@ -15,19 +15,19 @@
 #include "Thread.hh"
 #include "ThreadPool.hh"
 
-Plazza::Thread::Thread(Plazza::ThreadPool& delegate) : _delegate(delegate)
+plz::Thread::Thread(plz::ThreadPool& delegate) : _delegate(delegate)
 {
-  _state = Plazza::Thread::ThreadState::DIED;
-  _thread = std::unique_ptr<std::thread>(new std::thread(&Plazza::Thread::threadLoop, this));
+  _state = plz::Thread::ThreadState::DIED;
+  _thread = std::unique_ptr<std::thread>(new std::thread(&plz::Thread::threadLoop, this));
 }
 
-void	Plazza::Thread::threadLoop()
+void	plz::Thread::threadLoop()
 {
   bool	success;
-  std::shared_ptr<Plazza::ThreadTask>	ret;
-  Plazza::Searcher	searcher;
+  std::shared_ptr<plz::ThreadTask>	ret;
+  plz::Searcher	searcher;
 
-  _state = Plazza::Thread::ThreadState::WAITING;
+  _state = plz::Thread::ThreadState::WAITING;
   while (1)
     {
       if (_delegate.haveAvailableTask() == true)
@@ -35,22 +35,22 @@ void	Plazza::Thread::threadLoop()
       	  ret = _delegate.getATask(success);
       	  if (success)
 	    {
-	      _state = Plazza::Thread::ThreadState::WORKING;
+	      _state = plz::Thread::ThreadState::WORKING;
 	      ret->setResult(searcher.checkInformation(ret->getResearch(),
 						       ret->getFilePath()));
 	      _delegate.insertEndedTask(ret);
 	      ret.reset();
 	    }
       	}
-      _state = Plazza::Thread::ThreadState::WAITING;
+      _state = plz::Thread::ThreadState::WAITING;
       if (_delegate.haveAvailableTask() == false)
       	_delegate.waitForNewCommand();
     }
 }
 
-Plazza::Thread::ThreadState const&	Plazza::Thread::getState() const
+plz::Thread::ThreadState const&	plz::Thread::getState() const
 {
   return _state;
 }
 
-Plazza::Thread::~Thread() {}
+plz::Thread::~Thread() {}

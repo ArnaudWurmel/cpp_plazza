@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Thu Apr 20 09:36:05 2017 Arnaud WURMEL
-// Last update Thu Apr 20 09:49:41 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:43:13 2017 baptiste
 //
 
 #ifndef LOGGER_HH_
@@ -13,7 +13,7 @@
 
 # include <fstream>
 
-namespace	Plazza
+namespace	plz
 {
   class		Logger
   {

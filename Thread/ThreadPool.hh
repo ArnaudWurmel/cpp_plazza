@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:21:44 2017 Arnaud WURMEL
-// Last update Wed Apr 19 16:36:05 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:54:47 2017 baptiste
 //
 
 #ifndef THREADPOOL_HH_
@@ -16,7 +16,7 @@
 # include <condition_variable>
 # include "ThreadTask.hh"
 
-namespace	Plazza
+namespace	plz
 {
   class	ThreadPool
   {
@@ -28,9 +28,9 @@ namespace	Plazza
     unsigned int	getFreeThread() const;
 
   public:
-    void	insertNewTask(std::shared_ptr<Plazza::ThreadTask> const&);
-    std::shared_ptr<Plazza::ThreadTask>	getATask(bool&);
-    void	insertEndedTask(std::shared_ptr<Plazza::ThreadTask> const&);
+    void	insertNewTask(std::shared_ptr<plz::ThreadTask> const&);
+    std::shared_ptr<plz::ThreadTask>	getATask(bool&);
+    void	insertEndedTask(std::shared_ptr<plz::ThreadTask> const&);
 
   public:
     bool	haveAvailableTask() const;
@@ -38,12 +38,12 @@ namespace	Plazza
 
   public:
     unsigned int	haveEndedTask() const;
-    std::shared_ptr<Plazza::ThreadTask>	getAEndedTask();
+    std::shared_ptr<plz::ThreadTask>	getAEndedTask();
 
   private:
-    std::vector<std::unique_ptr<Plazza::Thread> >	_threadPool;
-    std::queue<std::shared_ptr<Plazza::ThreadTask> >	_taskQueue;
-    std::queue<std::shared_ptr<Plazza::ThreadTask> >	_endedTask;
+    std::vector<std::unique_ptr<plz::Thread> >	_threadPool;
+    std::queue<std::shared_ptr<plz::ThreadTask> >	_taskQueue;
+    std::queue<std::shared_ptr<plz::ThreadTask> >	_endedTask;
     std::mutex						_queueLocker;
     std::condition_variable				_condVar;
   };

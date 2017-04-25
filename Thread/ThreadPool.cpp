@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:25:15 2017 Arnaud WURMEL
-// Last update Wed Apr 19 17:00:16 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:54:09 2017 baptiste
 //
 
 #include <memory>
@@ -17,36 +17,36 @@
 #include "Thread.hh"
 #include "ThreadPool.hh"
 
-Plazza::ThreadPool::ThreadPool(unsigned int maxThread)
+plz::ThreadPool::ThreadPool(unsigned int maxThread)
 {
   unsigned int	i = 0;
 
   while (i < maxThread)
     {
-      _threadPool.push_back(std::unique_ptr<Plazza::Thread>(new Plazza::Thread(*this)));
+      _threadPool.push_back(std::unique_ptr<plz::Thread>(new plz::Thread(*this)));
       ++i;
     }
 }
 
-unsigned int	Plazza::ThreadPool::getFreeThread() const
+unsigned int	plz::ThreadPool::getFreeThread() const
 {
-  std::vector<std::unique_ptr<Plazza::Thread> >::const_iterator	it;
+  std::vector<std::unique_ptr<plz::Thread> >::const_iterator	it;
   unsigned int	freed;
 
   freed = 0;
   it = _threadPool.begin();
   while (it != _threadPool.end())
     {
-      if ((*it)->getState() == Plazza::Thread::ThreadState::WAITING)
+      if ((*it)->getState() == plz::Thread::ThreadState::WAITING)
 	++freed;
       ++it;
     }
   return freed;
 }
 
-std::shared_ptr<Plazza::ThreadTask>	Plazza::ThreadPool::getATask(bool& success)
+std::shared_ptr<plz::ThreadTask>	plz::ThreadPool::getATask(bool& success)
 {
-  std::shared_ptr<Plazza::ThreadTask>	ret;
+  std::shared_ptr<plz::ThreadTask>	ret;
 
   success = false;
   if (_queueLocker.try_lock())
@@ -62,14 +62,14 @@ std::shared_ptr<Plazza::ThreadTask>	Plazza::ThreadPool::getATask(bool& success)
   return ret;
 }
 
-void	Plazza::ThreadPool::insertEndedTask(std::shared_ptr<Plazza::ThreadTask> const& task)
+void	plz::ThreadPool::insertEndedTask(std::shared_ptr<plz::ThreadTask> const& task)
 {
   _queueLocker.lock();
   _endedTask.push(task);
   _queueLocker.unlock();
 }
 
-void	Plazza::ThreadPool::insertNewTask(std::shared_ptr<Plazza::ThreadTask> const& task)
+void	plz::ThreadPool::insertNewTask(std::shared_ptr<plz::ThreadTask> const& task)
 {
   _queueLocker.lock();
   _taskQueue.push(task);
@@ -77,21 +77,21 @@ void	Plazza::ThreadPool::insertNewTask(std::shared_ptr<Plazza::ThreadTask> const
   _condVar.notify_one();
 }
 
-bool	Plazza::ThreadPool::haveAvailableTask() const
+bool	plz::ThreadPool::haveAvailableTask() const
 {
   if (_taskQueue.size() > 0)
     return true;
   return false;
 }
 
-unsigned int	Plazza::ThreadPool::haveEndedTask() const
+unsigned int	plz::ThreadPool::haveEndedTask() const
 {
   return _endedTask.size();
 }
 
-std::shared_ptr<Plazza::ThreadTask>	Plazza::ThreadPool::getAEndedTask()
+std::shared_ptr<plz::ThreadTask>	plz::ThreadPool::getAEndedTask()
 {
-  std::shared_ptr<Plazza::ThreadTask>	ret;
+  std::shared_ptr<plz::ThreadTask>	ret;
 
   _queueLocker.lock();
   ret = _endedTask.front();
@@ -100,11 +100,11 @@ std::shared_ptr<Plazza::ThreadTask>	Plazza::ThreadPool::getAEndedTask()
   return ret;
 }
 
-void	Plazza::ThreadPool::waitForNewCommand()
+void	plz::ThreadPool::waitForNewCommand()
 {
   std::unique_lock<std::mutex>	lock(this->_queueLocker);
 
   _condVar.wait(lock);
 }
 
-Plazza::ThreadPool::~ThreadPool() {}
+plz::ThreadPool::~ThreadPool() {}

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 20:16:58 2017 Arnaud WURMEL
-// Last update Mon Apr 24 22:38:27 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:48:42 2017 baptiste
 //
 
 #ifndef APIPEDATA_HH_
@@ -13,7 +13,7 @@
 
 # define MAX_SIZE 255
 
-namespace	Plazza
+namespace	plz
 {
   class	PipeData
   {

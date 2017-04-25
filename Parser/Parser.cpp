@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:56:28 2017 Arnaud WURMEL
-// Last update Wed Apr 19 12:45:08 2017 Arnaud WURMEL
+// Last update Tue Apr 25 18:02:23 2017 baptiste
 //
 
 #include <iostream>
@@ -17,14 +17,14 @@
 #include "Errors.hh"
 #include "Parser.hh"
 
-Plazza::Parser::Parser()
+plz::Parser::Parser()
 {
   _mapping.insert(std::make_pair("PHONE_NUMBER", Command::Information::PHONE_NUMBER));
   _mapping.insert(std::make_pair("EMAIL_ADDRESS", Command::Information::EMAIL_ADDRESS));
   _mapping.insert(std::make_pair("IP_ADDRESS", Command::Information::IP_ADDRESS));
 }
 
-bool	Plazza::Parser::isCharacterAfter(std::string::iterator it, std::string::iterator const& end) const
+bool	plz::Parser::isCharacterAfter(std::string::iterator it, std::string::iterator const& end) const
 {
   while (it != end)
     {
@@ -35,7 +35,7 @@ bool	Plazza::Parser::isCharacterAfter(std::string::iterator it, std::string::ite
   return false;
 }
 
-void		Plazza::Parser::epurStr(std::string& str) const
+void		plz::Parser::epurStr(std::string& str) const
 {
   std::string::iterator	it;
   bool			one_space;
@@ -63,9 +63,9 @@ void		Plazza::Parser::epurStr(std::string& str) const
     }
 }
 
-std::shared_ptr<Plazza::Command>	Plazza::Parser::createToken(std::string& str) const
+std::shared_ptr<plz::Command>	plz::Parser::createToken(std::string& str) const
 {
-  std::shared_ptr<Plazza::Command> res = std::shared_ptr<Plazza::Command>(new Plazza::Command());
+  std::shared_ptr<plz::Command> res = std::shared_ptr<plz::Command>(new plz::Command());
   std::vector<std::string>	token;
   size_t	pos;
 
@@ -93,9 +93,9 @@ std::shared_ptr<Plazza::Command>	Plazza::Parser::createToken(std::string& str) c
   return res;
 }
 
-std::vector<std::shared_ptr<Plazza::Command> >	Plazza::Parser::evalString(std::string& input) const
+std::vector<std::shared_ptr<plz::Command> >	plz::Parser::evalString(std::string& input) const
 {
-  std::vector<std::shared_ptr<Plazza::Command> >	res;
+  std::vector<std::shared_ptr<plz::Command> >	res;
   std::string	curr;
   size_t	pos;
 
@@ -106,7 +106,7 @@ std::vector<std::shared_ptr<Plazza::Command> >	Plazza::Parser::evalString(std::s
       epurStr(curr);
       if (curr.size() > 0)
 	{
-	  std::shared_ptr<Plazza::Command> cmd = createToken(curr);
+	  std::shared_ptr<plz::Command> cmd = createToken(curr);
 	  if (cmd->getFilePaths().size() > 0)
 	    res.push_back(cmd);
 	}
@@ -114,11 +114,11 @@ std::vector<std::shared_ptr<Plazza::Command> >	Plazza::Parser::evalString(std::s
   if (input.size() > 0)
     {
       epurStr(input);
-      std::shared_ptr<Plazza::Command> cmd = createToken(input);
+      std::shared_ptr<plz::Command> cmd = createToken(input);
       if (cmd->getFilePaths().size() > 0)
 	res.push_back(cmd);
     }
   return res;
 }
 
-Plazza::Parser::~Parser() {}
+plz::Parser::~Parser() {}

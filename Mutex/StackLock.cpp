@@ -5,17 +5,17 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Wed Apr 19 12:59:37 2017 Arnaud WURMEL
-// Last update Wed Apr 19 13:00:54 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:43:28 2017 baptiste
 //
 
 #include "StackLock.hh"
 
-Plazza::StackLock::StackLock(std::mutex& mutex) : _mutex(mutex)
+plz::StackLock::StackLock(std::mutex& mutex) : _mutex(mutex)
 {
   _mutex.lock();
 }
 
-Plazza::StackLock::~StackLock()
+plz::StackLock::~StackLock()
 {
   _mutex.unlock();
 }

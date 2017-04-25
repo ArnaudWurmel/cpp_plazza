@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:57:48 2017 Arnaud WURMEL
-// Last update Tue Apr 25 13:26:31 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:44:46 2017 baptiste
 //
 
 #include <fstream>
@@ -24,12 +24,12 @@
 #include "APipe.hh"
 #include "Pipe.hh"
 
-Plazza::Pipe::Pipe(std::string const& pipeName)
+plz::Pipe::Pipe(std::string const& pipeName)
 {
   _pipeName = pipeName;
 }
 
-bool	Plazza::Pipe::openPipe()
+bool	plz::Pipe::openPipe()
 {
   if (mkfifo(_pipeName.c_str(), S_IWUSR | S_IRUSR) == -1)
     return false;
@@ -38,7 +38,7 @@ bool	Plazza::Pipe::openPipe()
   return true;
 }
 
-void	Plazza::Pipe::operator<<(const PipeData& pipeData)
+void	plz::Pipe::operator<<(const PipeData& pipeData)
 {
   PipeData::Data	data;
 
@@ -51,7 +51,7 @@ void	Plazza::Pipe::operator<<(const PipeData& pipeData)
     }
 }
 
-void	Plazza::Pipe::operator>>(PipeData& pipeData)
+void	plz::Pipe::operator>>(PipeData& pipeData)
 {
   int	result;
   PipeData::Data	data;
@@ -80,7 +80,7 @@ void	Plazza::Pipe::operator>>(PipeData& pipeData)
     }
 }
 
-Plazza::Pipe::~Pipe()
+plz::Pipe::~Pipe()
 {
   close(_fd);
   unlink(_pipeName.c_str());

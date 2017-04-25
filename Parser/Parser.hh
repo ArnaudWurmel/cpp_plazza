@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:56:42 2017 Arnaud WURMEL
-// Last update Mon Apr 10 20:55:18 2017 Arnaud WURMEL
+// Last update Tue Apr 25 18:02:43 2017 baptiste
 //
 
 #ifndef PARSER_HH_
 # define PARSER_HH_
 
-namespace	Plazza
+namespace	plz
 {
   class	Parser
   {

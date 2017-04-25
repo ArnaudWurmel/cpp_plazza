@@ -5,13 +5,13 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 14:17:33 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:29:53 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:42:34 2017 baptiste
 //
 
 #ifndef APROCESS_HH_
 # define APROCESS_HH_
 
-namespace	Plazza
+namespace	plz
 {
   class	AProcess
   {

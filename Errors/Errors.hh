@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:23:37 2017 Arnaud WURMEL
-// Last update Mon Apr 10 10:29:49 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:59:40 2017 baptiste
 //
 
 #ifndef ERRORS_HH_
@@ -14,7 +14,7 @@
 # include <string>
 # include <exception>
 
-namespace	Plazza
+namespace	plz
 {
   class	Error : public std::exception
   {
