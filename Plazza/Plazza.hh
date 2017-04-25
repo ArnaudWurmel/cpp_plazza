@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Mon Apr 24 22:28:27 2017 Arnaud WURMEL
+// Last update Tue Apr 25 11:31:54 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -13,6 +13,7 @@
 
 # include <mutex>
 # include <thread>
+# include "UIManager.hh"
 
 namespace	Plazza
 {
@@ -40,6 +41,7 @@ namespace	Plazza
     std::vector<std::shared_ptr<AProcess> >	_process;
     std::unique_ptr<std::thread>		_threadData;
     std::mutex		_writer;
+    plz::UIManager	_manager;
   };
 }
 

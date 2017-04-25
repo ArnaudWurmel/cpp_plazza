@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Tue Apr 25 13:20:44 2017 Arnaud WURMEL
+// Last update Tue Apr 25 11:38:16 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <exception>
+#include "UIManager.hh"
 #include "Logger.hh"
 #include "Command.hh"
 #include "Parser.hh"
@@ -27,7 +28,7 @@
 #include "Plazza.hh"
 #include "StackLock.hh"
 
-Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
+Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads), _manager(maxThreads)
 {
   Logger::addLog("[Plazza] instancied");
   _threadData = std::unique_ptr<std::thread>(new std::thread(&Plazza::threadGetData, this));
@@ -154,6 +155,7 @@ void	Plazza::Plazza::threadGetData()
 	  if (checkExitProcess(it) == false)
 	    ++it;
       	}
+      _manager.updateProcess(_process);
       _writer.unlock();
     }
 }
@@ -178,9 +180,7 @@ void	Plazza::Plazza::mainLoop()
 	  }
 	}
     }
-  while (_process.size())
-    {
-    }
+  while (_process.size()) {}
 }
 
 Plazza::Plazza::~Plazza()

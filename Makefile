@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Mon Apr 24 17:26:57 2017 Arnaud WURMEL
+## Last update Tue Apr 25 11:33:41 2017 Arnaud WURMEL
 ##
 
 
@@ -25,7 +25,8 @@ SRCS		=	Plazza/Plazza.cpp \
 			Mutex/StackLock.cpp \
 			Searcher/Searcher.cpp \
 			Logger/Logger.cpp \
-			srcs/main.cpp
+			UIManager/UIManager.cpp \
+			srcs/main.cpp \
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -49,9 +50,10 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Mutex \
 			-I ./Searcher \
 			-I ./Logger \
+			-I ./UIManager \
 			-I ./Thread
 
-LDFLAGS		=	-lpthread
+LDFLAGS		=	-lpthread -lsfml-graphics -lsfml-window -lsfml-system
 
 CXXFLAGS	+= 	-Wall -Wextra -std=c++14 -g
 
@@ -63,6 +65,11 @@ $(NAME):		title $(OBJS)
 			@$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) &&				\
 			 $(ECHO) $(TEAL)"[OK]" $(GREEN) $(NAME) $(DEFAULT) ||	\
 			 $(ECHO) $(RED)"[KO]" $(NAME) $(DEFAULT)
+
+ui:			CXXFLAGS += -DUIMODE
+ui:			HEADERS	+= -I ./UIManager
+ui:			SRCS += UIManager/UIManager.cpp
+ui:			$(OBJS) $ $(NAME)
 
 .cpp.o:
 			@$(CC) -c $< -o $@ $(HEADERS) $(CXXFLAGS) &&		\
