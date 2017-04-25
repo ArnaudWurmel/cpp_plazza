@@ -5,7 +5,7 @@
 // Login   <wurmel@epitech.net>
 // 
 // Started on  Tue Apr 25 09:27:49 2017 Arnaud WURMEL
-// Last update Tue Apr 25 11:36:31 2017 Arnaud WURMEL
+// Last update Tue Apr 25 13:48:58 2017 Arnaud WURMEL
 //
 
 #ifndef UIMANAGER_HH_
@@ -24,14 +24,26 @@ namespace	plz
   class	UIManager
   {
   public:
+    enum	Color
+      {
+	BACKGROUND = 0,
+	PROCESS_BACKGROUND,
+	THREAD_USED,
+	THREAD_UNUSED
+      };
+  public:
     UIManager(unsigned int);
     ~UIManager();
     
   public:
-    void	updateProcess(std::vector<std::shared_ptr<Plazza::AProcess> > const&);
+    void	updateProcess(std::vector<std::shared_ptr<plz::AProcess> > const&);
 
   private:
-    void	showData(std::vector<std::shared_ptr<Plazza::AProcess> > const&);
+    void	showData(std::vector<std::shared_ptr<plz::AProcess> > const&);
+
+  private:
+    unsigned int	getNbSquare(unsigned int);
+    void		drawSquare(unsigned int, unsigned int, unsigned int, Color const&);
 
   private:
     unsigned int	_maxThread;
@@ -39,6 +51,7 @@ namespace	plz
   private:
     std::unique_ptr<sf::RenderWindow>	_window;
     sf::Image				_image;
+    sf::Color				_color[4];
   };
 }
 

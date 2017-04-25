@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Tue Apr 25 11:38:16 2017 Arnaud WURMEL
+// Last update Tue Apr 25 13:23:43 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -28,14 +28,14 @@
 #include "Plazza.hh"
 #include "StackLock.hh"
 
-Plazza::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads), _manager(maxThreads)
+plz::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads), _manager(maxThreads)
 {
   Logger::addLog("[Plazza] instancied");
   _threadData = std::unique_ptr<std::thread>(new std::thread(&Plazza::threadGetData, this));
   _threadData->detach();
 }
 
-bool	Plazza::Plazza::createNewProcess()
+bool	plz::Plazza::createNewProcess()
 {
   AProcess	*p;
 
@@ -50,7 +50,7 @@ bool	Plazza::Plazza::createNewProcess()
   return true;
 }
 
-void	Plazza::Plazza::assignCommand(std::string const& filepath,
+void	plz::Plazza::assignCommand(std::string const& filepath,
 				      Command::Information const& information,
 				      std::shared_ptr<AProcess>& process)
 {
@@ -66,7 +66,7 @@ void	Plazza::Plazza::assignCommand(std::string const& filepath,
   *process >> status;
 }
 
-void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
+void	plz::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& commands)
 {
   StackLock	locker(_writer);
   PipeData	data(PipeData::DataType::GET_FREE_SPACE);
@@ -91,7 +91,6 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
 	      *(*it) >> status;
 	      if (status.getData()._stockage.integer > 0)
 		{
-		  std::cerr << "No need to create : " << status.getData()._stockage.integer << std::endl;
 		  shouldCreate = false;
 		  assignCommand(*it_filepath, (*it_cmd)->getCommandType(), *it);
 		}
@@ -107,7 +106,7 @@ void	Plazza::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>
     }
 }
 
-bool	Plazza::Plazza::checkExitProcess(std::vector<std::shared_ptr<AProcess> >::iterator& it)
+bool	plz::Plazza::checkExitProcess(std::vector<std::shared_ptr<AProcess> >::iterator& it)
 {
   PipeData	status(PipeData::DataType::GET_PROCESS_END);
 
@@ -121,7 +120,7 @@ bool	Plazza::Plazza::checkExitProcess(std::vector<std::shared_ptr<AProcess> >::i
   return false;
 }
 
-void	Plazza::Plazza::threadGetData()
+void	plz::Plazza::threadGetData()
 {
   PipeData	getter(PipeData::DataType::GET_ORDER_STATE);
   PipeData	separator(PipeData::DataType::UNUSED);
@@ -160,7 +159,7 @@ void	Plazza::Plazza::threadGetData()
     }
 }
 
-void	Plazza::Plazza::mainLoop()
+void	plz::Plazza::mainLoop()
 {
   std::string	line;
   Parser	parser;
@@ -183,7 +182,7 @@ void	Plazza::Plazza::mainLoop()
   while (_process.size()) {}
 }
 
-Plazza::Plazza::~Plazza()
+plz::Plazza::~Plazza()
 {
   _threadData.reset();
   _process.clear();

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Tue Apr 25 11:31:54 2017 Arnaud WURMEL
+// Last update Tue Apr 25 13:23:49 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -15,7 +15,7 @@
 # include <thread>
 # include "UIManager.hh"
 
-namespace	Plazza
+namespace	plz
 {
   class	Plazza
   {

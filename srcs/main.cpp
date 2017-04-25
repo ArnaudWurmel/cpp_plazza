@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 12:46:29 2017 Arnaud WURMEL
-// Last update Thu Apr 20 09:49:20 2017 Arnaud WURMEL
+// Last update Tue Apr 25 13:24:59 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -28,7 +28,7 @@ static bool	check_arg(const char *arg)
 
 int	main(int ac, char **av)
 {
-  std::unique_ptr<Plazza::Plazza>	plazza;
+  std::unique_ptr<plz::Plazza>	plazza;
 
   if (ac != 2 || check_arg(av[1]) == false)
     {
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
       std::cerr << av[0] << " [NB_THREAD_BY_PROCESS > 0]" << std::endl;
       return 1;
     }
-  plazza = std::unique_ptr<Plazza::Plazza>(new Plazza::Plazza(std::stoi(av[1], nullptr)));
+  plazza = std::unique_ptr<plz::Plazza>(new plz::Plazza(std::stoi(av[1], nullptr)));
   plazza->mainLoop();
   return 0;
 }
