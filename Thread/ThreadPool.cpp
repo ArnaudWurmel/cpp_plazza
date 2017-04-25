@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:25:15 2017 Arnaud WURMEL
-// Last update Tue Apr 25 17:54:09 2017 baptiste
+// Last update Tue Apr 25 14:43:22 2017 Arnaud WURMEL
 //
 
 #include <memory>
@@ -24,6 +24,7 @@ plz::ThreadPool::ThreadPool(unsigned int maxThread)
   while (i < maxThread)
     {
       _threadPool.push_back(std::unique_ptr<plz::Thread>(new plz::Thread(*this)));
+      _threadPool.back()->detach();
       ++i;
     }
 }

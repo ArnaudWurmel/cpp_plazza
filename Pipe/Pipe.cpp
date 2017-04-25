@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:57:48 2017 Arnaud WURMEL
-// Last update Tue Apr 25 17:44:46 2017 baptiste
+// Last update Tue Apr 25 14:40:06 2017 Arnaud WURMEL
 //
 
 #include <fstream>
@@ -60,7 +60,10 @@ void	plz::Pipe::operator>>(PipeData& pipeData)
 
   if (_fd != -1)
     {
-      tv.tv_sec = 1;
+      if (getpgid(0) == getpid())
+	tv.tv_sec = 1;
+      else
+	tv.tv_sec = 10000;
       tv.tv_usec = 0;
       FD_ZERO(&readset);
       FD_SET(_fd, &readset);
@@ -73,10 +76,7 @@ void	plz::Pipe::operator>>(PipeData& pipeData)
 	  pipeData.setDataType(data._type);
 	}
       else
-	{
-	  std::cout << result << std::endl;
-	  pipeData.setInteger(-1);
-	}
+	pipeData.setInteger(-1);
     }
 }
 
