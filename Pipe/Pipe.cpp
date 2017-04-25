@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 17:57:48 2017 Arnaud WURMEL
-// Last update Mon Apr 24 13:51:29 2017 Arnaud WURMEL
+// Last update Tue Apr 25 13:26:31 2017 Arnaud WURMEL
 //
 
 #include <fstream>
@@ -17,6 +17,7 @@
 #include <iostream>
 #include <vector>
 #include <unistd.h>
+#include <sys/time.h>
 #include <sys/select.h>
 #include "Command.hh"
 #include "PipeData.hh"
@@ -52,14 +53,30 @@ void	Plazza::Pipe::operator<<(const PipeData& pipeData)
 
 void	Plazza::Pipe::operator>>(PipeData& pipeData)
 {
+  int	result;
   PipeData::Data	data;
+  fd_set		readset;
+  struct timeval	tv;
 
   if (_fd != -1)
     {
+      tv.tv_sec = 1;
+      tv.tv_usec = 0;
+      FD_ZERO(&readset);
+      FD_SET(_fd, &readset);
       memset(&data, 0, sizeof(data));
-      read(_fd, &data, sizeof(data));
-      pipeData.setStockage(data._stockage);
-      pipeData.setDataType(data._type);
+      result = select(_fd + 1, &readset, NULL, NULL, &tv);
+      if (result > 0)
+	{
+	  read(_fd, &data, sizeof(data));
+	  pipeData.setStockage(data._stockage);
+	  pipeData.setDataType(data._type);
+	}
+      else
+	{
+	  std::cout << result << std::endl;
+	  pipeData.setInteger(-1);
+	}
     }
 }
 

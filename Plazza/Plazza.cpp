@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Mon Apr 24 22:43:30 2017 Arnaud WURMEL
+// Last update Tue Apr 25 13:20:44 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -112,7 +112,7 @@ bool	Plazza::Plazza::checkExitProcess(std::vector<std::shared_ptr<AProcess> >::i
 
   *(*it) << status;
   *(*it) >> status;
-  if (status.getData()._stockage.integer == 1)
+  if (status.getData()._stockage.integer == 1 || status.getData()._stockage.integer == -1)
     {
       _process.erase(it);
       return true;
