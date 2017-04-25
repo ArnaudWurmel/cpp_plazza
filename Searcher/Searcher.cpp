@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Tue Apr 25 10:17:59 2017 Arnaud WURMEL
+// Last update Tue Apr 25 17:05:19 2017 baptiste
 //
 
 #include <regex>
@@ -122,41 +122,53 @@ void     Plazza::Searcher::XOR_2byte(std::regex reg, std::string str, std::vecto
 
 void		Plazza::Searcher::cesar(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
 {
-  std::string   res_str; 
   std::smatch	number;
-  int           key = 0;
-  int           i;
 
-  while (key != 127)
+  while (std::regex_search(str, number, reg))
     {
-      i = 0;
-      res_str = "";
-      while (str[i] != '\0')
-	{
-	  res_str += str[i] + key;
-	  i++;
-	}
-      while (std::regex_search(res_str, number, reg))
-	{
-	  vec.push_back(number[0]);
-	  res_str = number.suffix().str();
-	  ret = true;
-	}
-      key++;
+      vec.push_back(number[0]);
+      str = number.suffix().str();
+      ret = true;
     }
 }
 
 void	Plazza::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& vec)
 {
-  std::regex	check_number("(([0][1-9]) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}))");
+  std::string	reg = "(([0][1-9]) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}))";
+  std::string	reg2 = "000100101001000101000001000101000001000101000001000101000000";
+  std::regex	check_number(reg);
   std::smatch	number;
   bool		find = false;
+  int		key = 0;
+  int		i;
 
   while (std::regex_search(str, number, check_number))
     {
       vec.push_back(number[0]);
       str = number.suffix().str();
       find = true;
+    }
+  if (find == true)
+    return ;
+  while (key < 128)
+    {
+      i = 0;
+      while (reg[i] != '\0')
+	{
+	  if (reg2[i] == '1')
+	    reg[i] = (reg[i] + key) % 128;
+	  i++;
+	}
+      
+      std::regex	check_number(reg);
+      
+      while (std::regex_search(str, number, check_number))
+	{
+	  vec.push_back(number[0]);
+	  str = number.suffix().str();
+	  find = true;
+	}
+      key++;
     }
   // if (find == false)
   //   this->cesar(check_number, str, vec, find);
@@ -168,15 +180,41 @@ void	Plazza::Searcher::matchPhoneNumber(std::string str, std::vector<std::string
 
 void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec)
 {
-  std::regex	check_mail("([a-zA-Z0-9_.-]+)@((?:[a-zA-Z0-9]+.)+)([a-zA-Z0-9]{1,4})");
+  std::string	reg = "([a-zA-Z0-9_.-]+)@((?:[a-zA-Z0-9]+.)+)([a-zA-Z0-9]{1,4})";
+  std::string	reg2 = "00101101101111000100000101101101001000001011011010000000";
+  std::regex	check_mail(reg);
   std::smatch	mail;
   bool		find = false;
+  int		key = 0;
+  int		i;
 
   while (std::regex_search(str, mail, check_mail))
     {
       vec.push_back(mail[0]);
       str = mail.suffix().str();
       find = true;
+    }
+  if (find == true)
+    return ;
+  while (key < 128)
+    {
+      i = 0;
+      while (reg[i] != '\0')
+	{
+	  if (reg2[i] == '1')
+	    reg[i] = (reg[i] + key) % 128;
+	  i++;
+	}
+      
+      std::regex	check_mail(reg);
+      
+      while (std::regex_search(str, mail, check_mail))
+	{
+	  vec.push_back(mail[0]);
+	  str = mail.suffix().str();
+	  find = true;
+	}
+      key++;
     }
   // if (find == false)
   //   this->cesar(check_mail, str, vec, find);
@@ -188,15 +226,41 @@ void	Plazza::Searcher::matchEmailAddress(std::string str, std::vector<std::strin
 
 void	Plazza::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
 {
-  std::regex	check_ip("([0-2]?[0-9]?[0-9](\\.[0-2]?[0-9]?[0-9]){3})");
+  std::string	reg = "([0-2]?[0-9]?[0-9](\\.[0-2]?[0-9]?[0-9]){3})";
+  std::string	reg2 = "00101000101000101000010101000101000101000000";
+  std::regex	check_ip(reg);
   std::smatch	ip;
   bool		find = false;
+  int		key = 0;
+  int		i;
 
   while (std::regex_search(str, ip, check_ip))
     {
       vec.push_back(ip[0]);
       str = ip.suffix().str();
       find = true;
+    }
+  if (find == true)
+    return ;
+  while (key < 128)
+    {
+      i = 0;
+      while (reg[i] != '\0')
+	{
+	  if (reg2[i] == '1')
+	    reg[i] = (reg[i] + key) % 128;
+	  i++;
+	}
+
+      std::regex	check_ip(reg);
+      
+      while (std::regex_search(str, ip, check_ip))
+	{
+	  vec.push_back(ip[0]);
+	  str = ip.suffix().str();
+	  find = true;
+	}
+      key++;
     }
   // if (find == false)
   //   this->cesar(check_ip, str, vec, find);
