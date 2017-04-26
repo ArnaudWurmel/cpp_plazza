@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:28:23 2017 Arnaud WURMEL
-// Last update Tue Apr 25 17:53:13 2017 baptiste
+// Last update Wed Apr 26 02:11:52 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -19,6 +19,7 @@ plz::Thread::Thread(plz::ThreadPool& delegate) : _delegate(delegate)
 {
   _state = plz::Thread::ThreadState::DIED;
   _thread = std::unique_ptr<std::thread>(new std::thread(&plz::Thread::threadLoop, this));
+  _thread->detach();
 }
 
 void	plz::Thread::threadLoop()
@@ -30,7 +31,7 @@ void	plz::Thread::threadLoop()
   _state = plz::Thread::ThreadState::WAITING;
   while (1)
     {
-      if (_delegate.haveAvailableTask() == true)
+      if (_delegate.haveAvailableTask() > 0)
       	{
       	  ret = _delegate.getATask(success);
       	  if (success)
@@ -43,7 +44,7 @@ void	plz::Thread::threadLoop()
 	    }
       	}
       _state = plz::Thread::ThreadState::WAITING;
-      if (_delegate.haveAvailableTask() == false)
+      if (_delegate.haveAvailableTask() == 0)
       	_delegate.waitForNewCommand();
     }
 }

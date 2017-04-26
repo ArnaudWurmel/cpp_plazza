@@ -5,13 +5,14 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 12:46:29 2017 Arnaud WURMEL
-// Last update Tue Apr 25 13:24:59 2017 Arnaud WURMEL
+// Last update Wed Apr 26 01:22:56 2017 Arnaud WURMEL
 //
 
 #include <iostream>
 #include <string>
 #include <memory>
 #include <vector>
+#include "Logger.hh"
 #include "Command.hh"
 #include "PipeData.hh"
 #include "APipe.hh"
@@ -36,6 +37,7 @@ int	main(int ac, char **av)
       std::cerr << av[0] << " [NB_THREAD_BY_PROCESS > 0]" << std::endl;
       return 1;
     }
+  plz::Logger::resetLogFile();
   plazza = std::unique_ptr<plz::Plazza>(new plz::Plazza(std::stoi(av[1], nullptr)));
   plazza->mainLoop();
   return 0;

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Tue Apr 25 13:23:43 2017 Arnaud WURMEL
+// Last update Wed Apr 26 02:19:34 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -180,11 +180,11 @@ void	plz::Plazza::mainLoop()
 	}
     }
   while (_process.size()) {}
+  _threadData.reset();
 }
 
 plz::Plazza::~Plazza()
 {
-  _threadData.reset();
   _process.clear();
   Logger::addLog("[Plazza] deleted");
 }

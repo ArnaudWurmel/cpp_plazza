@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Tue Apr 25 18:03:01 2017 baptiste
+// Last update Wed Apr 26 02:08:30 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -107,7 +107,12 @@ void	plz::Process::getFreeSpace(PipeData const& pipeData)
   if (pipeData.getDataType() == plz::PipeData::DataType::GET_FREE_SPACE)
     {
       if (_isAlive)
-	send.setInteger((2 * _maxThread) - ((_maxThread - _pool->getFreeThread()) + _pool->haveAvailableTask()));
+	{
+	  std::cout << "Max command : " << (2 * _maxThread) << std::endl;
+	  std::cout << "Used thread : " << _maxThread - _pool->getFreeThread() << std::endl;
+	  std::cout << "Task list : " << _pool->haveAvailableTask() << std::endl;
+	  send.setInteger((2 * _maxThread) - ((_maxThread - _pool->getFreeThread()) + _pool->haveAvailableTask()));
+	}
       else
 	send.setInteger(-1);
       *_out << send;
@@ -156,6 +161,7 @@ void	plz::Process::addCommand(PipeData const& pipeData)
     {
       *_out << separator;
       *_in >> data;
+      std::cerr << "Add a command" << std::endl;
       std::shared_ptr<plz::ThreadTask>	ptr(new plz::ThreadTask(data.getData()._stockage.string, static_cast<Command::Information>(pipeData.getData()._stockage.integer)));
 
       _pool->insertNewTask(ptr);

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:21:44 2017 Arnaud WURMEL
-// Last update Tue Apr 25 17:54:47 2017 baptiste
+// Last update Wed Apr 26 02:10:41 2017 Arnaud WURMEL
 //
 
 #ifndef THREADPOOL_HH_
@@ -33,7 +33,7 @@ namespace	plz
     void	insertEndedTask(std::shared_ptr<plz::ThreadTask> const&);
 
   public:
-    bool	haveAvailableTask() const;
+    unsigned int	haveAvailableTask() const;
     void	waitForNewCommand();
 
   public:

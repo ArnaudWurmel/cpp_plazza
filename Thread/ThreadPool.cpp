@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:25:15 2017 Arnaud WURMEL
-// Last update Tue Apr 25 14:43:22 2017 Arnaud WURMEL
+// Last update Wed Apr 26 02:10:33 2017 Arnaud WURMEL
 //
 
 #include <memory>
@@ -24,7 +24,6 @@ plz::ThreadPool::ThreadPool(unsigned int maxThread)
   while (i < maxThread)
     {
       _threadPool.push_back(std::unique_ptr<plz::Thread>(new plz::Thread(*this)));
-      _threadPool.back()->detach();
       ++i;
     }
 }
@@ -78,11 +77,9 @@ void	plz::ThreadPool::insertNewTask(std::shared_ptr<plz::ThreadTask> const& task
   _condVar.notify_one();
 }
 
-bool	plz::ThreadPool::haveAvailableTask() const
+unsigned int	plz::ThreadPool::haveAvailableTask() const
 {
-  if (_taskQueue.size() > 0)
-    return true;
-  return false;
+  return _taskQueue.size();
 }
 
 unsigned int	plz::ThreadPool::haveEndedTask() const
