@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Wed Apr 26 18:25:13 2017 baptiste
+// Last update Wed Apr 26 18:31:57 2017 baptiste
 //
 
 #include <regex>
@@ -26,13 +26,13 @@ void		plz::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std:
   int           key = 0;
   int           i;
 
-  while (key <= 127)
+  while (key <= 255)
     {
       i = 0;
       res_str = "";
       while (str[i] != '\0')
 	{
-	  res_str += (str[i] ^ key) % 128;
+	  res_str += str[i] ^ key;
 	  i++;
 	}
       while (std::regex_search(res_str, number, reg))
@@ -55,16 +55,16 @@ void     plz::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<s
   int           key2;
   int           i;
 
-  while (key <= 127)
+  while (key <= 255)
     {
       key2 = 0;
-      while (key2 <= 127)
+      while (key2 <= 255)
 	{
 	  i = 0;
 	  res_str = "";
 	  while (str[i] != '\0')
 	    {
-	      res_str += (str[i] ^ key) % 128;
+	      res_str += str[i] ^ key;
 	      i++;
 	    }
 	  while (std::regex_search(res_str, number, reg))
