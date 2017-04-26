@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:14:19 2017 baptiste
-// Last update Tue Apr 25 17:41:55 2017 baptiste
+// Last update Wed Apr 26 18:20:01 2017 baptiste
 //
 
 #ifndef SEARCHER_HH_
@@ -24,8 +24,6 @@ namespace	plz
     ~Searcher();
     
   public:
-    void	XOR_change(std::string, std::string, std::string&);
-    void	itoa(char, std::string&);
     void	XOR_1byte(std::regex, std::string, std::vector<std::string>&, bool&);
     void	XOR_2byte(std::regex, std::string, std::vector<std::string>&, bool&);
     void	cesar(std::regex, std::string, std::vector<std::string>&, bool&);
