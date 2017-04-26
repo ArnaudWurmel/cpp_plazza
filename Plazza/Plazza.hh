@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Tue Apr 25 13:23:49 2017 Arnaud WURMEL
+// Last update Wed Apr 26 04:20:37 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -41,7 +41,7 @@ namespace	plz
     std::vector<std::shared_ptr<AProcess> >	_process;
     std::unique_ptr<std::thread>		_threadData;
     std::mutex		_writer;
-    plz::UIManager	_manager;
+    plz::UIManager	*_manager;
   };
 }
 

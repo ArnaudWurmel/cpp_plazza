@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 26 02:19:34 2017 Arnaud WURMEL
+// Last update Wed Apr 26 04:21:13 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -28,9 +28,10 @@
 #include "Plazza.hh"
 #include "StackLock.hh"
 
-plz::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads), _manager(maxThreads)
+plz::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads), _manager(NULL)
 {
   Logger::addLog("[Plazza] instancied");
+  _manager = new UIManager(maxThreads);
   _threadData = std::unique_ptr<std::thread>(new std::thread(&Plazza::threadGetData, this));
   _threadData->detach();
 }
@@ -44,7 +45,7 @@ bool	plz::Plazza::createNewProcess()
     _process.push_back(std::shared_ptr<AProcess>(p));
   }
   catch (std::exception &e) {
-    std::cout << e.what() << std::endl;
+    std::cerr << e.what() << std::endl;
     return false;
   }
   return true;
@@ -154,7 +155,7 @@ void	plz::Plazza::threadGetData()
 	  if (checkExitProcess(it) == false)
 	    ++it;
       	}
-      _manager.updateProcess(_process);
+      _manager->updateProcess(_process);
       _writer.unlock();
     }
 }
@@ -175,7 +176,7 @@ void	plz::Plazza::mainLoop()
 	    commands.clear();
 	  }
 	  catch (std::exception& e)	{
-	    std::cout << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
+	    std::cerr << "\033[31m[ KO ]\033[0m\t" << e.what() << std::endl;
 	  }
 	}
     }
@@ -185,6 +186,9 @@ void	plz::Plazza::mainLoop()
 
 plz::Plazza::~Plazza()
 {
+  _threadData.reset();
   _process.clear();
   Logger::addLog("[Plazza] deleted");
+  if (_manager)
+    delete _manager;
 }

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 17 19:21:44 2017 Arnaud WURMEL
-// Last update Wed Apr 26 02:10:41 2017 Arnaud WURMEL
+// Last update Wed Apr 26 03:50:32 2017 Arnaud WURMEL
 //
 
 #ifndef THREADPOOL_HH_
@@ -41,7 +41,7 @@ namespace	plz
     std::shared_ptr<plz::ThreadTask>	getAEndedTask();
 
   private:
-    std::vector<std::unique_ptr<plz::Thread> >	_threadPool;
+    std::vector<std::unique_ptr<plz::Thread> >		_threadPool;
     std::queue<std::shared_ptr<plz::ThreadTask> >	_taskQueue;
     std::queue<std::shared_ptr<plz::ThreadTask> >	_endedTask;
     std::mutex						_queueLocker;

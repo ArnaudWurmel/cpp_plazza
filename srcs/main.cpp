@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 12:46:29 2017 Arnaud WURMEL
-// Last update Wed Apr 26 01:22:56 2017 Arnaud WURMEL
+// Last update Wed Apr 26 04:26:06 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -38,7 +38,12 @@ int	main(int ac, char **av)
       return 1;
     }
   plz::Logger::resetLogFile();
-  plazza = std::unique_ptr<plz::Plazza>(new plz::Plazza(std::stoi(av[1], nullptr)));
-  plazza->mainLoop();
+  try {
+    plazza = std::unique_ptr<plz::Plazza>(new plz::Plazza(std::stoi(av[1], nullptr)));
+    plazza->mainLoop();
+  }
+  catch (std::exception& e) {
+    std::cerr << e.what() << std::endl;
+  }
   return 0;
 }
