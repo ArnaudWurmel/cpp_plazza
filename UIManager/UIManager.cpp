@@ -5,8 +5,10 @@
 // Login   <wurmel@epitech.net>
 // 
 // Started on  Tue Apr 25 09:27:26 2017 Arnaud WURMEL
-// Last update Tue Apr 25 14:15:23 2017 Arnaud WURMEL
+// Last update Wed Apr 26 08:46:14 2017 Arnaud WURMEL
 //
+
+#ifdef UIMODE
 
 #include <iostream>
 #include "UIManager.hh"
@@ -115,3 +117,5 @@ void	plz::UIManager::drawSquare(unsigned int x, unsigned int y, unsigned int siz
 }
 
 plz::UIManager::~UIManager() {}
+
+#endif

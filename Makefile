@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Tue Apr 25 11:33:41 2017 Arnaud WURMEL
+## Last update Wed Apr 26 08:48:18 2017 Arnaud WURMEL
 ##
 
 
@@ -14,6 +14,7 @@ RM		=	rm -f
 
 SRCS		=	Plazza/Plazza.cpp \
 			Errors/Errors.cpp \
+			Errors/ProcessError.cpp \
 			Process/Process.cpp \
 			Parser/Parser.cpp \
 			Parser/Command.cpp \
@@ -24,8 +25,8 @@ SRCS		=	Plazza/Plazza.cpp \
 			Thread/ThreadTask.cpp \
 			Mutex/StackLock.cpp \
 			Searcher/Searcher.cpp \
-			Logger/Logger.cpp \
 			UIManager/UIManager.cpp \
+			Logger/Logger.cpp \
 			srcs/main.cpp \
 
 OBJS		=	$(SRCS:.cpp=.o)
@@ -50,25 +51,23 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Mutex \
 			-I ./Searcher \
 			-I ./Logger \
-			-I ./UIManager \
 			-I ./Thread
 
 LDFLAGS		=	-lpthread -lsfml-graphics -lsfml-window -lsfml-system
 
-CXXFLAGS	+= 	-Wall -Wextra -std=c++14 -g
+CXXFLAGS	+= 	-Wall -Wextra -std=c++14
 
 NAME		=	plazza
 
 all:			$(NAME)
 
 $(NAME):		title $(OBJS)
-			@$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) &&				\
+			@$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) &&			\
 			 $(ECHO) $(TEAL)"[OK]" $(GREEN) $(NAME) $(DEFAULT) ||	\
 			 $(ECHO) $(RED)"[KO]" $(NAME) $(DEFAULT)
 
 ui:			CXXFLAGS += -DUIMODE
 ui:			HEADERS	+= -I ./UIManager
-ui:			SRCS += UIManager/UIManager.cpp
 ui:			$(OBJS) $ $(NAME)
 
 .cpp.o:

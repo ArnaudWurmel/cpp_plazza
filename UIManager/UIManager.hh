@@ -5,11 +5,13 @@
 // Login   <wurmel@epitech.net>
 // 
 // Started on  Tue Apr 25 09:27:49 2017 Arnaud WURMEL
-// Last update Tue Apr 25 13:48:58 2017 Arnaud WURMEL
+// Last update Wed Apr 26 08:45:32 2017 Arnaud WURMEL
 //
 
 #ifndef UIMANAGER_HH_
 # define UIMANAGER_HH_
+
+#ifdef UIMODE
 
 # include <vector>
 # include <memory>
@@ -55,4 +57,5 @@ namespace	plz
   };
 }
 
+#endif
 #endif /* !UIMANAGER_HH_ */

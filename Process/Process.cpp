@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 26 04:15:09 2017 Arnaud WURMEL
+// Last update Wed Apr 26 07:27:20 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -30,6 +30,7 @@
 #include "Process.hh"
 #include "ThreadTask.hh"
 #include "Errors.hh"
+#include "ProcessError.hh"
 
 unsigned int	plz::Process::processId = 0;
 
@@ -40,9 +41,11 @@ plz::Process::Process(unsigned int maxThread)
   _lastUpdate = 0;
   std::string	pipePath = "/tmp/" + std::to_string(plz::Process::processId);
   _in = std::shared_ptr<APipe>(new Pipe(pipePath + ".in.fifo"));
-  _in->openPipe();
   _out = std::shared_ptr<APipe>(new Pipe(pipePath + ".out.fifo"));
-  _out->openPipe();
+  if (_in->openPipe() == false || _out->openPipe() == false)
+    {
+      throw ProcessError("Can't create pipe for process");
+    }
   plz::Process::processId += 1;
   _pid = fork();
   if (_pid == -1)

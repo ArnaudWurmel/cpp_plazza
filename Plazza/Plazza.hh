@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Wed Apr 26 06:26:08 2017 Arnaud WURMEL
+// Last update Wed Apr 26 08:47:10 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -13,7 +13,10 @@
 
 # include <mutex>
 # include <thread>
-# include "UIManager.hh"
+
+# ifdef UIMODE
+#  include "UIManager.hh"
+# endif
 
 namespace	plz
 {
@@ -41,7 +44,10 @@ namespace	plz
     std::vector<std::shared_ptr<AProcess> >	_process;
     std::unique_ptr<std::thread>		_threadData;
     std::mutex		_writer;
+
+    #ifdef UIMODE
     std::unique_ptr<plz::UIManager>		_manager;
+    #endif
   };
 }
 
