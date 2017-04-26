@@ -5,7 +5,7 @@
 // Login   <wurmel@epitech.net>
 // 
 // Started on  Tue Apr 25 09:27:26 2017 Arnaud WURMEL
-// Last update Wed Apr 26 08:46:14 2017 Arnaud WURMEL
+// Last update Wed Apr 26 10:16:14 2017 Arnaud WURMEL
 //
 
 #ifdef UIMODE
@@ -52,12 +52,14 @@ void	plz::UIManager::showData(std::vector<std::shared_ptr<plz::AProcess> > const
   unsigned int	idx_thread;
   unsigned int	squareSize;
   unsigned int	squareThreadSize;
+  unsigned int	nbSquareProcess;
 
   drawSquare(0, 0, _image.getSize().x, BACKGROUND);
   if ((nbSquare = getNbSquare(processList.size())) > 0)
     {
       squareSize = _image.getSize().x / nbSquare;
-      squareThreadSize = (squareSize - 10) / _maxThread;
+      nbSquareProcess = getNbSquare(_maxThread);
+      squareThreadSize = (squareSize - 10) / nbSquareProcess;
       it = processList.begin();
       idx = 0;
       while (it != processList.end())
@@ -69,12 +71,15 @@ void	plz::UIManager::showData(std::vector<std::shared_ptr<plz::AProcess> > const
 	  idx_thread = 0;
 	  while (idx_thread < _maxThread)
 	    {
-	      unsigned int	x = (5 + (idx % nbSquare) * squareSize) + (idx_thread % _maxThread) * squareThreadSize;
-	      unsigned int	y = (5 + (idx / nbSquare) * squareSize) + (idx_thread / _maxThread) * squareThreadSize;;
-	      if (idx_thread < _maxThread - value.getData()._stockage.integer)
-		drawSquare(x, y, squareThreadSize, THREAD_USED);
-	      else
-		drawSquare(x, y, squareThreadSize, THREAD_UNUSED);
+	      if (nbSquare > 0)
+		{
+		  unsigned int	x = (5 + (idx % nbSquare) * squareSize) + (idx_thread % nbSquareProcess) * squareThreadSize;
+		  unsigned int	y = (5 + (idx / nbSquare) * squareSize) + (idx_thread / nbSquareProcess) * squareThreadSize;
+		  if (idx_thread < _maxThread - value.getData()._stockage.integer)
+		    drawSquare(x, y, squareThreadSize, THREAD_USED);
+		  else
+		    drawSquare(x, y, squareThreadSize, THREAD_UNUSED);
+		}
 	      ++idx_thread;
 	    }
 	  ++idx;

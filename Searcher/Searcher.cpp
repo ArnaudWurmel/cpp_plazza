@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Wed Apr 26 18:40:16 2017 baptiste
+// Last update Wed Apr 26 10:10:00 2017 Arnaud WURMEL
 //
 
 #include <regex>
@@ -77,7 +77,6 @@ void     plz::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<s
 	    return ;
 	  key2++;
 	}
-      std::cout << "BOUCLE" << std::endl;
       key++;
     }
 }
