@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 26 02:08:30 2017 Arnaud WURMEL
+// Last update Wed Apr 26 03:41:27 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -77,7 +77,8 @@ void	plz::Process::runProcess()
       *_in >> data;
       if (functionPtr.find(data.getDataType()) != functionPtr.end())
 	functionPtr[data.getDataType()](data);
-      if (_pool->haveAvailableTask() == 0 && _pool->haveEndedTask() == 0)
+      if (_pool->haveAvailableTask() == 0 && _pool->haveEndedTask() == 0 &&
+	  _pool->getFreeThread() == _maxThread)
 	{
 	  if (_lastUpdate != 0 && _lastUpdate + 5 < time(0))
 	    _isAlive = false;
