@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 26 04:21:13 2017 Arnaud WURMEL
+// Last update Wed Apr 26 06:26:48 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -28,10 +28,10 @@
 #include "Plazza.hh"
 #include "StackLock.hh"
 
-plz::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads), _manager(NULL)
+plz::Plazza::Plazza(unsigned int maxThreads) : _maxThreads(maxThreads)
 {
   Logger::addLog("[Plazza] instancied");
-  _manager = new UIManager(maxThreads);
+  _manager = std::unique_ptr<UIManager>(new UIManager(maxThreads));
   _threadData = std::unique_ptr<std::thread>(new std::thread(&Plazza::threadGetData, this));
   _threadData->detach();
 }
@@ -182,13 +182,11 @@ void	plz::Plazza::mainLoop()
     }
   while (_process.size()) {}
   _threadData.reset();
+  _manager.reset();
 }
 
 plz::Plazza::~Plazza()
 {
-  _threadData.reset();
   _process.clear();
   Logger::addLog("[Plazza] deleted");
-  if (_manager)
-    delete _manager;
 }
