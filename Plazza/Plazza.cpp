@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 26 08:47:46 2017 Arnaud WURMEL
+// Last update Wed Apr 26 11:49:55 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -91,12 +91,12 @@ void	plz::Plazza::dispatchCommand(const std::vector<std::shared_ptr<Command>>& c
 	    {
 	      *(*it) << data;
 	      *(*it) >> status;
-	      if (status.getData()._stockage.integer > 0)
+	      if (status.getInteger() > 0)
 		{
 		  shouldCreate = false;
 		  assignCommand(*it_filepath, (*it_cmd)->getCommandType(), *it);
 		}
-	      else if (status.getData()._stockage.integer == -1)
+	      else if (status.getInteger() == -1)
 		_process.erase(it);
 	      ++it;
 	    }
@@ -114,7 +114,7 @@ bool	plz::Plazza::checkExitProcess(std::vector<std::shared_ptr<AProcess> >::iter
 
   *(*it) << status;
   *(*it) >> status;
-  if (status.getData()._stockage.integer == 1 || status.getData()._stockage.integer == -1)
+  if (status.getInteger() == 1 || status.getInteger() == -1)
     {
       _process.erase(it);
       return true;
@@ -143,13 +143,13 @@ void	plz::Plazza::threadGetData()
 	      int nb;
 	      
 	      *(*it) << separator;
-	      for (nb = 0; nb < data.getData()._stockage.integer; nb++)
+	      for (nb = 0; nb < data.getInteger(); nb++)
 	      	{
 	      	  *(*it) >> result;
-	      	  std::cout << result.getData()._stockage.string << std::endl;
+	      	  std::cout << result.getString() << std::endl;
 		  *(*it) << separator;
 	      	}
-	      if (data.getData()._stockage.integer > 0)
+	      if (data.getInteger() > 0)
 		std::cout << std::endl;
 	      *(*it) >> separator;
 	    }

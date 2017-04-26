@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 26 07:27:20 2017 Arnaud WURMEL
+// Last update Wed Apr 26 11:45:52 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -160,7 +160,7 @@ void	plz::Process::addCommand(PipeData const& pipeData)
     {
       *_out << separator;
       *_in >> data;
-      std::shared_ptr<plz::ThreadTask>	ptr(new plz::ThreadTask(data.getData()._stockage.string, static_cast<Command::Information>(pipeData.getData()._stockage.integer)));
+      std::shared_ptr<plz::ThreadTask>	ptr(new plz::ThreadTask(data.getString(), static_cast<Command::Information>(pipeData.getInteger())));
 
       _pool->insertNewTask(ptr);
       *_out << separator;

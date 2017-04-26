@@ -5,7 +5,7 @@
 // Login   <wurmel@epitech.net>
 // 
 // Started on  Tue Apr 25 09:27:26 2017 Arnaud WURMEL
-// Last update Wed Apr 26 10:16:14 2017 Arnaud WURMEL
+// Last update Wed Apr 26 11:46:25 2017 Arnaud WURMEL
 //
 
 #ifdef UIMODE
@@ -75,7 +75,7 @@ void	plz::UIManager::showData(std::vector<std::shared_ptr<plz::AProcess> > const
 		{
 		  unsigned int	x = (5 + (idx % nbSquare) * squareSize) + (idx_thread % nbSquareProcess) * squareThreadSize;
 		  unsigned int	y = (5 + (idx / nbSquare) * squareSize) + (idx_thread / nbSquareProcess) * squareThreadSize;
-		  if (idx_thread < _maxThread - value.getData()._stockage.integer)
+		  if (idx_thread < _maxThread - value.getInteger())
 		    drawSquare(x, y, squareThreadSize, THREAD_USED);
 		  else
 		    drawSquare(x, y, squareThreadSize, THREAD_UNUSED);

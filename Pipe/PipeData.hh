@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 20:16:58 2017 Arnaud WURMEL
-// Last update Tue Apr 25 17:48:42 2017 baptiste
+// Last update Wed Apr 26 11:41:57 2017 Arnaud WURMEL
 //
 
 #ifndef APIPEDATA_HH_
@@ -53,11 +53,14 @@ namespace	plz
     DataType const&	getDataType() const;
 
   public:
-    void	setInteger(uint32_t value);
+    void	setInteger(int32_t value);
     void	setString(std::string const&);
     void	setDataType(DataType const& type);
     void	setStockage(DataStockage const&);
 
+  public:
+    int32_t const&	getInteger() const;
+    std::string	getString() const;
 
   private:
     Data	_data;

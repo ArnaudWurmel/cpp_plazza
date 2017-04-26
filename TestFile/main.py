@@ -1,3 +1,9 @@
+##
+## Made by Arnaud WURMEL
+##
+## for cpp_plazza
+##
+
 #!/usr/bin/python3
 import sys
 import random
