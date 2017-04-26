@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Wed Apr 26 18:31:57 2017 baptiste
+// Last update Wed Apr 26 18:40:16 2017 baptiste
 //
 
 #include <regex>
@@ -77,6 +77,7 @@ void     plz::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<s
 	    return ;
 	  key2++;
 	}
+      std::cout << "BOUCLE" << std::endl;
       key++;
     }
 }
@@ -124,8 +125,8 @@ void	plz::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& 
     }
   if (find == false)
     this->cesar(check_number, str, vec, find);
-  // if (find == false)
-  //   this->XOR_1byte(check_number, str, vec, find);
+  if (find == false)
+    this->XOR_1byte(check_number, str, vec, find);
   //if (find == false)
   //this->XOR_2byte(check_number, str, vec, find);
 }
@@ -145,10 +146,10 @@ void	plz::Searcher::matchEmailAddress(std::string str, std::vector<std::string>&
     }
   if (find == false)
     this->cesar(check_mail, str, vec, find);
-  // if (find == false)
-  //   this->XOR_1byte(check_mail, str, vec, find);
-  // if (find == false)
-  //   this->XOR_2byte(check_mail, str, vec, find);
+  if (find == false)
+    this->XOR_1byte(check_mail, str, vec, find);
+  //if (find == false)
+  //this->XOR_2byte(check_mail, str, vec, find);
 }
 
 void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
@@ -166,10 +167,10 @@ void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& ve
     }
   if (find == false)
     this->cesar(check_ip, str, vec, find);
-  // if (find == false)
-  //   this->XOR_1byte(check_ip, str, vec, find);
-  // if (find == false)
-  //   this->XOR_2byte(check_ip, str, vec, find);
+  if (find == false)
+    this->XOR_1byte(check_ip, str, vec, find);
+  //if (find == false)
+  //this->XOR_2byte(check_ip, str, vec, find);
 }
 
 std::vector<std::string>	plz::Searcher::checkInformation(Command::Information inf, std::string file)
