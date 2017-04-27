@@ -5,7 +5,7 @@
 ## Login   <wurmel_a@epitech.net>
 ## 
 ## Started on  Mon Apr 10 10:30:16 2017 Arnaud WURMEL
-## Last update Wed Apr 26 08:48:18 2017 Arnaud WURMEL
+## Last update Thu Apr 27 10:35:04 2017 Arnaud WURMEL
 ##
 
 
@@ -53,7 +53,7 @@ HEADERS		+=	-I ./Plazza \
 			-I ./Logger \
 			-I ./Thread
 
-LDFLAGS		=	-lpthread -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS		=	-lpthread
 
 CXXFLAGS	+= 	-Wall -Wextra -std=c++14
 
@@ -67,8 +67,10 @@ $(NAME):		title $(OBJS)
 			 $(ECHO) $(RED)"[KO]" $(NAME) $(DEFAULT)
 
 ui:			CXXFLAGS += -DUIMODE
+ui:			LDFLAGS +=  -lsfml-graphics -lsfml-window -lsfml-system
 ui:			HEADERS	+= -I ./UIManager
 ui:			$(OBJS) $ $(NAME)
+			make -C uimode/
 
 .cpp.o:
 			@$(CC) -c $< -o $@ $(HEADERS) $(CXXFLAGS) &&		\
@@ -80,8 +82,10 @@ title:
 
 clean:
 			$(RM) $(OBJS)
+			$(RM) -f uimode/*.o
 
 fclean:			clean
 			$(RM) $(NAME)
+			$(RM) uimode/cpp_$(NAME)
 
 re:			fclean all
