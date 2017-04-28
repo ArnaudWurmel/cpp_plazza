@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Tue Apr 11 14:17:33 2017 Arnaud WURMEL
-// Last update Tue Apr 25 17:42:34 2017 baptiste
+// Last update Fri Apr 28 06:22:49 2017 Arnaud WURMEL
 //
 
 #ifndef APROCESS_HH_
@@ -13,7 +13,7 @@
 
 namespace	plz
 {
-  class	AProcess
+  class		AProcess
   {
   public:
     enum	AutoOrder
