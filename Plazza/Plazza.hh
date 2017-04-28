@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:20:05 2017 Arnaud WURMEL
-// Last update Wed Apr 26 08:47:10 2017 Arnaud WURMEL
+// Last update Fri Apr 28 22:55:21 2017 Arnaud WURMEL
 //
 
 #ifndef PLAZZA_HH_
@@ -38,6 +38,7 @@ namespace	plz
 			      std::shared_ptr<AProcess>&);
     bool	createNewProcess();
     bool	checkExitProcess(std::vector<std::shared_ptr<AProcess> >::iterator&);
+    void	notifyProcessMainExit();
 
   private:
     unsigned int	_maxThreads;

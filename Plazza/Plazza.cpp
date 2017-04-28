@@ -5,10 +5,12 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Wed Apr 26 11:49:55 2017 Arnaud WURMEL
+// Last update Fri Apr 28 22:55:55 2017 Arnaud WURMEL
 //
 
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include <string>
 #include <vector>
 #include <memory>
@@ -160,7 +162,25 @@ void	plz::Plazza::threadGetData()
       _manager->updateProcess(_process);
       #endif
       _writer.unlock();
+      #ifdef UIMODE
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      #endif
     }
+}
+
+void	plz::Plazza::notifyProcessMainExit()
+{
+  PipeData	exiting(PipeData::DataType::MAIN_ENDED);
+  std::vector<std::shared_ptr<AProcess>>::iterator	it;
+
+  _writer.lock();
+  it = _process.begin();
+  while (it != _process.end())
+    {
+      *(*it) << exiting;
+      ++it;
+    }
+  _writer.unlock();
 }
 
 void	plz::Plazza::mainLoop()
@@ -183,6 +203,7 @@ void	plz::Plazza::mainLoop()
 	  }
 	}
     }
+  notifyProcessMainExit();
   while (_process.size()) {}
   _writer.lock();
   _threadData.reset();

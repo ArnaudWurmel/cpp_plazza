@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Wed Apr 26 11:45:52 2017 Arnaud WURMEL
+// Last update Fri Apr 28 22:58:35 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -39,6 +39,7 @@ plz::Process::Process(unsigned int maxThread)
   _pid = -1;
   _maxThread = maxThread;
   _lastUpdate = 0;
+  _mainEnded = false;
   std::string	pipePath = "/tmp/" + std::to_string(plz::Process::processId);
   _in = std::shared_ptr<APipe>(new Pipe(pipePath + ".in.fifo"));
   _out = std::shared_ptr<APipe>(new Pipe(pipePath + ".out.fifo"));
@@ -75,6 +76,7 @@ void	plz::Process::runProcess()
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_ORDER_STATE, std::bind(&plz::Process::sendData, this, std::placeholders::_1)));
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_PROCESS_END, std::bind(&plz::Process::getProcessEnd, this, std::placeholders::_1)));
   functionPtr.insert(std::make_pair(PipeData::DataType::GET_FREE_SPACE, std::bind(&plz::Process::getFreeSpace, this, std::placeholders::_1)));
+  functionPtr.insert(std::make_pair(PipeData::DataType::MAIN_ENDED, std::bind(&plz::Process::mainHaveEnded, this, std::placeholders::_1)));
   while (true)
     {
       *_in >> data;
@@ -96,7 +98,12 @@ void	plz::Process::getProcessEnd(PipeData const& pipeData)
 
   if (pipeData.getDataType() == plz::PipeData::DataType::GET_PROCESS_END)
     {
-      if (_isAlive)
+      if (_mainEnded == true && _pool->haveAvailableTask() == 0 && _pool->haveEndedTask() == 0 &&
+	  _pool->getFreeThread() == _maxThread)
+	{
+	  res.setInteger(1);
+	}
+      else if (_isAlive)
 	res.setInteger(0);
       else
 	res.setInteger(1);
@@ -161,7 +168,6 @@ void	plz::Process::addCommand(PipeData const& pipeData)
       *_out << separator;
       *_in >> data;
       std::shared_ptr<plz::ThreadTask>	ptr(new plz::ThreadTask(data.getString(), static_cast<Command::Information>(pipeData.getInteger())));
-
       _pool->insertNewTask(ptr);
       *_out << separator;
     }
@@ -183,6 +189,14 @@ void	plz::Process::getInfo(plz::PipeData const& pipeData)
       else
 	send.setInteger(-1);
       *_out << send;
+    }
+}
+
+void	plz::Process::mainHaveEnded(plz::PipeData const& pipeData)
+{
+  if (pipeData.getDataType() == plz::PipeData::DataType::MAIN_ENDED)
+    {
+      _mainEnded = true;
     }
 }
 

@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Tue Apr 25 18:03:15 2017 baptiste
+// Last update Fri Apr 28 22:16:37 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -48,10 +48,12 @@ namespace	plz
     void	addCommand(PipeData const&);
     void	sendData(PipeData const&);
     void	getProcessEnd(PipeData const&);
+    void	mainHaveEnded(PipeData const&);
 
   private:
     time_t			_lastUpdate;
     bool			_isAlive;
+    bool			_mainEnded;
     unsigned int		_maxThread;
     pid_t			_pid;
     std::shared_ptr<APipe>	_in;

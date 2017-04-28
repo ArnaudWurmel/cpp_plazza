@@ -19,16 +19,17 @@ namespace	plz
   {
   public:
     enum	DataType : int
-      {
-	FAILURE = -1,
+    {
+      FAILURE = -1,
 	UNUSED = 0,
 	GET_PROCESS_INFO,
 	GET_FREE_SPACE,
 	GET_ORDER_STATE,
 	GET_PROCESS_END,
 	SEND_DATA,
+	MAIN_ENDED,
 	ASSIGN_ORDER
-      };
+     };
     
   public:
     union	DataStockage
