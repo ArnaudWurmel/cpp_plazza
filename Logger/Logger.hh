@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Thu Apr 20 09:36:05 2017 Arnaud WURMEL
-// Last update Tue Apr 25 17:43:13 2017 baptiste
+// Last update Fri Apr 28 23:44:46 2017 Arnaud WURMEL
 //
 
 #ifndef LOGGER_HH_
@@ -20,6 +20,9 @@ namespace	plz
   public:
     static void	addLog(std::string const&);
     static void	resetLogFile();
+
+    static void	addResult(std::string const&);
+    static void	endResult();
   };
 }
 

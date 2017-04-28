@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 10:19:33 2017 Arnaud WURMEL
-// Last update Fri Apr 28 22:55:55 2017 Arnaud WURMEL
+// Last update Fri Apr 28 23:46:21 2017 Arnaud WURMEL
 //
 
 #include <iostream>
@@ -149,10 +149,14 @@ void	plz::Plazza::threadGetData()
 	      	{
 	      	  *(*it) >> result;
 	      	  std::cout << result.getString() << std::endl;
+		  plz::Logger::addResult(result.getString());
 		  *(*it) << separator;
 	      	}
 	      if (data.getInteger() > 0)
-		std::cout << std::endl;
+		{
+		  std::cout << std::endl;
+		  plz::Logger::endResult();
+		}
 	      *(*it) >> separator;
 	    }
 	  if (checkExitProcess(it) == false)
