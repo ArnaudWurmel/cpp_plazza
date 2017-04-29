@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Fri Apr 28 22:58:35 2017 Arnaud WURMEL
+// Last update Sat Apr 29 16:06:42 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -85,7 +85,7 @@ void	plz::Process::runProcess()
       if (_pool->haveAvailableTask() == 0 && _pool->haveEndedTask() == 0 &&
 	  _pool->getFreeThread() == _maxThread)
 	{
-	  if (_lastUpdate != 0 && _lastUpdate + 5 < time(0))
+	  if (_lastUpdate != 0 && _lastUpdate + 5 < std::time(nullptr))
 	    _isAlive = false;
 	}
     }
@@ -148,7 +148,7 @@ void	plz::Process::sendData(PipeData const& pipeData)
       	  ++it;
       	}
       *_out << separator;
-      _lastUpdate = time(0);
+      _lastUpdate = std::time(nullptr);
     }
   else
     {

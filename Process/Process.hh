@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:16 2017 Arnaud WURMEL
-// Last update Fri Apr 28 22:16:37 2017 Arnaud WURMEL
+// Last update Sat Apr 29 16:06:06 2017 Arnaud WURMEL
 //
 
 #ifndef PROCESS_HH_
@@ -51,7 +51,7 @@ namespace	plz
     void	mainHaveEnded(PipeData const&);
 
   private:
-    time_t			_lastUpdate;
+    std::time_t			_lastUpdate;
     bool			_isAlive;
     bool			_mainEnded;
     unsigned int		_maxThread;
