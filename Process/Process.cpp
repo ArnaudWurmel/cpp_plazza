@@ -5,7 +5,7 @@
 // Login   <wurmel_a@epitech.net>
 // 
 // Started on  Mon Apr 10 19:51:06 2017 Arnaud WURMEL
-// Last update Sat Apr 29 16:06:42 2017 Arnaud WURMEL
+// Last update Sun Apr 30 18:39:24 2017 Arnaud WURMEL
 //
 
 #include <unistd.h>
@@ -41,8 +41,8 @@ plz::Process::Process(unsigned int maxThread)
   _lastUpdate = 0;
   _mainEnded = false;
   std::string	pipePath = "/tmp/" + std::to_string(plz::Process::processId);
-  _in = std::shared_ptr<APipe>(new Pipe(pipePath + ".in.fifo"));
-  _out = std::shared_ptr<APipe>(new Pipe(pipePath + ".out.fifo"));
+  _in = std::shared_ptr<APipe>(new Pipe(pipePath + "wurmel_a.in.fifo"));
+  _out = std::shared_ptr<APipe>(new Pipe(pipePath + "wurmel_a.out.fifo"));
   if (_in->openPipe() == false || _out->openPipe() == false)
     {
       throw ProcessError("Can't create pipe for process");
