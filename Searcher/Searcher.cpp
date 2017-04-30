@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Sat Apr 29 00:03:56 2017 Arnaud WURMEL
+// Last update Sun Apr 30 05:05:12 2017 Arnaud WURMEL
 //
 
 #include <regex>
@@ -19,7 +19,7 @@ plz::Searcher::Searcher()
 {
 }
 
-void		plz::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
+void		plz::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret) const
 {
   std::string   res_str;
   std::smatch	number;
@@ -47,7 +47,7 @@ void		plz::Searcher::XOR_1byte(std::regex reg, std::string str, std::vector<std:
     }
 }
 
-void     plz::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
+void     plz::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret) const
 {
   std::string   res_str;
   std::smatch	number;
@@ -81,7 +81,7 @@ void     plz::Searcher::XOR_2byte(std::regex reg, std::string str, std::vector<s
     }
 }
 
-void		plz::Searcher::cesar(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret)
+void		plz::Searcher::cesar(std::regex reg, std::string str, std::vector<std::string>& vec, bool& ret) const
 {
   std::string   res_str;
   std::smatch	number;
@@ -109,7 +109,7 @@ void		plz::Searcher::cesar(std::regex reg, std::string str, std::vector<std::str
     }
 }
 
-void	plz::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& vec)
+void	plz::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& vec) const
 {
   std::string	reg = "(([0][1-9]) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}))";
   std::regex	check_number(reg);
@@ -130,7 +130,7 @@ void	plz::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& 
     this->XOR_2byte(check_number, str, vec, find);
 }
 
-void	plz::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec)
+void	plz::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec) const
 {
   std::string	reg = "([a-zA-Z0-9_.-]+)@((?:[a-zA-Z0-9]+.)+)([a-zA-Z0-9]{1,4})";
   std::regex	check_mail(reg);
@@ -151,7 +151,7 @@ void	plz::Searcher::matchEmailAddress(std::string str, std::vector<std::string>&
     this->XOR_2byte(check_mail, str, vec, find);
 }
 
-void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec)
+void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec) const
 {
   std::string	reg = "((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))\\.((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))\\.((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))\\.((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))";
   std::regex	check_ip(reg);
@@ -172,7 +172,7 @@ void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& ve
     this->XOR_2byte(check_ip, str, vec, find);
 }
 
-std::vector<std::string>	plz::Searcher::checkInformation(Command::Information inf, std::string file)
+std::vector<std::string>	plz::Searcher::checkInformation(Command::Information inf, std::string file) const
 {
   std::ifstream			fichier(file, std::ios::in);
   std::vector<std::string>	ret;
