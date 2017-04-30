@@ -5,7 +5,7 @@
 // Login   <baptiste@epitech.net>
 // 
 // Started on  Tue Apr 18 13:05:38 2017 baptiste
-// Last update Sun Apr 30 05:05:12 2017 Arnaud WURMEL
+// Last update Sun Apr 30 22:49:54 2017 Arnaud WURMEL
 //
 
 #include <regex>
@@ -114,20 +114,26 @@ void	plz::Searcher::matchPhoneNumber(std::string str, std::vector<std::string>& 
   std::string	reg = "(([0][1-9]) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}) ?([0-9]{2}))";
   std::regex	check_number(reg);
   std::smatch	number;
+  #ifdef UIMODE
   bool		find = false;
+  #endif
 
   while (std::regex_search(str, number, check_number))
     {
       vec.push_back(number[0]);
       str = number.suffix().str();
+      #ifdef UIMODE
       find = true;
+      #endif
     }
+  #ifdef UIMODE
   if (find == false)
     this->cesar(check_number, str, vec, find);
   if (find == false)
     this->XOR_1byte(check_number, str, vec, find);
   if (find == false)
     this->XOR_2byte(check_number, str, vec, find);
+  #endif
 }
 
 void	plz::Searcher::matchEmailAddress(std::string str, std::vector<std::string>& vec) const
@@ -135,20 +141,26 @@ void	plz::Searcher::matchEmailAddress(std::string str, std::vector<std::string>&
   std::string	reg = "([a-zA-Z0-9_.-]+)@((?:[a-zA-Z0-9]+.)+)([a-zA-Z0-9]{1,4})";
   std::regex	check_mail(reg);
   std::smatch	mail;
+  #ifdef UIMODE
   bool		find = false;
+  #endif
 
   while (std::regex_search(str, mail, check_mail))
     {
       vec.push_back(mail[0]);
       str = mail.suffix().str();
+      #ifdef UIMODE
       find = true;
+      #endif
     }
+  #ifdef UIMODE
   if (find == false)
     this->cesar(check_mail, str, vec, find);
   if (find == false)
     this->XOR_1byte(check_mail, str, vec, find);
   if (find == false)
     this->XOR_2byte(check_mail, str, vec, find);
+  #endif
 }
 
 void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& vec) const
@@ -156,20 +168,26 @@ void	plz::Searcher::matchIpAddress(std::string str, std::vector<std::string>& ve
   std::string	reg = "((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))\\.((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))\\.((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))\\.((1[0-9][0-9])|(2[0-4][0-9])|(2(5[0-5]))|([0-9][0-9])|([0-9]))";
   std::regex	check_ip(reg);
   std::smatch	ip;
+  #ifdef UIMODE
   bool		find = false;
+  #endif
 
   while (std::regex_search(str, ip, check_ip))
     {
       vec.push_back(ip[0]);
       str = ip.suffix().str();
+      #ifdef UIMODE
       find = true;
+      #endif
     }
+  #ifdef UIMODE
   if (find == false)
     this->cesar(check_ip, str, vec, find);
   if (find == false)
     this->XOR_1byte(check_ip, str, vec, find);
   if (find == false)
     this->XOR_2byte(check_ip, str, vec, find);
+  #endif
 }
 
 std::vector<std::string>	plz::Searcher::checkInformation(Command::Information inf, std::string file) const
